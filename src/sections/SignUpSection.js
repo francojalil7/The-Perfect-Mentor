@@ -12,19 +12,29 @@ import {
   VerticalLine,
   Input,
   H2,
+  ErrorMessage
 } from "../styles/texts";
-import user from "../assets/SingUp/icon 32px/light/user.png";
-import email from "../assets/SingUp/icon 32px 2/light/email.png";
-import password from "../assets/SingUp/icon 32px 3/light/password.png";
-import line from "../assets/SingUp/Line 2.png";
+import user from "../assets/Sing/icon 32px/light/user.png";
+import email from "../assets/Sing/icon 32px 2/light/email.png";
+import password from "../assets/Sing/icon 32px 3/light/password.png";
+import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import { signUpUser } from "../states/user";
 
 // Messages
-const required = "Este campo es requerido";
-
+const required = "This field is required";
+const maxLength = "You must enter a maximum of 15 characters";
+const minLength = "You must enter at least 5 characters";
 // Error Component
 const errorMessage = (error) => {
-  return <div>{error}</div>;
+  return (
+
+    <ErrorMessage
+    >
+      {error}
+    </ErrorMessage>
+  );
 };
 
 const SignUpSection = () => {
@@ -33,13 +43,18 @@ const SignUpSection = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const dispatch = useDispatch()
+  const onSubmit = (data) => {
+    console.log(data);
+    dispatch(signUpUser({username:data.username,email:data.email,password:data.password}))
+  }
 
   return (
     <>
       <Section>
         <Mentor src={mentor} />
-        <SmallRectangle >
+        <SmallRectangle>
           <aside>
             <SalyImage />
           </aside>
@@ -73,28 +88,48 @@ const SignUpSection = () => {
                   autoComplete="off"
                   placeholder="email"
                   name="email"
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: true,
+                    pattern: /^\S+@\S+$/i,
+                  })}
                 />
               </Button>
               {errors.email &&
                 errors.email.type === "required" &&
                 errorMessage(required)}
+              {errors.email &&
+                errors.email.type === "pattern" &&
+                errorMessage("The email is not valid")}
               <Button>
                 <Icon src={password} />
                 <Input
-                  type="text"
+                  type="password"
                   autoComplete="off"
                   placeholder="password"
                   name="password"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 15,
+                  })}
                 />
               </Button>
               {errors.password &&
                 errors.password.type === "required" &&
                 errorMessage(required)}
+              {errors.password &&
+                errors.password.type === "minLength" &&
+                errorMessage(minLength)}
+              {errors.password &&
+                errors.password.type === "maxLength" &&
+                errorMessage(maxLength)}
 
-              <GreyButtonInside onClick={handleSubmit(onSubmit)}>Sign Up</GreyButtonInside>
-              <GreyButtonOutside onClick={handleSubmit(onSubmit)}>Sign Up</GreyButtonOutside>
+              <GreyButtonInside onClick={handleSubmit(onSubmit)}>
+                Sign Up
+              </GreyButtonInside>
+              <GreyButtonOutside onClick={handleSubmit(onSubmit)}>
+                Sign Up
+              </GreyButtonOutside>
             </form>
           </section>
         </SmallRectangle>
@@ -111,7 +146,6 @@ const Icon = styled.img`
   margin: 0 10px;
 `;
 
-
 const Mentor = styled.img`
   height: 107px;
   width: 200px;
@@ -120,10 +154,7 @@ const Mentor = styled.img`
   margin-bottom: 20px;
 
   @media only screen and (max-width: 700px) {
-
-   margin-right: 350px !important;
-
-  
+    margin-right: 350px !important;
   }
 `;
 

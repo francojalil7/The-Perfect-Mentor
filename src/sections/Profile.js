@@ -1,68 +1,70 @@
-import React from "react";
-import { Section, TopRectangle, WhiteRectangle } from "../styles/texts";
+import React, { useState, useEffect } from "react";
+import { MentorSidebar, Section, TopRectangle, WhiteRectangle, Title } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
 import edit from "../assets/Profile/Group 5.png";
-import profile from "../assets/Profile/Group 163.png";
 import profileImg from "../assets/Profile/philip.png";
-import users from "../assets/Profile/Vector.png";
-import stadistics from "../assets/Profile/Rectangle 92.png";
-import reports from "../assets/Profile/Vector 8.png";
+import MobileBar from "../components/MobileBar.js"
 import ProfileForm from "../components/ProfileForm";
+import Sidebar from "../components/Sidebar";
+import { useSelector} from "react-redux";
 
 const Profile = () => {
+
+  const [width, setWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    window.addEventListener("resize", () => setWidth(window.innerWidth));
+  }, []);
+  const medium = 700;
+  
+
   return (
     <>
       <Section>
-        <Mentor src={mentor} />
+        {width >= medium ? (
+          <>
+            <MentorSidebar src={mentor} />
 
-        <Sidebar>
-          <SidebarButton>
-            <img src={users} alt='users'/>
-            <p>Users</p>
-          </SidebarButton>
-          <SidebarButton>
-            <img src={stadistics} alt='stadistics'/>
-            <p>Stadistics</p>
-          </SidebarButton>
-          <SidebarButton>
-            <img src={reports} alt='reports'/>
-            <p>Reports</p>
-          </SidebarButton>
-          <SidebarButton>
-            <img style={{ color: "#444444" }} src={profile} alt='profile'/>
-            <p>Profile</p>
-          </SidebarButton>
-        </Sidebar>
-        <WhiteRectangle>
-          <TopRectangle>
-            <Title>Profile</Title>
-          </TopRectangle>
+            <Sidebar/>
+            <WhiteRectangle>
+              <TopRectangle>
+                <Title>Profile</Title>
+              </TopRectangle>
 
-          <ProfileDetails>
-            <ProfilePicture src={profileImg} />
-            <EditButton>
-              <p>Edit</p>
-              <img src={edit} alt='edit'/>
-            </EditButton>
+              <ProfileDetails>
+                <ProfilePicture src={profileImg} />
+                <EditButton>
+                  <p>Edit</p>
+                  <Logo src={edit} alt="edit" />
+                </EditButton>
 
+                <ProfileForm />
+              </ProfileDetails>
+            </WhiteRectangle>
+          </>
+        ) : (
+          <>
+            <Header>
+              <Title>Profile</Title>
+              <div>
+                <img src={edit} alt="edit" />
+              </div>
+              <ProfilePicture src={profileImg} />
+            </Header>
 
-
-            <ProfileForm/>
-          </ProfileDetails>
-        </WhiteRectangle>
+            <ProfileDetailsMobile>
+              <ProfileForm />
+            </ProfileDetailsMobile>
+            <MobileBar/>
+            
+          </>
+        )}
       </Section>
     </>
   );
 };
 
-const Mentor = styled.img`
-  position: absolute;
-  top: 81px;
-  left: 30px;
-  height: 107;
-  width: 200;
-`;
+
 
 const ProfileDetails = styled.div`
   position: relative;
@@ -78,17 +80,24 @@ const ProfileDetails = styled.div`
   mix-blend-mode: normal;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
+
+  @media only screen and (max-width: 1400px) {
+    left: 120px;
+  }
 `;
 
-const Title = styled.h2`
-  font-family: "Heebo";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 50px;
-  line-height: 73px;
-  color: #444444;
-  margin-top: 40px;
+const ProfileDetailsMobile = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 355px;
+  height: 805px;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
 `;
+
+
 
 const ProfilePicture = styled.img`
   position: absolute;
@@ -96,6 +105,14 @@ const ProfilePicture = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 50%;
+
+  @media only screen and (max-width: 700px) {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    top: 60px;
+    left: 170px;
+  }
 `;
 
 const EditButton = styled.button`
@@ -122,45 +139,58 @@ const EditButton = styled.button`
     mix-blend-mode: normal;
     padding-right: 10px;
   }
+
+  /* @media only screen and (max-width: 700px) {
+
+    position: absolute;
+
+    top: 48px;
+    left: 250px;
+    width: 32px;
+    height: 32px;
+    background-color: white;
+
+    p {
+      display: none;
+    }
+  } */
 `;
 
-const Sidebar = styled.div`
-  width: 270px;
-  position: absolute;
-  top: 240px;
-  left: 0;
-`;
 
-const SidebarButton = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 25px;
-  color: rgba(68, 68, 68, 0.5);
-  p {
-    font-family: "Heebo";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-
-    /* :hover{
-        color: #bfd732 !important;
-    } */
-  }
-  img {
-    width: 20px;
-    height: 21px;
-    padding-right: 10px;
-    :hover {
-    background: #444444;
-    color: #bfd732 !important;
-  }
-  }
-
+const Logo = styled.img`
+  width: 20px;
+  height: 21px;
+  padding-right: 10px;
   :hover {
-    background: #444444;
-    color: #bfd732 !important;
+    display: none;
   }
 `;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: row !important;
+  position: relative;
+  left: -95px;
+
+  div {
+    position: relative;
+    top: 45px;
+    left: 15px;
+    background-color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 20px;
+
+    img {
+      position: relative;
+      top: 8px;
+      left: 8px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+`;
+
+
 
 export default Profile;
