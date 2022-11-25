@@ -6,7 +6,6 @@ export const Section = styled.div`
   flex-direction: column;
   align-items: center;
 
-
   @media only screen and (max-width: 700px) {
     justify-content: center;
     align-items: center;
@@ -60,6 +59,11 @@ export const SmallRectangle = styled.div`
   border: 2px solid #444444;
   border-radius: 40px;
 
+  @media only screen and (max-width: 975px) {
+    width: 700px;
+    height: 400px;
+  }
+
   @media only screen and (max-width: 700px) {
     width: 315px;
     height: 361px;
@@ -70,6 +74,12 @@ export const SmallRectangle = styled.div`
     top: 250px;
     right: 270px;
 
+    @media only screen and (max-width: 975px) {
+      position: relative;
+      top: 310px;
+      right: 300px;
+    }
+
     @media only screen and (max-width: 700px) {
       display: none;
     }
@@ -78,6 +88,13 @@ export const SmallRectangle = styled.div`
   section {
     position: relative;
     left: 120px;
+    bottom: 30px;
+
+    @media only screen and (max-width: 975px) {
+      position: relative;
+      left: 380px;
+      bottom: 10px;
+    }
 
     @media only screen and (max-width: 700px) {
       left: 0px;
@@ -112,6 +129,14 @@ export const Button = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 20.56px;
+
+  @media only screen and (max-width: 975px) {
+    width: 250px !important;
+    margin-left: 20px;
+    mix-blend-mode: normal;
+    border: 1px solid #444444;
+    border-radius: 40px;
+  }
   @media only screen and (max-width: 700px) {
     width: 265px !important;
     margin-left: 20px;
@@ -132,6 +157,11 @@ export const GreyButtonInside = styled.div`
   mix-blend-mode: normal;
   border-radius: 40px;
   margin-top: 10px;
+
+  @media only screen and (max-width: 975px) {
+    width: 250px !important;
+    margin-left: 20px;
+  }
   @media only screen and (max-width: 700px) {
     display: none;
     /* margin-top: 30px;
@@ -167,9 +197,16 @@ export const H2 = styled.h2`
   font-weight: 800;
   font-size: 40px;
   height: 30px;
+  margin-bottom: 40px;
   /* line-height: 59px; */
   color: #444444;
   mix-blend-mode: normal;
+
+  @media only screen and (max-width: 975px) {
+    font-size: 32px !important;
+    margin-left: 30px;
+    margin-bottom: 25px;
+  }
   @media only screen and (max-width: 700px) {
     font-size: 30px !important;
     margin-top: 70px;
@@ -186,6 +223,10 @@ export const H3 = styled.h3`
   color: #444444;
   mix-blend-mode: normal;
   height: 20px;
+  @media only screen and (max-width: 975px) {
+    font-size: 30px !important;
+    margin-left: 30px;
+  }
   @media only screen and (max-width: 700px) {
     font-size: 30px !important;
     margin-left: 30px;
@@ -194,6 +235,12 @@ export const H3 = styled.h3`
 export const Line = styled.div`
   border: 1px dashed #444444;
   max-width: 323px;
+  margin-bottom: 30px;
+
+  @media only screen and (max-width: 975px) {
+    max-width: 250px;
+    margin-left: 30px;
+  }
   @media only screen and (max-width: 700px) {
     max-width: 285px;
     margin-left: 10px;
@@ -205,6 +252,11 @@ export const VerticalLine = styled.img`
   top: 10px;
   left: 70px;
   height: 400px;
+
+  @media only screen and (max-width: 975px) {
+    height: 340px;
+    left: 370px;
+  }
   @media only screen and (max-width: 700px) {
     display: none;
   }
@@ -218,6 +270,9 @@ export const Text = styled.p`
   line-height: 18px;
   color: #444444;
   mix-blend-mode: normal;
+  @media only screen and (max-width: 975px) {
+    margin-left: 30px;
+  }
   @media only screen and (max-width: 700px) {
     margin-left: 30px;
   }
@@ -227,6 +282,9 @@ export const Input = styled.input`
   background-color: #bfd732;
   border: none;
   :focus {
+    outline: none;
+  }
+  :active {
     outline: none;
   }
 `;
@@ -242,6 +300,16 @@ export const WhiteRectangle = styled.div`
     0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
     0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
   border-radius: 35px;
+
+  @media only screen and (max-width: 700px) {
+   display: none;
+
+  }
+
+  @media only screen and (max-width: 1400px) {
+    width: 800px !important;
+    height: 944px;
+  }
 `;
 
 export const TopRectangle = styled.div`
@@ -252,6 +320,16 @@ export const TopRectangle = styled.div`
   justify-content: center;
   background: #f5f6f7;
   border-radius: 35px 35px 0px 0px;
+
+  @media only screen and (max-width: 1400px) {
+    width: 800px !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
 export const ButtonOnBoardingGrey = styled.div`
@@ -300,5 +378,41 @@ export const ButtonOnBoardingGreen = styled.div`
 
   @media only screen and (max-width: 320px) {
     width: 300px;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+
+  @media only screen and (max-width: 700px) {
+    margin-left: 25px;
+  }
+`;
+
+export const MentorSidebar = styled.img`
+position: absolute;
+top: 81px;
+left: 30px;
+height: 107;
+width: 200;
+`;
+
+export const Title = styled.h2`
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 73px;
+  color: #444444;
+  margin-top: 40px;
+
+  @media only screen and (max-width: 700px) {
+    font-style: bold;
+    font-size: 30px;
+    line-height: 44px;
+
   }
 `;
