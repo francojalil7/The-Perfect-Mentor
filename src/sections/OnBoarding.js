@@ -25,9 +25,9 @@ const OnBoarding = () => {
     <>
       <Section>
         <Rectangle>
-          {/* <ImageContainer>
+          <ImageContainer>
             <Saly src={saly} />
-          </ImageContainer> */}
+          </ImageContainer>
 
           <section>
             <Mentor src={mentor} />
@@ -48,24 +48,15 @@ const OnBoarding = () => {
 
 const Saly = styled.img`
   position: relative;
-  top: -160px;
-  left: -190px;
+  top: -15px;
+  left: -270px;
 
   @media only screen and (max-width: 700px) {
-    height: 511px;
-    width: 511px;
-
-    /* position: absolute; */
-    /* left: 0%;
-    top:18%; */
-    /* position: absolute;
-    left: 1.52%;
-    right: 1.52%;
-    top: 150px; */
-
-    /* position: absolute;
-    top: 0px;
-    left: 300px; */
+    height: 500px;
+    width: 500px;
+    position: absolute;
+    left: 10px;
+    top:80px;
   }
 `;
 
