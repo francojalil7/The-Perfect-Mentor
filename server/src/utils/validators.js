@@ -1,7 +1,7 @@
 const { check, validationResult } = require("express-validator");
 
 const validateSignUp = [
-  check("name").exists().not().isEmpty(),
+  check("userName").exists().not().isEmpty(),
   check("password").exists().not().isEmpty().isLength({ min: 5 }),
   check("email").exists().isEmail(),
   (req, res, next) => {
