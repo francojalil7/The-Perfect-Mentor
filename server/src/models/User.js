@@ -23,6 +23,12 @@ const UserSchema = new Schema({
   isAdmin: {
     type: Boolean,
   },
+  isMentor: {
+    type: Boolean,
+  },
+  isMentee: {
+    type: Boolean
+  },
   country: {
     type: String,
   },
