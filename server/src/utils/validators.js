@@ -7,7 +7,7 @@ const validateSignUp = [
   (req, res, next) => {
     try {
       validationResult(req).throw();
-      next()
+      next();
     } catch (error) {
       res.status(403);
       res.send({ error: error.array() });

@@ -12,20 +12,26 @@ import {
   VerticalLine,
   Text,
   Input,
+  ErrorMessage,
 } from "../styles/texts";
 import mentor from "../assets/OnBoarding/Vector.png";
 import SalyImage from "../components/SalyImage";
-import email from "../assets/SingUp/icon 32px 2/light/email.png";
-import password from "../assets/SingUp/icon 32px 3/light/password.png";
-import line from "../assets/SingUp/Line 2.png";
+import email from "../assets/Sing/icon 32px 2/light/email.png";
+import password from "../assets/Sing/icon 32px 3/light/password.png";
+import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../states/user";
+import { useNavigate } from "react-router-dom";
 
 // Messages
-const required = "Este campo es requerido";
+const required = "This field is required";
+const maxLength = "You must enter a maximum of 15 characters";
+const minLength = "You must enter at least 5 characters";
 
 // Error Component
 const errorMessage = (error) => {
-  return <div>{error}</div>;
+  return <ErrorMessage>{error}</ErrorMessage>;
 };
 
 const SignInSection = () => {
@@ -34,12 +40,20 @@ const SignInSection = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const onSubmit = (data) =>{
+    console.log(data);
+    dispatch(loginUser({email:data.email, password: data.password}))
+    navigate("/profile")
+  } 
   return (
     <>
       <Section>
         <Mentor src={mentor} />
-        <SmallRectangle >
+        <SmallRectangle>
           <aside>
             <SalyImage />
           </aside>
@@ -57,35 +71,56 @@ const SignInSection = () => {
                 <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="username"
-                  name="username"
-                  {...register("username", { required: true })}
+                  placeholder="email"
+                  name="email"
+                  {...register("email", {
+                    required: true,
+                    pattern: /^\S+@\S+$/i,
+                  })}
                 />
               </Button>
-              {errors.username &&
-                errors.username.type === "required" &&
+    
+              {errors.email &&
+                errors.email.type === "required" &&
                 errorMessage(required)}
+              {errors.email &&
+                errors.email.type === "pattern" &&
+                errorMessage("The email is not valid")}
+ 
+             
               <Button>
                 <Icon src={password} />
 
                 <Input
-                  type="text"
+                  type="password"
                   autoComplete="off"
                   placeholder="password"
                   name="password"
-                  {...register("password", { required: true })}
+                  {...register("password", {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 15,
+                  })}
                 />
               </Button>
               {errors.password &&
                 errors.password.type === "required" &&
                 errorMessage(required)}
+              {errors.password &&
+                errors.password.type === "minLength" &&
+                errorMessage(minLength)}
+              {errors.password &&
+                errors.password.type === "maxLength" &&
+                errorMessage(maxLength)}
 
               <Text>Do you forgot your password?</Text>
 
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign In
               </GreyButtonInside>
-              <GreyButtonOutside onClick={handleSubmit(onSubmit)}>Sign Up</GreyButtonOutside>
+              <GreyButtonOutside onClick={handleSubmit(onSubmit)}>
+                Sign In
+              </GreyButtonOutside>
             </form>
           </section>
         </SmallRectangle>
@@ -102,10 +137,7 @@ const Mentor = styled.img`
   margin-bottom: 20px;
 
   @media only screen and (max-width: 700px) {
-
-   margin-right: 350px !important;
-
-  
+    margin-right: 350px !important;
   }
 `;
 

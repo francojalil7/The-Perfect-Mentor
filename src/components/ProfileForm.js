@@ -1,13 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 // Messages
-const required = "Este campo es requerido";
+const required = "This field is required";
 
 // Error Component
 const errorMessage = (error) => {
-  return <div>{error}</div>;
+  return (
+    <div
+      style={{
+        display: "block",
+        color: "red",
+        fontSize: "12px",
+        marginLeft: "20px",
+      }}
+    >
+      {error}
+    </div>
+  );
 };
 
 const ProfileForm = () => {
@@ -68,8 +80,8 @@ const ProfileForm = () => {
             {...register("age", { required: true })}
           />
 
-          {errors.password &&
-            errors.password.type === "required" &&
+          {errors.age &&
+            errors.age.type === "required" &&
             errorMessage(required)}
           <Label>Role</Label>
           <ProfileInput
@@ -80,11 +92,52 @@ const ProfileForm = () => {
             {...register("rol", { required: true })}
           />
 
-          {errors.password &&
-            errors.password.type === "required" &&
+          {errors.role &&
+            errors.role.type === "required" &&
             errorMessage(required)}
 
-          {/* <button onClick={handleSubmit(onSubmit)}>Sign In</button> */}
+          <Label>Country of residence</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder="Country"
+            name="country"
+            {...register("country", { required: true })}
+          />
+
+          {errors.country &&
+            errors.country.type === "required" &&
+            errorMessage(required)}
+          <Label>Language</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder="English/Spanish"
+            name="language"
+            {...register("language", { required: true })}
+          />
+
+          {errors.language &&
+            errors.language.type === "required" &&
+            errorMessage(required)}
+
+          <Label>Skills</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder="Skills"
+            name="skills"
+            {...register("skills", { required: true })}
+          />
+
+          {errors.skills &&
+            errors.skills.type === "required" &&
+            errorMessage(required)}
+
+          <SaveChangesButton onClick={handleSubmit(onSubmit)}>
+            Save changes
+          </SaveChangesButton>
+          <span></span>
         </form>
       </FormContainer>
     </>
@@ -93,12 +146,14 @@ const ProfileForm = () => {
 
 const FormContainer = styled.div`
   display: flex;
-  justify-content: center !important;
-
-  margin-top: 200px;
+  margin-top: 150px;
 
   form {
     justify-content: center !important;
+  }
+
+  @media only screen and (max-width: 700px) {
+    margin-top: 70px;
   }
 `;
 
@@ -125,6 +180,32 @@ const ProfileInput = styled.input`
   border-bottom: 0.5px solid rgba(68, 68, 68, 0.3);
   height: 30px;
   width: 90%;
+`;
+
+const SaveChangesButton = styled.button`
+  box-sizing: border-box;
+  position: relative;
+  left: 220px;
+  width: 120px;
+  height: 30px;
+
+  border: 1px solid rgba(68, 68, 68, 0.15);
+  background: transparent;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(68, 68, 68, 0.5);
+  margin-top: 20px;
+  @media only screen and (max-width: 700px) {
+    left: 110px;
+  }
 `;
 
 export default ProfileForm;
