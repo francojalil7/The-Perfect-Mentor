@@ -30,7 +30,7 @@ const Stadistics = () => {
         </>
       ) : (
         <>
-                 <Title>Stadistics</Title>
+          <Title>Stadistics</Title>
           <MobileBar />
         </>
       )}
