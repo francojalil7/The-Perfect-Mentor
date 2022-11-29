@@ -28,6 +28,11 @@ const UserSchema = new Schema({
   },
   age: {
     type: String,
+  isMentor: {
+    type: Boolean,
+  },
+  isMentee: {
+    type: Boolean
   },
   country: {
     type: String,
