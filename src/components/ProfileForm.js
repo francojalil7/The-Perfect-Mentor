@@ -1,12 +1,188 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../states/user";
+import { useNavigate } from "react-router-dom";
+import { MultiSelect } from "react-multi-select-component";
+import Select from "react-select";
 
-// Messages
+const ProfileForm = () => {
+  const [preData, setPreData] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const options = [
+    { label: "Spanish", value: "spanish" },
+    { label: "English", value: "english" },
+    { label: "Italian", value: "italian" },
+    { label: "French", value: "french" },
+    { label: "Chinese", value: "chinese" },
+  ];
+
+  const roleOptions = [
+    { value: "mentor", label: "Mentor" },
+    { value: "mentee", label: "Mentee" },
+  ];
+
+  useEffect(() => {
+    const userName = localStorage.getItem("userName");
+    const email = localStorage.getItem("email");
+    const age = localStorage.getItem("age");
+    const role = localStorage.getItem("role");
+    const country = localStorage.getItem("country");
+    const languages = localStorage.getItem("language");
+    setPreData({ userName, email, age, role, country, languages });
+  }, []);
+  const [selected, setSelected] = useState([]);
+  const [selectedRole, setSelectedRole] = useState([]);
+
+  const onSubmit = (data) => {
+    const languages = selected.map((option) => {
+      return option.value;
+    });
+    dispatch(
+      updateUser({
+        email: preData.email,
+        age: data.age,
+        role: selectedRole.value,
+        description: data.description,
+        country: data.country,
+        language: languages,
+      })
+    );
+    localStorage.setItem("age", data.age);
+    localStorage.setItem("role", selectedRole.value);
+    localStorage.setItem("country", data.country);
+    localStorage.setItem("language", languages);
+    navigate("/reports");
+  };
+  return (
+    <>
+      <FormContainer>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <br />
+          <br />
+          <br />
+          <Label>
+            Your name: <strong>{preData.userName}</strong>
+          </Label>
+          <br />
+          <br />
+          <Label>
+            Your email: <strong>{preData.email}</strong>
+          </Label>
+          <br />
+          <br />
+          <Label>Age</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder={preData.age}
+            name="age"
+            {...register("age", { required: true })}
+          />
+
+          {errors.age &&
+            errors.age.type === "required" &&
+            errorMessage(required)}
+
+          <Label>Role</Label>
+          {/* <ProfileInput
+            type="string"
+            multiple
+            name="role"
+            id="role"
+            list="roles"
+            required
+            placeholder={preData.role}
+            size="64"
+            // {...register("role", { required: true })}
+          /> */}
+
+          <SelectedContainer>
+            <Select
+              options={roleOptions}
+              onChange={setSelectedRole}
+              value={selectedRole}
+              isSearchable={false}
+            />
+          </SelectedContainer>
+
+          {/* <datalist id="roles">
+            <option value="Mentor"></option>
+            <option value="Mentee"></option>
+          </datalist> */}
+
+          {/* {errors.role &&
+            errors.role.type === "required" &&
+            errorMessage(required)} */}
+
+          <br />
+
+          <br />
+
+          <br />
+
+          <br />
+
+          <Label>Country of residence</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder={preData.country}
+            name="country"
+            {...register("country", { required: true })}
+          />
+
+          {errors.country &&
+            errors.country.type === "required" &&
+            errorMessage(required)}
+          <Label>Language</Label>
+
+          <Options>
+            <MultiSelect
+              name="language"
+              options={options}
+              value={selected}
+              onChange={setSelected}
+              labelledBy={preData.language}
+            />
+          </Options>
+
+          {errors.language &&
+            errors.language.type === "required" &&
+            errorMessage(required)}
+
+          <Label>Description</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            placeholder={preData.description}
+            name="description"
+            {...register("description", { required: true })}
+          />
+
+          {errors.description &&
+            errors.description.type === "required" &&
+            errorMessage(required)}
+
+          <SaveChangesButton onClick={handleSubmit(onSubmit)}>
+            Save changes
+          </SaveChangesButton>
+          <span></span>
+        </form>
+      </FormContainer>
+    </>
+  );
+};
+
 const required = "This field is required";
-
-// Error Component
 const errorMessage = (error) => {
   return (
     <div
@@ -19,128 +195,6 @@ const errorMessage = (error) => {
     >
       {error}
     </div>
-  );
-};
-
-const ProfileForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
-
-  return (
-    <>
-      <FormContainer>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Label>Your name</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="usename"
-            name="username"
-            {...register("username", { required: true })}
-          />
-
-          {errors.username &&
-            errors.username.type === "required" &&
-            errorMessage(required)}
-
-          <Label>Your email</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="email"
-            name="email"
-            {...register("email", { required: true })}
-          />
-
-          {errors.email &&
-            errors.email.type === "required" &&
-            errorMessage(required)}
-          <Label>Your password</Label>
-          <ProfileInput
-            type="password"
-            autoComplete="off"
-            placeholder="password"
-            name="password"
-            {...register("password", { required: true })}
-          />
-
-          {errors.password &&
-            errors.password.type === "required" &&
-            errorMessage(required)}
-          <Label>Age</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="35"
-            name="age"
-            {...register("age", { required: true })}
-          />
-
-          {errors.age &&
-            errors.age.type === "required" &&
-            errorMessage(required)}
-          <Label>Role</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="Mentor"
-            name="rol"
-            {...register("rol", { required: true })}
-          />
-
-          {errors.role &&
-            errors.role.type === "required" &&
-            errorMessage(required)}
-
-          <Label>Country of residence</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="Country"
-            name="country"
-            {...register("country", { required: true })}
-          />
-
-          {errors.country &&
-            errors.country.type === "required" &&
-            errorMessage(required)}
-          <Label>Language</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="English/Spanish"
-            name="language"
-            {...register("language", { required: true })}
-          />
-
-          {errors.language &&
-            errors.language.type === "required" &&
-            errorMessage(required)}
-
-          <Label>Skills</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder="Skills"
-            name="skills"
-            {...register("skills", { required: true })}
-          />
-
-          {errors.skills &&
-            errors.skills.type === "required" &&
-            errorMessage(required)}
-
-          <SaveChangesButton onClick={handleSubmit(onSubmit)}>
-            Save changes
-          </SaveChangesButton>
-          <span></span>
-        </form>
-      </FormContainer>
-    </>
   );
 };
 
@@ -205,6 +259,29 @@ const SaveChangesButton = styled.button`
   margin-top: 20px;
   @media only screen and (max-width: 700px) {
     left: 110px;
+  }
+`;
+
+const Options = styled.div`
+  margin: 0 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 30px;
+  width: 90%;
+  font-size: 14px;
+`;
+
+const SelectedContainer = styled.div`
+  position: absolute;
+  left: 92px;
+  top: 380px;
+  font-size: 13px;
+
+  @media only screen and (max-width: 700px) {
+    position: relative;
+    left: 14px;
+    top: 5px;
+    width: 90%;
   }
 `;
 

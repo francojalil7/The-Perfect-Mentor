@@ -21,8 +21,8 @@ import password from "../assets/Sing/icon 32px 3/light/password.png";
 import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../states/user";
 import { useNavigate } from "react-router-dom";
+import { effectLogin } from "../states/user";
 
 // Messages
 const required = "This field is required";
@@ -45,8 +45,7 @@ const SignInSection = () => {
   const navigate = useNavigate()
 
   const onSubmit = (data) =>{
-    console.log(data);
-    dispatch(loginUser({email:data.email, password: data.password}))
+    dispatch(effectLogin(data))
     navigate("/profile")
   } 
   return (

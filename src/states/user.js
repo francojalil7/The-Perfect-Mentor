@@ -1,117 +1,112 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAction,
+  createReducer,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
+import swal from "sweetalert";
 
-const initialState = {
-  msg: "",
-  user: "",
-//   email: "",
-//   password: "",
-  token: "",
-  loading: false,
-  error: "",
-};
+export const setUser = createAction("SET_USER");
 
 export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
-  console.log("body en signUpUser", body);
-  // const res = await fetch("////", {
-  //     method:"post",
-  //     headers:{
-  //         'Content-Type':'application/json'
-  //     },
-  //     body: JSON.stringify(body)
-  // })
-  // return await res.json();
-  // const res =  JSON.stringify(body)
-  // console.log("RES", res)
-  return body;
-});
-
-export const loginUser = createAsyncThunk("LOGINUSER", async (body) => {
-    console.log("body en loginUser", body);
-    // const res = await fetch("////", {
-    //     method:"post",
-    //     headers:{
-    //         'Content-Type':'application/json'
-    //     },
-    //     body: JSON.stringify(body)
-    // })
-    // return await res.json();
-    // const res =  JSON.stringify(body)
-    // console.log("RES", res)
-    return body;
+  const response = await fetch("http://localhost:5001/auth/register", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
   });
 
+  if (!response.ok) {
+    swal("Oops! ", "Something went wrong.", "error");
+    // throw new Error(`HTTP error! status: ${response.status}`);
+  }
 
-
-const userSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-
-addToken: (state, action) => {
-    state.token = localStorage.getItem('token')
-},
-addUser: (state, action) => {
-    state.email = localStorage.getItem('email')
-},
-logout: (state, action) => {
-    state.token = null;
-    localStorage.clear()
-}
-
-  },
-  extraReducers: {
-    //***** SIGN UP ******* */
-    [signUpUser.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [signUpUser.fulfilled]: (
-      state,
-      { payload: { error, msg, username, email, password} }
-    ) => {
-      state.loading = false;
-      if (error) {
-        state.error = error;
-      } else {
-        state.msg = msg;
-        // state.username = username;
-        // state.email = email;
-        // state.password = password;
-      }
-    },
-    [signUpUser.rejected]: (state, action) => {
-      state.loading = true;
-    },
-
-
-     //***** LOGIN ******* */
-     [loginUser.pending]: (state, action) => {
-        state.loading = true;
-      },
-      [loginUser.fulfilled]: (
-        state,
-        { payload: { error, msg, token, email} }
-      ) => {
-        state.loading = false;
-        if (error) {
-          state.error = error;
-        } else {
-          state.msg = msg;
-          state.token = token;
-          state.email = email;
-        //   state.password = password;
-
-          localStorage.setItem('email', email)
-
-          localStorage.setItem('token', token)
-        }
-      },
-      [loginUser.rejected]: (state, action) => {
-        state.loading = true;
-      },
-
-  },
+  swal(
+    "Congratulations!",
+    "Your account has been successfully created ",
+    "success"
+  );
+  
+  return await response.json();
 });
 
+export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
+  const response = await fetch("http://localhost:5001/auth/login", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
-export const {addToken,addUser,logout} = userSlice.actions;
-export default userSlice.reducer;
+  if (!response.ok) {
+    swal(
+      "Oops! Something went wrong!",
+      "You have entered an invalid username or password",
+      "error"
+    );
+    // throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  localStorage.setItem("email", data.user.email);
+  localStorage.setItem("userName", data.user.userName);
+  localStorage.setItem("_id", data.user._id);
+  localStorage.setItem("token", data.token);
+  return data;
+  // return JSON.parse(localStorage.getItem("user"));
+});
+
+export const updateUser = createAsyncThunk("UPDATE_USER", async (body) => {
+  const response = await fetch("http://localhost:5001/auth/completeRegister", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    swal("Oops! ", "Something went wrong.", "error");
+    // throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  swal(
+    "Congratulations!",
+    "Your account has been UPDATED!",
+    "success"
+  );
+  
+  return await response.json();
+});
+
+export const getUserId = createAsyncThunk("GET_USER", async (body) => {
+  try {
+    const user = await fetch("http://localhost:5001/auth/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    return user.json;
+  } catch {
+    console.log("Error");
+  }
+});
+
+const userReducer = createReducer(
+  {},
+  {
+    
+    [setUser]: (state, action) => action.payload,
+    [getUserId.fulfilled]: (state, action) => action.payload,
+    [signUpUser.fulfilled]: (state, action) => action.payload,
+    [effectLogin.fulfilled]: (state, action) => action.payload,
+    [updateUser.fulfilled]: (state, action) => action.payload,
+  }
+);
+
+export default userReducer;

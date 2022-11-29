@@ -47,7 +47,7 @@ const SignUpSection = () => {
   const dispatch = useDispatch()
   const onSubmit = (data) => {
     console.log(data);
-    dispatch(signUpUser({username:data.username,email:data.email,password:data.password}))
+    dispatch(signUpUser({userName:data.username,email:data.email,password:data.password}))
   }
 
   return (

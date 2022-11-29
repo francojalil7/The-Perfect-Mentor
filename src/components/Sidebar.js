@@ -10,9 +10,9 @@ import stadisticsGreen from "../assets/Profile/GreenIcons/Rectangle 92.png";
 import profileGreen from "../assets/Profile/GreenIcons/Group 163.png";
 import logout from "../assets/Bar/login.png";
 import mask from "../assets/Bar/Mask group.svg";
+import {setUser} from "../states/user"
 
 import { useNavigate } from "react-router-dom";
-// import { logout } from "../states/user.js";
 import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
@@ -21,16 +21,16 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("profile");
 
   const handleSelected = (view) => {
-    console.log("VIEW", view);
     setSelected(view);
-    console.log("SELECTED", selected);
     navigate(`/${view}`);
   };
 
 
-  // const handleLogout = () => {
-  //   dispatch(logout())
-  // }
+  const handleLogout = () => {
+    localStorage.clear()
+    dispatch(setUser({}))
+    navigate("/")
+  }
 
   return (
     <SidebarContainer>
@@ -43,7 +43,7 @@ const Sidebar = () => {
 
         <p>Users</p>
         <span>
-          <img src={mask} />
+          <img src={mask} alt="mask"/>
         </span>
       </SidebarButton>
       <SidebarButton onClick={() => handleSelected("stadistics")}>
@@ -54,7 +54,7 @@ const Sidebar = () => {
 
         <p>Stadistics</p>
         <span>
-          <img src={mask} />
+          <img src={mask} alt="mask"/>
         </span>
       </SidebarButton>
       <SidebarButton onClick={() => handleSelected("reports")}>
@@ -65,7 +65,7 @@ const Sidebar = () => {
 
         <p>Reports</p>
         <span>
-          <img src={mask} />
+          <img src={mask} alt="mask"/>
         </span>
       </SidebarButton>
       <SidebarButton onClick={() => handleSelected("profile")}>
@@ -76,14 +76,14 @@ const Sidebar = () => {
 
         <p>Profile</p>
         <span>
-          <img src={mask} />
+          <img src={mask} alt="mask"/>
         </span>
       </SidebarButton>
 
       <LogoutButton 
-      // onClick={() => handleLogout()}
+      onClick={() => handleLogout()}
       >
-        <img src={logout} />
+        <img src={logout} alt="logout"/>
         <p>Logout</p>
       </LogoutButton>
     </SidebarContainer>

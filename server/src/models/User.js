@@ -3,13 +3,12 @@ const { Schema } = mongoose;
 const validator = require("validator");
 
 const UserSchema = new Schema({
-  name: {
+  userName: {
     type: String,
-    required: true,
+    required: true
   },
-  lastName: {
+  fullName: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -23,6 +22,12 @@ const UserSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
+  },
+  role:{
+    type: String,
+  },
+  age: {
+    type: String,
   },
   country: {
     type: String,
