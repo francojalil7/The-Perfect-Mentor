@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { MentorSidebar, Section, TopRectangle, WhiteRectangle, Title } from "../styles/texts";
+import {
+  MentorSidebar,
+  Section,
+  TopRectangle,
+  WhiteRectangle,
+  Title,
+} from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
 import edit from "../assets/Profile/Group 5.png";
 import profileImg from "../assets/Profile/philip.png";
-import MobileBar from "../components/MobileBar.js"
+import MobileBar from "../components/MobileBar.js";
 import ProfileForm from "../components/ProfileForm";
 import Sidebar from "../components/Sidebar";
-import { useSelector} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const Profile = () => {
-
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   const medium = 700;
-  
+  const user = useSelector((state) => state.user);
 
   return (
     <>
@@ -25,7 +30,7 @@ const Profile = () => {
           <>
             <MentorSidebar src={mentor} />
 
-            <Sidebar/>
+            <Sidebar />
             <WhiteRectangle>
               <TopRectangle>
                 <Title>Profile</Title>
@@ -38,6 +43,9 @@ const Profile = () => {
                   <Logo src={edit} alt="edit" />
                 </EditButton>
 
+                {/* {user.user ? (<>
+                  <ProfileForm  props={user.user}/>
+                </>) : (<></>)} */}
                 <ProfileForm />
               </ProfileDetails>
             </WhiteRectangle>
@@ -55,16 +63,13 @@ const Profile = () => {
             <ProfileDetailsMobile>
               <ProfileForm />
             </ProfileDetailsMobile>
-            <MobileBar/>
-            
+            <MobileBar />
           </>
         )}
       </Section>
     </>
   );
 };
-
-
 
 const ProfileDetails = styled.div`
   position: relative;
@@ -96,8 +101,6 @@ const ProfileDetailsMobile = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
 `;
-
-
 
 const ProfilePicture = styled.img`
   position: absolute;
@@ -156,7 +159,6 @@ const EditButton = styled.button`
   } */
 `;
 
-
 const Logo = styled.img`
   width: 20px;
   height: 21px;
@@ -190,7 +192,5 @@ const Header = styled.div`
     }
   }
 `;
-
-
 
 export default Profile;

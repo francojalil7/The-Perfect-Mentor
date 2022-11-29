@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 const OnBoarding = () => {
   const navigate = useNavigate();
 
+
   const goSignIn = () => {
     navigate("/signin");
   };
@@ -30,7 +31,7 @@ const OnBoarding = () => {
           </ImageContainer>
 
           <section>
-            <Mentor src={mentor} />
+            <Mentor src={mentor} alt="perfect mentor"/>
             <div>
             <ButtonOnBoardingGrey onClick={goSignUp}>
               Sign Up

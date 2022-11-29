@@ -34,7 +34,7 @@ const MobileBar = () => {
           </div>
           <img src={mobileUsers} alt="users" />
           <span>
-            <img src={mask} />
+            <img src={mask} alt="mask" />
           </span>
         </button>
 
@@ -48,7 +48,7 @@ const MobileBar = () => {
           </div>
           <img src={mobileStadistics} alt="stadistics" />
           <span>
-            <img src={mask} />
+            <img src={mask} alt="mask"/>
           </span>
         </button>
         <button
@@ -61,7 +61,7 @@ const MobileBar = () => {
           </div>
           <img src={mobileReports} alt="reports" />
           <span>
-            <img src={mask} />
+            <img src={mask} alt="mask"/>
           </span>
         </button>
         <button
@@ -74,7 +74,7 @@ const MobileBar = () => {
           </div>
           <img src={mobileProfile} alt="profile" />
           <span>
-            <img src={mask} />
+            <img src={mask} alt="mask"/>
           </span>
         </button>
       </BottomBar>

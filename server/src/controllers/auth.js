@@ -23,9 +23,26 @@ const loginCtrl = async ({ body }, res) => {
       error: "invalid username or password",
     });
   }
-
   const token = generateToken(user);
-  res.status(200).send({ token });
+  return res.status(200).send({user, token});
 };
 
-module.exports = { registerCtrl, loginCtrl };
+const completeRegisterCtrl = async ({ body }, res) => {
+  const filter= { email: body.email};
+  let update = {
+    role: body.role,
+    country: body.country,
+    age: body.age,
+    language: body.language,
+    description:body.description
+   }
+
+  let updatedUser =  await User.findOneAndUpdate(filter,update,{
+    returnOriginal: false
+  });
+
+res.status(201).send(updatedUser);
+}
+
+module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl };
+

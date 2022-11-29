@@ -23,6 +23,11 @@ const UserSchema = new Schema({
   isAdmin: {
     type: Boolean,
   },
+  role:{
+    type: String,
+  },
+  age: {
+    type: String,
   isMentor: {
     type: Boolean,
   },
