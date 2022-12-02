@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const authRouter = require("./auth");
-const user = require("./user")
+const user = require("./user");
+const adminRouter = require("./admin");
 
 router.get("/", (req, res) => res.send("Index"));
-//router.use("/user", userRouter);
 router.use("/auth", authRouter);
-
-router.use("/user", user)
+router.use("/user", user);
+router.use("/admin", adminRouter);
 
 module.exports = router;

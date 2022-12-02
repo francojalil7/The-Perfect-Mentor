@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 const generateToken = (user) => {
   const payload = {
     userName: user.userName,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    isMentee: user.isMentee,
+    isMentor: user.isMentor,
     id: user._id,
   };
   const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "2d" });
@@ -14,4 +18,3 @@ const validateToken = (token) => {
 };
 
 module.exports = { generateToken, validateToken };
-
