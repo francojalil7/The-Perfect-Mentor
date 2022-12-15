@@ -6,7 +6,7 @@ const User = require("../models/User");
 //ASIGNAR UN MENTEE O MENTOR
 
 const me = async (req, res) => {
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.params.email });
   res.send(user);
 };
 

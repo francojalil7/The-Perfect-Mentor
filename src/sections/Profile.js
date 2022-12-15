@@ -4,7 +4,7 @@ import {
   Section,
   TopRectangle,
   WhiteRectangle,
-  Title,
+  ProfileTitle,
 } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
@@ -13,7 +13,7 @@ import profileImg from "../assets/Profile/philip.png";
 import MobileBar from "../components/MobileBar.js";
 import ProfileForm from "../components/ProfileForm";
 import Sidebar from "../components/Sidebar";
-import { useSelector, useDispatch } from "react-redux";
+
 
 const Profile = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -21,7 +21,7 @@ const Profile = () => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   const medium = 700;
-  const user = useSelector((state) => state.user);
+
 
   return (
     <>
@@ -33,7 +33,7 @@ const Profile = () => {
             <Sidebar />
             <WhiteRectangle>
               <TopRectangle>
-                <Title>Profile</Title>
+                <ProfileTitle>Profile</ProfileTitle>
               </TopRectangle>
 
               <ProfileDetails>
@@ -53,7 +53,7 @@ const Profile = () => {
         ) : (
           <>
             <Header>
-              <Title>Profile</Title>
+              <ProfileTitle>Profile</ProfileTitle>
               <div>
                 <img src={edit} alt="edit" />
               </div>
@@ -74,7 +74,7 @@ const Profile = () => {
 const ProfileDetails = styled.div`
   position: relative;
   width: 548px;
-  height: 767px;
+  height: 805px;
   left: 290px;
   top: 137px;
 

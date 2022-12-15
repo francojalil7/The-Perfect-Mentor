@@ -23,11 +23,26 @@ const ProfileForm = () => {
     { label: "Italian", value: "italian" },
     { label: "French", value: "french" },
     { label: "Chinese", value: "chinese" },
+    { label: "Portuguese", value: "portuguese" },
   ];
 
   const roleOptions = [
     { value: "mentor", label: "Mentor" },
     { value: "mentee", label: "Mentee" },
+  ];
+
+  const professionOptions = [
+    { value: "fullstack", label: "Fullstack Developer" },
+    { value: "frontend", label: "Frontend Developer" },
+    { value: "backend", label: "Backend Developer" },
+  ];
+  const skillsOptions = [
+    { value: "react", label: "React Js" },
+    { value: "vue", label: "Vue" },
+    { value: "angular", label: "Angular" },
+    { value: "javascript", label: "Javascript" },
+    { value: "c++", label: "C++" },
+    { value: "phyton", label: "Phyton" },
   ];
 
   useEffect(() => {
@@ -41,36 +56,40 @@ const ProfileForm = () => {
   }, []);
   const [selected, setSelected] = useState([]);
   const [selectedRole, setSelectedRole] = useState([]);
+  const [selectedProfession, setSelectedProfession] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
   const onSubmit = (data) => {
     const languages = selected.map((option) => {
+      return option.value;
+    });
+    const skills = selectedSkills.map((option) => {
       return option.value;
     });
     dispatch(
       updateUser({
         email: preData.email,
         age: data.age,
+        fullName: data.fullName,
         role: selectedRole.value,
         description: data.description,
         country: data.country,
         language: languages,
+        skills: skills,
+        profession: selectedProfession.value,
       })
+
     );
-    localStorage.setItem("age", data.age);
-    localStorage.setItem("role", selectedRole.value);
-    localStorage.setItem("country", data.country);
-    localStorage.setItem("language", languages);
+    localStorage.setItem("age", data.age)
     navigate("/reports");
   };
   return (
     <>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <br />
-          <br />
-          <br />
+      
           <Label>
-            Your name: <strong>{preData.userName}</strong>
+            User name: <strong>{preData.userName}</strong>
           </Label>
           <br />
           <br />
@@ -79,6 +98,17 @@ const ProfileForm = () => {
           </Label>
           <br />
           <br />
+          <Label>Full Name</Label>
+          <ProfileInput
+            type="text"
+            autoComplete="off"
+            name="fullName"
+            {...register("fullName", { required: true })}
+          />
+
+          {errors.fullName &&
+            errors.fullName.type === "required" &&
+            errorMessage(required)}
           <Label>Age</Label>
           <ProfileInput
             type="text"
@@ -92,45 +122,6 @@ const ProfileForm = () => {
             errors.age.type === "required" &&
             errorMessage(required)}
 
-          <Label>Role</Label>
-          {/* <ProfileInput
-            type="string"
-            multiple
-            name="role"
-            id="role"
-            list="roles"
-            required
-            placeholder={preData.role}
-            size="64"
-            // {...register("role", { required: true })}
-          /> */}
-
-          <SelectedContainer>
-            <Select
-              options={roleOptions}
-              onChange={setSelectedRole}
-              value={selectedRole}
-              isSearchable={false}
-            />
-          </SelectedContainer>
-
-          {/* <datalist id="roles">
-            <option value="Mentor"></option>
-            <option value="Mentee"></option>
-          </datalist> */}
-
-          {/* {errors.role &&
-            errors.role.type === "required" &&
-            errorMessage(required)} */}
-
-          <br />
-
-          <br />
-
-          <br />
-
-          <br />
-
           <Label>Country of residence</Label>
           <ProfileInput
             type="text"
@@ -143,6 +134,52 @@ const ProfileForm = () => {
           {errors.country &&
             errors.country.type === "required" &&
             errorMessage(required)}
+
+          <Label>Role</Label>
+
+          <SelectedContainer>
+            <Select
+              options={roleOptions}
+              onChange={setSelectedRole}
+              value={selectedRole}
+              isSearchable={false}
+              required
+            />
+          </SelectedContainer>
+
+          {errors.role &&
+            errors.role.type === "required" &&
+            errorMessage(required)}
+
+          <Label>Profession</Label>
+
+          <SelectedContainer>
+            <Select
+              options={professionOptions}
+              onChange={setSelectedProfession}
+              value={selectedProfession}
+              isSearchable={false}
+              required
+            />
+          </SelectedContainer>
+
+          <Label>Skills</Label>
+
+          <Options>
+            <MultiSelect
+              name="skills"
+              options={skillsOptions}
+              value={selectedSkills}
+              onChange={setSelectedSkills}
+              labelledBy={preData.skills}
+              required
+            />
+          </Options>
+
+          {errors.language &&
+            errors.language.type === "required" &&
+            errorMessage(required)}
+
           <Label>Language</Label>
 
           <Options>
@@ -152,6 +189,7 @@ const ProfileForm = () => {
               value={selected}
               onChange={setSelected}
               labelledBy={preData.language}
+          
             />
           </Options>
 
@@ -272,14 +310,15 @@ const Options = styled.div`
 `;
 
 const SelectedContainer = styled.div`
-  position: absolute;
-  left: 92px;
-  top: 380px;
+margin-top:5px;
+margin-bottom:5px;
   font-size: 13px;
+  width: 90%;
+  margin-left: 20px;
 
   @media only screen and (max-width: 700px) {
     position: relative;
-    left: 14px;
+    left: 0px;
     top: 5px;
     width: 90%;
   }

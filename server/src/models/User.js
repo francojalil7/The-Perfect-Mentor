@@ -5,7 +5,7 @@ const validator = require("validator");
 const UserSchema = new Schema({
   userName: {
     type: String,
-    required: true
+    required: true,
   },
   fullName: {
     type: String,
@@ -20,19 +20,26 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+    default: "UNVERIFIED",
+  },
+  code: { type: String, required: true },
   isAdmin: {
     type: Boolean,
   },
-  role:{
+  role: {
     type: String,
   },
   age: {
     type: String,
+  },
   isMentor: {
     type: Boolean,
   },
   isMentee: {
-    type: Boolean
+    type: Boolean,
   },
   country: {
     type: String,
@@ -49,7 +56,7 @@ const UserSchema = new Schema({
   language: {
     type: Array,
   },
-  preferences: {
+  skills: {
     type: Array,
   },
   assignedMentee: {
