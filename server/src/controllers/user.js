@@ -82,16 +82,17 @@ const singPerMounth = async (req, res) => {
 
 const newUsers = async (req, res) => {
   const newUsers = {
-    users: 0,
-    mentees: 0,
-    mentors: 0,
+    users: 17,
+    mentees: 7,
+    mentors: 10,
   };
 
-  cron.schedule("* * 1 * *", () => {
-    envioCorreo("Cada 11 de cada mes")
-  }, {
-      timezone: "America/Lima"
-    })
+  //Función para contar usuarios nuevos cada mes
+  // cron.schedule("* * * */1 * *", () => {
+  //   console.log("Cada 3 segundos")
+  // }, {
+  //     timezone: "America/Lima"
+  //   })
 
   res.send(newUsers);
 };
