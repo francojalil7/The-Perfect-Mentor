@@ -9,6 +9,7 @@ const registerCtrl = async ({ body }, res) => {
   const passwordHash = await encrypt(body.password);
   const user = new User({ ...body, password: passwordHash });
   const savedUser = await user.save();
+  console.log("🚀 ~ file: auth.js:12 ~ registerCtrl ~ savedUser", savedUser)
   res.status(201).send(savedUser);
 };
 
