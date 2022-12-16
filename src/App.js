@@ -6,6 +6,7 @@ import Profile from "./sections/Profile";
 import Stadistics from "./sections/Stadistics";
 import Users from "./sections/Users";
 import Reports from "./sections/Reports";
+import Dashboard from "./sections/Dashboard"
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/" element={<OnBoarding />} />
             <Route path="/signup" element={<SignUpSection />} />
             <Route path="/signin" element={<SignInSection />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </>
         )}
       </Routes>
