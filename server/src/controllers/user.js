@@ -1,10 +1,5 @@
 const User = require("../models/User");
 
-//FIND ALL USERS
-//FIND ONE USER
-//MENTOR, MENTEE, ADMIN -> ID /email
-//ASIGNAR UN MENTEE O MENTOR
-
 const me = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   res.send(user);

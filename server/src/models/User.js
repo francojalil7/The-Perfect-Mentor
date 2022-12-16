@@ -28,6 +28,7 @@ const UserSchema = new Schema({
   },
   age: {
     type: String,
+  },
   isMentor: {
     type: Boolean,
   },
@@ -58,6 +59,14 @@ const UserSchema = new Schema({
   assignedMentor: {
     type: String,
   },
+  status: {
+    type: Boolean,
+    default: false
+  },
+  joinedDate: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);
