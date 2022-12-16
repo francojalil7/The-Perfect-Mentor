@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import users from "../assets/Profile/Vector.png";
 import stadistics from "../assets/Profile/Rectangle 92.png";
@@ -11,21 +11,25 @@ import profileGreen from "../assets/Profile/GreenIcons/Group 163.png";
 import logout from "../assets/Bar/login.png";
 import mask from "../assets/Bar/Mask group.svg";
 import {setUser} from "../states/user"
-
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const [selected, setSelected] = useState("profile");
+  const [age, setAge] = useState(0);
 
   const handleSelected = (view) => {
     setSelected(view);
     navigate(`/${view}`);
   };
 
+  const user = useSelector((state) => state.user);
 
+  useEffect(() => {
+    setAge(localStorage.getItem("age"))
+  },[])
   const handleLogout = () => {
     localStorage.clear()
     dispatch(setUser({}))
@@ -33,8 +37,23 @@ const Sidebar = () => {
   }
 
   return (
+
     <SidebarContainer>
-      <SidebarButton onClick={() => handleSelected("users")}>
+        { age === 0   ? (<>
+          <SidebarButton onClick={() => handleSelected("profile")}>
+        <div>
+          <img src={profileGreen} alt="profile" />
+        </div>
+        <img src={profile} alt="profile" />
+
+        <p>Profile</p>
+        <span>
+          <img src={mask} alt="mask"/>
+        </span>
+      </SidebarButton>
+        
+        </>) : (<>
+          <SidebarButton onClick={() => handleSelected("users")}>
         <div>
           <img src={usersGreen} alt="users" />
         </div>
@@ -79,6 +98,10 @@ const Sidebar = () => {
           <img src={mask} alt="mask"/>
         </span>
       </SidebarButton>
+      
+      </>)}
+      
+      
 
       <LogoutButton 
       onClick={() => handleLogout()}

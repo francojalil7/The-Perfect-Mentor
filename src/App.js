@@ -6,45 +6,75 @@ import Profile from "./sections/Profile";
 import Stadistics from "./sections/Stadistics";
 import Users from "./sections/Users";
 import Reports from "./sections/Reports";
+import MailVerification from "./sections/MailVerification";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./sections/Dashboard"
-import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import { getUserMail } from "./states/user";
+import { useDispatch } from "react-redux";
 
 import { useSelector } from "react-redux";
+import ChangePassword from "./sections/ChangePassword";
 function App() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const [userById, setUserById] = useState({});
+  const [userByEmail, setUserByEmail] = useState({});
 
   useEffect(() => {
-    if (!user.user) {
-      const id = localStorage.getItem("_id");
-      setUserById(id);
-    }
-  }, []);
+    const email = localStorage.getItem("email");
+    setUserByEmail(email);
 
-  return (
-    <>
+    if(user.succes){
+      navigate("/verification")
+    }
+    if (!user.user && email) {
+      dispatch(getUserMail(email));
+    }
+  }, [user.succes]);
+
+
+
+  if (user.user || userByEmail) {
+    return (
       <Routes>
-        {user.user || userById ? (
+        {user.user !== "undefined" ? (
           <>
-            {" "}
             <Route path="/profile" element={<Profile />} />
             <Route path="/users" element={<Users />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/stadistics" element={<Stadistics />} />
+            <Route path="/changepass" element={<ChangePassword />} />
           </>
         ) : (
           <>
-            {" "}
+            <Route path="/signin" element={<SignInSection />} />
+        
+          </>
+        )}
+      </Routes>
+    );
+  } else {
+    return (
+      <Routes>
+        {user.succes ? (
+          <>
+            <Route path="/verification" element={<MailVerification />} />
+          </>
+        ) : (
+          <>
             <Route path="/" element={<OnBoarding />} />
             <Route path="/signup" element={<SignUpSection />} />
             <Route path="/signin" element={<SignInSection />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </>
         )}
+        <></>
       </Routes>
-    </>
-  );
+    );
+  }
 }
 
 export default App;
+
+

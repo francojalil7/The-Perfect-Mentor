@@ -11,6 +11,8 @@ const {
   newUsers
 } = require("../controllers/user");
 
+
+router.get("/me/:email", me)
 router.get("/me", me);
 router.put("/update", updateUser);
 router.delete("/delete", deleteUser);
@@ -19,3 +21,4 @@ router.get("/totalUsers", validateUser, totalUsers);
 router.get("/singPerMounth", validateUser, singPerMounth);
 router.get("/newUsers", newUsers)
 module.exports = router;
+

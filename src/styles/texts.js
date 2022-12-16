@@ -12,6 +12,17 @@ export const Section = styled.div`
   }
 `;
 
+export const PagesSection = styled.div`
+  background-color: #bfd732;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media only screen and (max-width: 700px) {
+    background-color: #F5F6F7 !important;
+    height: 1100px;
+  }
+`;
 export const Rectangle = styled.div`
   display: flex;
   color: #444444;
@@ -292,7 +303,7 @@ export const Input = styled.input`
 export const WhiteRectangle = styled.div`
   position: absolute;
   width: 1128px;
-  height: 944px;
+  height: 980px;
   left: 272px;
   top: 40px;
   background: #ffffff;
@@ -307,7 +318,11 @@ export const WhiteRectangle = styled.div`
 
   @media only screen and (max-width: 1400px) {
     width: 800px !important;
-    height: 944px;
+    height: 984px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 620px !important;
   }
 `;
 
@@ -319,6 +334,8 @@ export const TopRectangle = styled.div`
   justify-content: center;
   background: #f5f6f7;
   border-radius: 35px 35px 0px 0px;
+  display: flex;
+  flex-direction:column;
 
   @media only screen and (max-width: 1400px) {
     width: 800px !important;
@@ -328,6 +345,9 @@ export const TopRectangle = styled.div`
 
   @media only screen and (max-width: 700px) {
     display: none;
+  }
+  @media only screen and (max-width: 1080px) {
+    width: 600px !important;
   }
 `;
 
@@ -399,6 +419,25 @@ export const MentorSidebar = styled.img`
   width: 200;
 `;
 
+
+export const ProfileTitle = styled.h2`
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 73px;
+  color: #444444;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (max-width: 700px) {
+    font-style: bold;
+    font-size: 30px;
+    line-height: 44px;
+  }
+`;
+
 //Dashboard & Table
 
 export const Title = styled.h2`
@@ -408,12 +447,39 @@ export const Title = styled.h2`
   font-size: 50px;
   line-height: 73px;
   color: #444444;
-  margin-top: 40px;
+  margin-left:80px;
+  mix-blend-mode: normal;
+  height: 0px;
+
 
   @media only screen and (max-width: 700px) {
-    font-style: bold;
     font-size: 30px;
+    font-weight: 800;
     line-height: 44px;
+margin-top:50px;
+
+  }
+`;
+
+export const SubTitle = styled.h2`
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 29px;
+  color: #444444;
+  margin-left:80px;
+  margin-bottom:75px;
+  height: 0px;
+
+  @media only screen and (max-width: 700px) {
+    font-size: 14px;
+    line-height: 15px;
+    width: 150px;
+    margin-top: 15px;
+
+
+
   }
 `;
 
@@ -503,3 +569,4 @@ export const DPagination = styled.div`
   border-radius: 20px 20px 0px 0px;
   transform: rotate(-180deg);
 `;
+

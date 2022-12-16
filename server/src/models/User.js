@@ -20,6 +20,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+    default: "UNVERIFIED",
+  },
+  code: { type: String, required: true },
   isAdmin: {
     type: Boolean,
   },
@@ -52,7 +58,7 @@ const UserSchema = new Schema({
   language: {
     type: Array,
   },
-  preferences: {
+  skills: {
     type: Array,
   },
   assignedMentee: {

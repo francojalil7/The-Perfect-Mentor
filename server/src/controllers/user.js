@@ -3,7 +3,7 @@ var cron = require("node-cron");
 
 
 const me = async (req, res) => {
-  let user = await User.findOne({ email: req.body.email });
+  let user = await User.findOne({ email: req.params.email });
   res.send(user);
 };
 

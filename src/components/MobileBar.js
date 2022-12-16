@@ -16,9 +16,7 @@ const MobileBar = () => {
   const [mobileSelected, setMobileSelected] = useState("profile");
 
   const handleMobileSelected = (view) => {
-    console.log("VIEW", view);
     setMobileSelected(view);
-    console.log("MOBILE SELECTED", mobileSelected);
     navigate(`/${view}`);
   };
   return (

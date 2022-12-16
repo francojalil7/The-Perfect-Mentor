@@ -12,29 +12,23 @@ import {
   VerticalLine,
   Input,
   H2,
-  ErrorMessage
+  ErrorMessage,
 } from "../styles/texts";
-import user from "../assets/Sing/icon 32px/light/user.png";
 import email from "../assets/Sing/icon 32px 2/light/email.png";
 import password from "../assets/Sing/icon 32px 3/light/password.png";
 import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../states/user";
 
 // Messages
 const required = "This field is required";
 const maxLength = "You must enter a maximum of 15 characters";
 const minLength = "You must enter at least 5 characters";
+const username = "Username must have only letters and numbers (no spaces)";
 // Error Component
 const errorMessage = (error) => {
-  return (
-
-    <ErrorMessage
-    >
-      {error}
-    </ErrorMessage>
-  );
+  return <ErrorMessage>{error}</ErrorMessage>;
 };
 
 const SignUpSection = () => {
@@ -44,11 +38,24 @@ const SignUpSection = () => {
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch()
-  const onSubmit = (data) => {
-    console.log(data);
-    dispatch(signUpUser({userName:data.username,email:data.email,password:data.password}))
-  }
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const onSubmit = async (data) => {
+    try {
+      await
+        dispatch(
+          signUpUser({
+            userName: data.userName,
+            email: data.email,
+            password: data.password,
+          })
+        )
+      
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <>
@@ -73,14 +80,17 @@ const SignUpSection = () => {
                 <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="username"
-                  name="username"
-                  {...register("username", { required: true })}
+                  placeholder="user name"
+                  name="userName"
+                  {...register("userName", {
+                    required: true,
+                    pattern: /^[A-Za-z0-9]+$/i,
+                  })}
                 />
               </Button>
-              {errors.username &&
-                errors.username.type === "required" &&
-                errorMessage(required)}
+              {errors.userName &&
+                errors.userName.type === "required" &&
+                errorMessage(username)}
               <Button>
                 <Icon src={email} />
                 <Input
