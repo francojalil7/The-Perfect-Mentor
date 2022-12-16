@@ -26,13 +26,10 @@ const Sidebar = () => {
   };
 
   const user = useSelector((state) => state.user);
-  console.log("user en sidebar", user)
 
   useEffect(() => {
     setAge(localStorage.getItem("age"))
   },[])
-
-  console.log("age en sidebar", age)
   const handleLogout = () => {
     localStorage.clear()
     dispatch(setUser({}))
