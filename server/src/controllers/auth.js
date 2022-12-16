@@ -46,7 +46,6 @@ const registerCtrl = async (req, res) => {
         .json({ message: "algo salio mail en el send email" });
     }
 
-
     await user.save();
 
     res.json({
@@ -104,6 +103,7 @@ const validateUserCtrl = async (req, res) => {
       msg: "Error al confirmar usuario",
     });
   }
+
 };
 
 const loginCtrl = async ({ body }, res) => {
@@ -148,6 +148,7 @@ const completeRegisterCtrl = async ({ body }, res) => {
 
   res.status(201).send(updatedUser);
 };
+
 
 // const forgotPasswordCtrl = async (req, res) => {
 //   const { email } = req.body;
@@ -219,3 +220,7 @@ module.exports = {
   // forgotPasswordCtrl,
   // createNewPasswordCtrl,
 };
+
+
+module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl };
+

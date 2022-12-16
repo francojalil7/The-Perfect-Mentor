@@ -37,9 +37,11 @@ const UserSchema = new Schema({
   },
   isMentor: {
     type: Boolean,
+    default: false,
   },
   isMentee: {
     type: Boolean,
+    default: false,
   },
   country: {
     type: String,
@@ -65,6 +67,19 @@ const UserSchema = new Schema({
   assignedMentor: {
     type: String,
   },
+  status: {
+    type: Boolean,
+    default: false
+  },
+  joinedDate: {
+    type: Date,
+    default: Date.now
+  }
+  created: { 
+    type: Date,
+    default: Date.now
+}
+
 });
 
 module.exports = mongoose.model("User", UserSchema);

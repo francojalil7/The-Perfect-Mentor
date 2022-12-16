@@ -8,6 +8,7 @@ import Users from "./sections/Users";
 import Reports from "./sections/Reports";
 import MailVerification from "./sections/MailVerification";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import Dashboard from "./sections/Dashboard"
 import "./App.css";
 import { getUserMail } from "./states/user";
 import { useDispatch } from "react-redux";
@@ -65,6 +66,7 @@ function App() {
             <Route path="/" element={<OnBoarding />} />
             <Route path="/signup" element={<SignUpSection />} />
             <Route path="/signin" element={<SignInSection />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </>
         )}
         <></>

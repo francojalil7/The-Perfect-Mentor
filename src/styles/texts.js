@@ -313,8 +313,7 @@ export const WhiteRectangle = styled.div`
   border-radius: 35px;
 
   @media only screen and (max-width: 700px) {
-   display: none;
-
+    display: none;
   }
 
   @media only screen and (max-width: 1400px) {
@@ -413,12 +412,13 @@ export const ErrorMessage = styled.div`
 `;
 
 export const MentorSidebar = styled.img`
-position: absolute;
-top: 81px;
-left: 30px;
-height: 107;
-width: 200;
+  position: absolute;
+  top: 81px;
+  left: 30px;
+  height: 107;
+  width: 200;
 `;
+
 
 export const ProfileTitle = styled.h2`
   font-family: "Heebo";
@@ -435,9 +435,10 @@ export const ProfileTitle = styled.h2`
     font-style: bold;
     font-size: 30px;
     line-height: 44px;
-
   }
 `;
+
+//Dashboard & Table
 
 export const Title = styled.h2`
   font-family: "Heebo";
@@ -481,3 +482,91 @@ export const SubTitle = styled.h2`
 
   }
 `;
+
+export const DHead = styled.thead`
+  position: absolute;
+  width: 1018px;
+  height: 40px;
+  left: 20px;
+  top: 100px;
+  flex-direction: row;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f6f7;
+  mix-blend-mode: normal;
+  border-radius: 20px 20px 0px 0px;
+`;
+
+export const DBodyUnverified = styled.tr`
+  position: relative;
+  display: flex;
+  width: 1018px;
+  height: 60px;
+  left: 4px;
+  top: 145px;
+  background: rgba(230, 21, 135, 0.1);
+  mix-blend-mode: normal;
+  justify-content: space-around;
+  margin: 2px;
+`;
+
+export const DBodyVerified = styled.tr`
+  position: relative;
+  display: flex;
+  width: 1018px;
+  height: 60px;
+  left: 4px;
+  top: 145px;
+  background: #39B54A1A;
+  mix-blend-mode: normal;
+  justify-content: space-around;
+  margin: 2px;
+`;
+
+export const DTitle = styled.th`
+  position: relative;
+  width: 170px;
+  top: 9px;
+  justify-content: space-between;
+
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height */
+
+  color: #444444;
+
+  mix-blend-mode: normal;
+`;
+
+export const DData = styled.td`
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: left;
+  color: #444444;
+  mix-blend-mode: normal;
+  max-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DPagination = styled.div`
+  position: absolute;
+  width: 1018px;
+  height: 40px;
+  left: 29px;
+  top: 710px;
+  background: #f5f6f7;
+  mix-blend-mode: normal;
+  border-radius: 20px 20px 0px 0px;
+  transform: rotate(-180deg);
+`;
+
