@@ -3,7 +3,6 @@ const { registerCtrl, loginCtrl, completeRegisterCtrl } = require("../controller
 const { validateUser } = require("../middleware/auth");
 const { validateSignUp } = require("../utils/validators");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
 
 router.post("/register", validateSignUp, registerCtrl);
 

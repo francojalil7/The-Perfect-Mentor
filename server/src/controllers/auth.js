@@ -9,6 +9,7 @@ const registerCtrl = async ({ body }, res) => {
   const passwordHash = await encrypt(body.password);
   const user = new User({ ...body, password: passwordHash });
   const savedUser = await user.save();
+  console.log("🚀 ~ file: auth.js:12 ~ registerCtrl ~ savedUser", savedUser)
   res.status(201).send(savedUser);
 };
 
@@ -24,25 +25,24 @@ const loginCtrl = async ({ body }, res) => {
     });
   }
   const token = generateToken(user);
-  return res.status(200).send({user, token});
+  return res.status(200).send({ user, token });
 };
 
 const completeRegisterCtrl = async ({ body }, res) => {
-  const filter= { email: body.email};
+  const filter = { email: body.email };
   let update = {
     role: body.role,
     country: body.country,
     age: body.age,
     language: body.language,
-    description:body.description
-   }
+    description: body.description,
+  };
 
-  let updatedUser =  await User.findOneAndUpdate(filter,update,{
-    returnOriginal: false
+  let updatedUser = await User.findOneAndUpdate(filter, update, {
+    returnOriginal: false,
   });
 
-res.status(201).send(updatedUser);
-}
+  res.status(201).send(updatedUser);
+};
 
 module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl };
-
