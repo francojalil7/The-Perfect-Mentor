@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.pagination:focus {
+  content: url("../public/active-bullet.svg");
+  margin: 2px;
+}
+
+.pagination {
+  content: url("../public/bullet.svg");
+  margin: 2px;
+}

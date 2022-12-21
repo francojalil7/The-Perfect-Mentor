@@ -84,10 +84,11 @@ const validateUserCtrl = async (req, res) => {
       });
     }
 
-      // // Verificar el código
-      // if (code !== user.code) {
-      //   return res.redirect("http://localhost:3000/error.html");
-      // }
+    // Verificar el código
+    // if (code !== user.code) {
+    //   return res.redirect("http://localhost:3000/error.html");
+    // }
+
 
     // Actualizar usuario
     user.status = "VERIFIED";
@@ -222,5 +223,7 @@ module.exports = {
 };
 
 
+
 module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl,validateUserCtrl };
+
 

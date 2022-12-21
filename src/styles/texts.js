@@ -19,7 +19,7 @@ export const PagesSection = styled.div`
   align-items: center;
 
   @media only screen and (max-width: 700px) {
-    background-color: #F5F6F7 !important;
+    background-color: #f5f6f7 !important;
     height: 1100px;
   }
 `;
@@ -336,7 +336,7 @@ export const TopRectangle = styled.div`
   background: #f5f6f7;
   border-radius: 35px 35px 0px 0px;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 
   @media only screen and (max-width: 1400px) {
     width: 800px !important;
@@ -421,7 +421,6 @@ export const MentorSidebar = styled.img`
   width: 200;
 `;
 
-
 export const ProfileTitle = styled.h2`
   font-family: "Heebo";
   font-style: normal;
@@ -449,17 +448,15 @@ export const Title = styled.h2`
   font-size: 50px;
   line-height: 73px;
   color: #444444;
-  margin-left:80px;
+  margin-left: 80px;
   mix-blend-mode: normal;
   height: 0px;
-
 
   @media only screen and (max-width: 700px) {
     font-size: 30px;
     font-weight: 800;
     line-height: 44px;
-margin-top:50px;
-
+    margin-top: 50px;
   }
 `;
 
@@ -470,8 +467,8 @@ export const SubTitle = styled.h2`
   font-size: 20px;
   line-height: 29px;
   color: #444444;
-  margin-left:80px;
-  margin-bottom:75px;
+  margin-left: 80px;
+  margin-bottom: 75px;
   height: 0px;
 
   @media only screen and (max-width: 700px) {
@@ -479,9 +476,6 @@ export const SubTitle = styled.h2`
     line-height: 15px;
     width: 150px;
     margin-top: 15px;
-
-
-
   }
 `;
 
@@ -522,7 +516,7 @@ export const DBodyVerified = styled.tr`
   height: 60px;
   left: 4px;
   top: 145px;
-  background: #39B54A1A;
+  background: #39b54a1a;
   mix-blend-mode: normal;
   justify-content: space-around;
   margin: 2px;
@@ -569,7 +563,31 @@ export const DPagination = styled.div`
   background: #f5f6f7;
   mix-blend-mode: normal;
   border-radius: 20px 20px 0px 0px;
-  transform: rotate(-180deg);
+  display: flex;
+  align-items: center;
+  justify-content: right;
+`;
+
+export const RedBookmark = styled.div`
+  position: relative;
+  width: 4px;
+  height: 40px;
+  left: -47px;
+  top: 10px;
+
+  background: #e61587;
+  border-radius: 0px 10px 10px 0px;
+`;
+
+export const GreenBookmark = styled.div`
+  position: relative;
+  width: 4px;
+  height: 40px;
+  left: -47px;
+  top: 10px;
+
+  background: #39b54a;
+  border-radius: 0px 10px 10px 0px;
 `;
 
 export const MobileScreen = styled.div`

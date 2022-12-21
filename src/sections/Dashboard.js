@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MentorSidebar } from "../styles/texts";
+import { BulletPagination, DPagination, MentorSidebar } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
@@ -59,11 +59,13 @@ const Dashboard = () => {
             </StatusButton>
           </DashboardFilter>
           <Table users={currentUsers}></Table>
+          <DPagination>
           <Pagination
             usersPerPage={usersPerPage}
             totalUsers={users.length}
             paginate={paginate}
           ></Pagination>
+          </DPagination>
         </DashboardDetails>
       </DashboardWhiteRectangle>
     </>

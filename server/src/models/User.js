@@ -67,10 +67,6 @@ const UserSchema = new Schema({
   assignedMentor: {
     type: String,
   },
-  // status: {
-  //   type: Boolean,
-  //   default: false
-  // },
   joinedDate: {
     type: Date,
     default: Date.now
@@ -78,12 +74,12 @@ const UserSchema = new Schema({
   created: { 
     type: Date,
     default: Date.now
+
 },
 registerForm:{
   type: Boolean,
   default: false,
 }
-
 });
 
 module.exports = mongoose.model("User", UserSchema);
