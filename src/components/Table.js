@@ -6,6 +6,9 @@ import {
   DBodyVerified,
   DTitle,
   DPagination,
+  RedBookmark,
+  GreenBookmark,
+  BulletPagination
 } from "../styles/texts";
 
 const Table = ({ users }) => {
@@ -18,7 +21,7 @@ const Table = ({ users }) => {
       user.email = users[i].email || "No definido";
       user.role = users[i].role || "No definido";
       user.joined = new Date(users[i].joinedDate).toDateString().slice(4, 15) || "No definido";
-      user.status = users[i].status || false;
+      user.status = users[i].status;
       arr.push(user);
     }
     return arr;
@@ -40,9 +43,10 @@ const Table = ({ users }) => {
         </tr>
       </DHead>
       {parsedList.map((data) => {
-        if (data.status == false) {
+        if (data.status == "UNVERIFIED") {
           return (
-            <DBodyVerified>
+            <DBodyUnverified>
+              <RedBookmark/>
               <DData>{data.name}</DData>
               <DData>
                 <b>{data.age}</b>
@@ -62,11 +66,12 @@ const Table = ({ users }) => {
               <DData>
                 <img src="pencil.svg"></img>
               </DData>
-            </DBodyVerified>
+            </DBodyUnverified>
           );
         }
         return (
-          <DBodyUnverified>
+          <DBodyVerified>
+            <GreenBookmark/>
             <DData>{data.name}</DData>
             <DData>
               <b>{data.age}</b>
@@ -86,10 +91,9 @@ const Table = ({ users }) => {
             <DData>
               <img src="pencil.svg"></img>
             </DData>
-          </DBodyUnverified>
+          </DBodyVerified>
         );
       })}
-      <DPagination />
     </table>
   );
 };
