@@ -12,7 +12,6 @@ import Dashboard from "./sections/Dashboard";
 import "./App.css";
 import { getUserMail } from "./states/user";
 import { useDispatch } from "react-redux";
-
 import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 function App() {

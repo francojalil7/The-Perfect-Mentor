@@ -323,6 +323,7 @@ export const WhiteRectangle = styled.div`
 
   @media only screen and (max-width: 1080px) {
     width: 620px !important;
+
   }
 `;
 
@@ -347,7 +348,8 @@ export const TopRectangle = styled.div`
     display: none;
   }
   @media only screen and (max-width: 1080px) {
-    width: 600px !important;
+    width: 620px !important;
+
   }
 `;
 
@@ -588,3 +590,318 @@ export const GreenBookmark = styled.div`
   border-radius: 0px 10px 10px 0px;
 `;
 
+export const MobileScreen = styled.div`
+  position: relative;
+  width: 93%;
+  height: 667px;
+  top: 20px;
+  padding-top: 109px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+
+  h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-family: "Heebo";
+    font-size: 15px;
+    color: #444444;
+    height: 0px;
+  }
+
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 26px;
+    line-height: 100%;
+    height: 2px;
+    color: #444444;
+  }
+
+  .small1 {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    background-color: #f5f6f7;
+    border: 1px solid #f5f6f7;
+    border-radius: 20px;
+    height: 197px;
+    width: 480px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    padding-left: 15px;
+    justify-self: center;
+  }
+  .small2 {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    background-color: #f5f6f7;
+    border: 1px solid #f5f6f7;
+    border-radius: 20px;
+    height: 197px;
+    width: 480px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    justify-self: center;
+  }
+  .big {
+    grid-column: 1 / 4;
+    grid-row: 2 / 4;
+    background-color: #f5f6f7;
+    width: 1018px;
+    height: 423px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #f5f6f7;
+    border-radius: 20px;
+    padding-left: 15px;
+    justify-self: center;
+  }
+
+  background: #ffffff;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+
+  @media only screen and (max-width: 700px) {
+    width: 355px !important;
+    /* height: 963px !important; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    padding-top: 50px;
+
+    h6 {
+      font-weight: 900;
+      font-family: "Heebo";
+      font-size: 14px;
+      color: #444444;
+      line-height: 22px;
+      height: 0px;
+      margin-top: 10px;
+    }
+
+    p {
+      font-family: "Heebo";
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 20px;
+      line-height: 100%;
+      height: 2px;
+      color: #444444;
+    }
+
+    .small1 {
+      height: 141px;
+      width: 142px;
+    }
+    .small2 {
+      height: 141px;
+      width: 142px;
+    }
+    .big {
+      width: 315px;
+      height: 464px;
+    }
+    .class1 {
+      padding-left: 65px !important;
+    }
+    .class2 {
+      padding-left: 50px;
+    }
+    .class3 {
+      padding-left: 40px;
+    }
+    .class4 {
+      padding-left: 35px;
+    }
+    .class5 {
+      padding-left: 54px;
+    }
+  }
+    
+
+  
+`;
+
+export const DashboardSearch = styled.div`
+
+  position: absolute;
+  width: 513px;
+  height: 55px;
+  left: 20px;
+  top: 20px;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  border-radius: 40px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+  border: none;
+  outline: none;
+  ::placeholder {
+    color: #444444;
+    right: 100px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 315px !important;
+    top: -50px !important;
+  }
+`;
+
+export const DashboardInput = styled.input`
+  position: relative;
+  width: 400px;
+  height: 21px;
+  left: 60px;
+  top: 18px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  outline: none;
+  border: 0;
+
+  color: #444444;
+
+  mix-blend-mode: normal;
+
+  @media only screen and (max-width: 700px) {
+    width: 200px !important;
+
+  }
+`;
+
+export const DashboardFilter = styled.div`
+  position: absolute;
+  width: 319px;
+  height: 55px;
+  left: 550px;
+  top: 20px;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+
+  @media only screen and (max-width: 700px) {
+    width: 315px !important;
+    height: 50px !important;
+    left: 20px !important;
+  }
+`;
+
+export const FilterButton = styled.button`
+  box-sizing: border-box;
+  position: absolute;
+  width: 128px;
+  height: 40px;
+  left: 10px;
+  top: 9px;
+
+  mix-blend-mode: normal;
+  border: 1px solid rgba(68, 68, 68, 0.15);
+  border-radius: 40px;
+
+  @media only screen and (max-width: 700px) {
+    top: 4px;
+    width: 80px !important;
+    left: 0px;
+    border: none;
+    background-color: transparent;
+  }
+`;
+
+export const AgeButton = styled.button`
+  box-sizing: border-box;
+  position: absolute;
+  width: 75px;
+  height: 40px;
+  left: 142px;
+  top: 9px;
+  mix-blend-mode: normal;
+  border: 1px solid rgba(68, 68, 68, 0.15);
+  border-radius: 40px;
+
+  @media only screen and (max-width: 700px) {
+    top: 4px;
+    left: 122px;
+  }
+`;
+
+export const StatusButton = styled.button`
+  position: relative;
+  width: 92px;
+  height: 40px;
+  left: 220px;
+  top: 9px;
+
+  background: #444444;
+  mix-blend-mode: normal;
+  border-radius: 40px;
+
+  @media only screen and (max-width: 700px) {
+    top: 4px;
+    left: 210px;
+  }
+`;
+
+export const ButtonTextFilter = styled.text`
+  position: absolute;
+  width: 80px;
+  height: 22px;
+  left: 24px;
+  top: 10px;
+
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: rgba(68, 68, 68, 0.5);
+
+  mix-blend-mode: normal;
+`;
+
+export const ButtonTextAge = styled.text`
+  position: absolute;
+  width: 27px;
+  height: 22px;
+  left: 24px;
+  top: 10px;
+
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: rgba(68, 68, 68, 0.5);
+
+  mix-blend-mode: normal;
+`;
+
+export const ButtonTextStatus = styled.text`
+  position: absolute;
+  width: 44px;
+  height: 22px;
+  left: 23px;
+  top: 10px;
+
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: #dadada;
+
+  mix-blend-mode: normal;
+`;

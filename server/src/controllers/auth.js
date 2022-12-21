@@ -89,6 +89,7 @@ const validateUserCtrl = async (req, res) => {
     //   return res.redirect("http://localhost:3000/error.html");
     // }
 
+
     // Actualizar usuario
     user.status = "VERIFIED";
     await user.save();
@@ -222,5 +223,7 @@ module.exports = {
 };
 
 
-module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl, validateUserCtrl };
+
+module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl,validateUserCtrl };
+
 
