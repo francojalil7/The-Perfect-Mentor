@@ -67,17 +67,21 @@ const UserSchema = new Schema({
   assignedMentor: {
     type: String,
   },
-  status: {
-    type: Boolean,
-    default: false
-  },
+  // status: {
+  //   type: Boolean,
+  //   default: false
+  // },
   joinedDate: {
     type: Date,
     default: Date.now
-  }
+  },
   created: { 
     type: Date,
     default: Date.now
+},
+registerForm:{
+  type: Boolean,
+  default: false,
 }
 
 });

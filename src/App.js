@@ -12,7 +12,6 @@ import Dashboard from "./sections/Dashboard"
 import "./App.css";
 import { getUserMail } from "./states/user";
 import { useDispatch } from "react-redux";
-
 import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 function App() {
@@ -45,6 +44,7 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/stadistics" element={<Stadistics />} />
             <Route path="/changepass" element={<ChangePassword />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </>
         ) : (
           <>
@@ -66,7 +66,7 @@ function App() {
             <Route path="/" element={<OnBoarding />} />
             <Route path="/signup" element={<SignUpSection />} />
             <Route path="/signin" element={<SignInSection />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+       
           </>
         )}
         <></>

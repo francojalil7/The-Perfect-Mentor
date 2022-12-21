@@ -7,6 +7,7 @@ import {
   WhiteRectangle,
   Title,
   SubTitle,
+  MobileScreen,
 } from "../styles/texts";
 import Sidebar from "../components/Sidebar";
 import MobileBar from "../components/MobileBar";
@@ -14,13 +15,63 @@ import mentor from "../assets/Profile/ProfileVector.png";
 import figure from "../assets/Stadistics/Group 91.png";
 import icon from "../assets/Stadistics/Saly-30.png";
 import Chart from "../components/Chart";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsersPerMonth } from "../states/usersPerMonth";
+import { getTotalUsers } from "../states/totalUsers";
+import { getNewUsers } from "../states/newUsers";
 
 const Stadistics = () => {
+  const dispatch = useDispatch();
   const [width, setWidth] = useState(window.innerWidth);
+
   useEffect(() => {
+    dispatch(getUsersPerMonth());
+    dispatch(getTotalUsers());
+    dispatch(getNewUsers());
     window.addEventListener("resize", () => setWidth(window.innerWidth));
   }, []);
   const medium = 700;
+  const totalUsers = useSelector((state) => state.totalUsers);
+  const newUsers = useSelector((state) => state.newUsers);
+
+  const ShowNumbers = () => {
+    return (
+      <>
+        <div className="small1">
+          <h6>TOTAL OF USERS</h6>
+          <DashedLine />
+
+          <p>
+            Mentees<span className="class1">{totalUsers.mentees}</span>{" "}
+          </p>
+          <Line />
+          <p>
+            Mentors<span className="class1"> {totalUsers.mentors}</span>
+          </p>
+          <Line />
+          <p>
+            Total user <span className="class2">{totalUsers.users}</span>
+          </p>
+        </div>
+        <div className="small2">
+          <h6>NEW USERS</h6>
+          <DashedLine />
+          <p>
+            New Mentees<span className="class3">{newUsers.mentees}</span>{" "}
+          </p>
+          <Line />
+          <p>
+            New Mentors<span className="class4"> {newUsers.mentors}</span>
+          </p>
+          <Line />
+          <p>
+            Total user <span className="class5">{newUsers.users}</span>
+          </p>
+        </div>
+      </>
+    );
+  };
+
   return (
     <PagesSection>
       {width >= medium ? (
@@ -37,24 +88,7 @@ const Stadistics = () => {
               <Logo src={icon} />
               <Figure src={figure} />
 
-              <div className="small1">
-                <h6>TOTAL OF USERS</h6>
-                <DashedLine />
-                <p>Mentees</p>
-                <Line />
-                <p>Mentors</p>
-                <Line />
-                <p>Total users</p>
-              </div>
-              <div className="small2">
-                <h6>NEW USERS</h6>
-                <DashedLine />
-                <p>New Mentees</p>
-                <Line />
-                <p>New Mentors</p>
-                <Line />
-                <p>Total users</p>
-              </div>
+              {ShowNumbers()}
 
               <div className="big">
                 {" "}
@@ -75,24 +109,7 @@ const Stadistics = () => {
             <Figure src={figure} />
           </Header>
           <MobileScreen>
-            <div className="small1">
-              <h6>TOTAL OF USERS</h6>
-              <DashedLine />
-              <p>Mentees</p>
-              <Line />
-              <p>Mentors</p>
-              <Line />
-              <p>Total users</p>
-            </div>
-            <div className="small2">
-              <h6>NEW USERS</h6>
-              <DashedLine />
-              <p>New Mentees</p>
-              <Line />
-              <p>New Mentors</p>
-              <Line />
-              <p>Total users</p>
-            </div>
+            {ShowNumbers()}
 
             <div className="big">
               {" "}
@@ -145,126 +162,6 @@ const Logo = styled.img`
   }
 `;
 
-const MobileScreen = styled.div`
-  position: relative;
-  width: 93%;
-  height: 667px;
-  top: 20px;
-  padding-top: 109px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-
-  h6 {
-    font-style: normal;
-    font-weight: 700;
-    font-family: "Heebo";
-    font-size: 15px;
-    color: #444444;
-    height: 0px;
-  }
-
-  p {
-    font-family: "Heebo";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 26px;
-    line-height: 100%;
-    height: 2px;
-    color: #444444;
-  }
-
-  .small1 {
-    grid-column: 1 / 2;
-    grid-row: 1;
-    background-color: #f5f6f7;
-    border: 1px solid #f5f6f7;
-    border-radius: 20px;
-    height: 197px;
-    width: 480px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    margin-left: 15px;
-    padding-left: 15px;
-    justify-self: center;
-  }
-  .small2 {
-    grid-column: 2 / 4;
-    grid-row: 1;
-    background-color: #f5f6f7;
-    border: 1px solid #f5f6f7;
-    border-radius: 20px;
-    height: 197px;
-    width: 480px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    padding-left: 15px;
-    justify-self: center;
-  }
-  .big {
-    grid-column: 1 / 4;
-    grid-row: 2 / 4;
-    background-color: #f5f6f7;
-    width: 1018px;
-    height: 423px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border: 1px solid #f5f6f7;
-    border-radius: 20px;
-    padding-left: 15px;
-    justify-self: center;
-  }
-
-  background: #ffffff;
-  mix-blend-mode: normal;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 40px;
-
-  @media only screen and (max-width: 700px) {
-    width: 355px !important;
-    /* height: 963px !important; */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-    padding-top: 50px;
-
-    h6 {
-      font-weight: 900;
-      font-family: "Heebo";
-      font-size: 14px;
-      color: #444444;
-      line-height: 22px;
-      height: 0px;
-      margin-top: 10px;
-    }
-
-    p {
-      font-family: "Heebo";
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 20px;
-      line-height: 100%;
-      height: 2px;
-      color: #444444;
-    }
-
-    .small1 {
-      height: 141px;
-      width: 142px;
-    }
-    .small2 {
-      height: 141px;
-      width: 142px;
-    }
-    .big {
-      width: 315px;
-      height: 464px;
-    }
-  }
-`;
-
 const Screen = styled.div`
   position: relative;
   width: 93%;
@@ -295,6 +192,21 @@ const Screen = styled.div`
     line-height: 100%;
     height: 2px;
     color: #444444;
+  }
+  .class1 {
+    padding-left: 380px;
+  }
+  .class2 {
+    padding-left: 364px;
+  }
+  .class3 {
+    padding-left: 340px;
+  }
+  .class4 {
+    padding-left: 335px;
+  }
+  .class5 {
+    padding-left: 360px;
   }
 
   .small1 {
@@ -361,6 +273,21 @@ const Screen = styled.div`
     .big {
       width: 750px;
     }
+    .class1 {
+      padding-left: 250px;
+    }
+    .class2 {
+      padding-left: 304px;
+    }
+    .class3 {
+      padding-left: 214px;
+    }
+    .class4 {
+      padding-left: 210px;
+    }
+    .class5 {
+      padding-left: 304px;
+    }
   }
 
   @media only screen and (max-width: 1080px) {
@@ -378,49 +305,26 @@ const Screen = styled.div`
     .big {
       width: 540px;
     }
+
+    .class1 {
+      padding-left: 150px;
+    }
+    .class2 {
+      padding-left: 135px;
+    }
+    .class3 {
+      padding-left: 114px;
+    }
+    .class4 {
+      padding-left: 110px;
+    }
+    .class5 {
+      padding-left: 135px;
+    }
   }
 
-  @media only screen and (max-width: 700px) {
-    width: 355px !important;
-    height: 563px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-
-    padding-top: 50px;
-    h6 {
-      font-weight: 900;
-      font-family: "Heebo";
-      font-size: 14px;
-      color: #444444;
-      line-height: 22px;
-      height: 0px;
-      margin-top: 10px;
-    }
-
-    p {
-      font-family: "Heebo";
-      font-weight: 700;
-      font-size: 12px;
-      line-height: 20px;
-      line-height: 100%;
-      height: 2px;
-      color: #444444;
-    }
-
-    .small1 {
-      height: 141px;
-      width: 152px;
-    }
-    .small2 {
-      height: 141px;
-      width: 152px;
-    }
-    .big {
-      width: 315px;
-      height: 284px;
-    }
-  }
+  
+  
 `;
 
 const Line = styled.div`

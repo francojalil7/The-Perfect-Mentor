@@ -2,8 +2,11 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import styled from "styled-components";
-
+import { useSelector } from "react-redux";
 const Chart = () => {
+  const usersPerMonth = useSelector((state) => state.usersPerMonth);
+
+
   const perShapeGradient = {
     x1: 0,
     y1: 1,
@@ -11,9 +14,8 @@ const Chart = () => {
     y2: 0,
   };
   const options = {
-
     chart: {
-        backgroundColor: 'rgba(245, 246, 247, 1)',
+      backgroundColor: "rgba(245, 246, 247, 1)",
       type: "column",
     },
     title: {
@@ -45,10 +47,7 @@ const Chart = () => {
     series: [
       {
         name: "Signin",
-        data: [
-          49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 95.6, 54.4, 20,
-          50,
-        ],
+        data: usersPerMonth,
       },
     ],
     colors: [
@@ -90,7 +89,6 @@ const ChartContainer = styled.div`
 
   @media only screen and (max-width: 700px) {
     width: 300px !important;
-
   }
 `;
 

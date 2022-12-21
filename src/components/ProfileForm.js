@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../states/user";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserMail, updateUser } from "../states/user";
 import { useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import Select from "react-select";
+import useInput from "../hooks/useInput";
 
 const ProfileForm = () => {
-  const [preData, setPreData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -46,14 +46,21 @@ const ProfileForm = () => {
   ];
 
   useEffect(() => {
-    const userName = localStorage.getItem("userName");
     const email = localStorage.getItem("email");
-    const age = localStorage.getItem("age");
-    const role = localStorage.getItem("role");
-    const country = localStorage.getItem("country");
-    const languages = localStorage.getItem("language");
-    setPreData({ userName, email, age, role, country, languages });
+    dispatch(getUserMail(email));
   }, []);
+
+  let user = useSelector((state) => state.user);
+ 
+  const age = useInput(user.age);
+  const fullName = useInput(user.fullName);
+  // const role = useInput(user.role);
+  const description = useInput(user.description);
+  const country = useInput(user.country);
+  // const language = useInput(user.language);
+  // const skills = useInput(user.skills);
+  // const profession = useInput(user.profession);
+
   const [selected, setSelected] = useState([]);
   const [selectedRole, setSelectedRole] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState([]);
@@ -68,7 +75,7 @@ const ProfileForm = () => {
     });
     dispatch(
       updateUser({
-        email: preData.email,
+        email: user.email,
         age: data.age,
         fullName: data.fullName,
         role: selectedRole.value,
@@ -78,32 +85,29 @@ const ProfileForm = () => {
         skills: skills,
         profession: selectedProfession.value,
       })
-
     );
-    localStorage.setItem("age", data.age)
+
     navigate("/reports");
   };
   return (
     <>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-      
           <Label>
-            User name: <strong>{preData.userName}</strong>
+            User name: <strong>{user.userName}</strong>
           </Label>
           <br />
           <br />
           <Label>
-            Your email: <strong>{preData.email}</strong>
+            Your email: <strong>{user.email}</strong>
           </Label>
           <br />
           <br />
           <Label>Full Name</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            name="fullName"
-            {...register("fullName", { required: true })}
+            {...register("fullName")}
+            value={fullName.value}
+            onChange={fullName.onChange}
           />
 
           {errors.fullName &&
@@ -111,11 +115,9 @@ const ProfileForm = () => {
             errorMessage(required)}
           <Label>Age</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.age}
-            name="age"
-            {...register("age", { required: true })}
+            {...register("age")}
+            value={age.value}
+            onChange={age.onChange}
           />
 
           {errors.age &&
@@ -124,24 +126,23 @@ const ProfileForm = () => {
 
           <Label>Country of residence</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.country}
-            name="country"
-            {...register("country", { required: true })}
+            {...register("country")}
+            value={country.value}
+            onChange={country.onChange}
           />
 
           {errors.country &&
             errors.country.type === "required" &&
             errorMessage(required)}
 
-          <Label>Role</Label>
+         <Label>Role</Label>
 
           <SelectedContainer>
             <Select
               options={roleOptions}
               onChange={setSelectedRole}
               value={selectedRole}
+              placeholder={user.role}
               isSearchable={false}
               required
             />
@@ -151,6 +152,7 @@ const ProfileForm = () => {
             errors.role.type === "required" &&
             errorMessage(required)}
 
+ 
           <Label>Profession</Label>
 
           <SelectedContainer>
@@ -158,6 +160,7 @@ const ProfileForm = () => {
               options={professionOptions}
               onChange={setSelectedProfession}
               value={selectedProfession}
+              placeholder={user.profession}
               isSearchable={false}
               required
             />
@@ -171,7 +174,8 @@ const ProfileForm = () => {
               options={skillsOptions}
               value={selectedSkills}
               onChange={setSelectedSkills}
-              labelledBy={preData.skills}
+  
+        
               required
             />
           </Options>
@@ -188,22 +192,19 @@ const ProfileForm = () => {
               options={options}
               value={selected}
               onChange={setSelected}
-              labelledBy={preData.language}
           
             />
           </Options>
 
           {errors.language &&
             errors.language.type === "required" &&
-            errorMessage(required)}
+            errorMessage(required)} 
 
           <Label>Description</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.description}
-            name="description"
-            {...register("description", { required: true })}
+            {...register("description")}
+            value={description.value}
+            onChange={description.onChange}
           />
 
           {errors.description &&
@@ -310,8 +311,8 @@ const Options = styled.div`
 `;
 
 const SelectedContainer = styled.div`
-margin-top:5px;
-margin-bottom:5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 13px;
   width: 90%;
   margin-left: 20px;
