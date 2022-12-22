@@ -94,6 +94,26 @@ const newUsers = async (req, res) => {
   res.send(newUsers);
 };
 
+const filteredUser = async ({ body }, res) => {
+  try {
+    let users;
+    if (body.hasOwnProperty("role")) {
+      users = await User.find({ role: body.role });
+      res.send(users);
+    } else if (body.hasOwnProperty("skills")) {
+      users = await User.find({ skills: body.skills });
+      res.send(users);
+    } else if (body.hasOwnProperty("userName")) {
+      users = await User.find({ userName: body.userName });
+      res.send(users);
+    } else {
+      res.sendStatus(403);
+    }
+  } catch (error) {
+    res.status(403).send({ error: error.message });
+  }
+};
+
 module.exports = {
   me,
   updateUser,
@@ -102,4 +122,5 @@ module.exports = {
   totalUsers,
   singPerMounth,
   newUsers,
+  filteredUser,
 };

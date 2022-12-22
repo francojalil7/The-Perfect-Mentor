@@ -105,8 +105,6 @@ const validateUserCtrl = async (req, res) => {
     });
   }
 
-};
-
 const loginCtrl = async ({ body }, res) => {
   const user = await User.findOne({ email: body.email });
 

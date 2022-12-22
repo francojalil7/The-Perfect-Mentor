@@ -69,17 +69,16 @@ const UserSchema = new Schema({
   },
   joinedDate: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  created: { 
+  created: {
     type: Date,
-    default: Date.now
-
-},
-registerForm:{
-  type: Boolean,
-  default: false,
-}
+    default: Date.now,
+  },
+  registerForm: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);
