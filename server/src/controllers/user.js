@@ -97,6 +97,8 @@ const newUsers = async (req, res) => {
   res.send(newUsers);
 };
 
+
+
 module.exports = {
   me,
   updateUser,
@@ -105,4 +107,5 @@ module.exports = {
   totalUsers,
   singPerMounth,
   newUsers,
+  filteredUser,
 };

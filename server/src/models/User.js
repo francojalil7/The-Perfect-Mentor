@@ -20,6 +20,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    required: true,
+    default: "UNVERIFIED",
+  },
+  code: { type: String, required: true },
   isAdmin: {
     type: Boolean,
   },
@@ -52,7 +58,7 @@ const UserSchema = new Schema({
   language: {
     type: Array,
   },
-  preferences: {
+  skills: {
     type: Array,
   },
   assignedMentee: {
@@ -61,10 +67,18 @@ const UserSchema = new Schema({
   assignedMentor: {
     type: String,
   },
-  created: { 
+  joinedDate: {
     type: Date,
-    default: Date.now
-}
+    default: Date.now,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  registerForm: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);

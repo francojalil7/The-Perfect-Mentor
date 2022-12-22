@@ -8,7 +8,8 @@ const {
   findAllUsers,
   totalUsers,
   singPerMounth,
-  newUsers
+  newUsers,
+  filteredUser,
 } = require("../controllers/user");
 
 router.get("/me", me);
@@ -17,5 +18,6 @@ router.delete("/delete", deleteUser);
 router.get("/users", findAllUsers);
 router.get("/totalUsers", validateUser, totalUsers);
 router.get("/singPerMounth", validateUser, singPerMounth);
-router.get("/newUsers", newUsers)
+router.get("/newUsers", validateUser, newUsers);
+router.get("/filtered", validateUser, filteredUser);
 module.exports = router;
