@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../states/user";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserMail, updateUser } from "../states/user";
 import { useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import Select from "react-select";
+import useInput from "../hooks/useInput";
 
 const ProfileForm = () => {
-  const [preData, setPreData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -23,6 +23,7 @@ const ProfileForm = () => {
     { label: "Italian", value: "italian" },
     { label: "French", value: "french" },
     { label: "Chinese", value: "chinese" },
+    { label: "Portuguese", value: "portuguese" },
   ];
 
   const roleOptions = [
@@ -30,119 +31,159 @@ const ProfileForm = () => {
     { value: "mentee", label: "Mentee" },
   ];
 
+  const professionOptions = [
+    { value: "fullstack", label: "Fullstack Developer" },
+    { value: "frontend", label: "Frontend Developer" },
+    { value: "backend", label: "Backend Developer" },
+  ];
+  const skillsOptions = [
+    { value: "react", label: "React Js" },
+    { value: "vue", label: "Vue" },
+    { value: "angular", label: "Angular" },
+    { value: "javascript", label: "Javascript" },
+    { value: "c++", label: "C++" },
+    { value: "phyton", label: "Phyton" },
+  ];
+
   useEffect(() => {
-    const userName = localStorage.getItem("userName");
     const email = localStorage.getItem("email");
-    const age = localStorage.getItem("age");
-    const role = localStorage.getItem("role");
-    const country = localStorage.getItem("country");
-    const languages = localStorage.getItem("language");
-    setPreData({ userName, email, age, role, country, languages });
+    dispatch(getUserMail(email));
   }, []);
+
+  let user = useSelector((state) => state.user);
+ 
+  const age = useInput(user.age);
+  const fullName = useInput(user.fullName);
+  // const role = useInput(user.role);
+  const description = useInput(user.description);
+  const country = useInput(user.country);
+  // const language = useInput(user.language);
+  // const skills = useInput(user.skills);
+  // const profession = useInput(user.profession);
+
   const [selected, setSelected] = useState([]);
   const [selectedRole, setSelectedRole] = useState([]);
+  const [selectedProfession, setSelectedProfession] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
   const onSubmit = (data) => {
     const languages = selected.map((option) => {
       return option.value;
     });
+    const skills = selectedSkills.map((option) => {
+      return option.value;
+    });
     dispatch(
       updateUser({
-        email: preData.email,
+        email: user.email,
         age: data.age,
+        fullName: data.fullName,
         role: selectedRole.value,
         description: data.description,
         country: data.country,
         language: languages,
+        skills: skills,
+        profession: selectedProfession.value,
       })
     );
-    localStorage.setItem("age", data.age);
-    localStorage.setItem("role", selectedRole.value);
-    localStorage.setItem("country", data.country);
-    localStorage.setItem("language", languages);
+
     navigate("/reports");
   };
   return (
     <>
       <FormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <br />
-          <br />
-          <br />
           <Label>
-            Your name: <strong>{preData.userName}</strong>
+            User name: <strong>{user.userName}</strong>
           </Label>
           <br />
           <br />
           <Label>
-            Your email: <strong>{preData.email}</strong>
+            Your email: <strong>{user.email}</strong>
           </Label>
           <br />
           <br />
+          <Label>Full Name</Label>
+          <ProfileInput
+            {...register("fullName")}
+            value={fullName.value}
+            onChange={fullName.onChange}
+          />
+
+          {errors.fullName &&
+            errors.fullName.type === "required" &&
+            errorMessage(required)}
           <Label>Age</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.age}
-            name="age"
-            {...register("age", { required: true })}
+            {...register("age")}
+            value={age.value}
+            onChange={age.onChange}
           />
 
           {errors.age &&
             errors.age.type === "required" &&
             errorMessage(required)}
 
-          <Label>Role</Label>
-          {/* <ProfileInput
-            type="string"
-            multiple
-            name="role"
-            id="role"
-            list="roles"
-            required
-            placeholder={preData.role}
-            size="64"
-            // {...register("role", { required: true })}
-          /> */}
+          <Label>Country of residence</Label>
+          <ProfileInput
+            {...register("country")}
+            value={country.value}
+            onChange={country.onChange}
+          />
+
+          {errors.country &&
+            errors.country.type === "required" &&
+            errorMessage(required)}
+
+         <Label>Role</Label>
 
           <SelectedContainer>
             <Select
               options={roleOptions}
               onChange={setSelectedRole}
               value={selectedRole}
+              placeholder={user.role}
               isSearchable={false}
+              required
             />
           </SelectedContainer>
 
-          {/* <datalist id="roles">
-            <option value="Mentor"></option>
-            <option value="Mentee"></option>
-          </datalist> */}
-
-          {/* {errors.role &&
+          {errors.role &&
             errors.role.type === "required" &&
-            errorMessage(required)} */}
-
-          <br />
-
-          <br />
-
-          <br />
-
-          <br />
-
-          <Label>Country of residence</Label>
-          <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.country}
-            name="country"
-            {...register("country", { required: true })}
-          />
-
-          {errors.country &&
-            errors.country.type === "required" &&
             errorMessage(required)}
+
+ 
+          <Label>Profession</Label>
+
+          <SelectedContainer>
+            <Select
+              options={professionOptions}
+              onChange={setSelectedProfession}
+              value={selectedProfession}
+              placeholder={user.profession}
+              isSearchable={false}
+              required
+            />
+          </SelectedContainer>
+
+          <Label>Skills</Label>
+
+          <Options>
+            <MultiSelect
+              name="skills"
+              options={skillsOptions}
+              value={selectedSkills}
+              onChange={setSelectedSkills}
+  
+        
+              required
+            />
+          </Options>
+
+          {errors.language &&
+            errors.language.type === "required" &&
+            errorMessage(required)}
+
           <Label>Language</Label>
 
           <Options>
@@ -151,21 +192,19 @@ const ProfileForm = () => {
               options={options}
               value={selected}
               onChange={setSelected}
-              labelledBy={preData.language}
+          
             />
           </Options>
 
           {errors.language &&
             errors.language.type === "required" &&
-            errorMessage(required)}
+            errorMessage(required)} 
 
           <Label>Description</Label>
           <ProfileInput
-            type="text"
-            autoComplete="off"
-            placeholder={preData.description}
-            name="description"
-            {...register("description", { required: true })}
+            {...register("description")}
+            value={description.value}
+            onChange={description.onChange}
           />
 
           {errors.description &&
@@ -272,14 +311,15 @@ const Options = styled.div`
 `;
 
 const SelectedContainer = styled.div`
-  position: absolute;
-  left: 92px;
-  top: 380px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 13px;
+  width: 90%;
+  margin-left: 20px;
 
   @media only screen and (max-width: 700px) {
     position: relative;
-    left: 14px;
+    left: 0px;
     top: 5px;
     width: 90%;
   }
