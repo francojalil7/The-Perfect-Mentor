@@ -46,3 +46,17 @@
   content: url("../public/bullet.svg");
   margin: 2px;
 }
+
+.age{
+  padding-left: 50px;
+}
+.email{
+  padding-left: -10px;
+}
+.role{
+  padding-left: 40px;
+}
+
+.date{
+  padding-left: 40px;
+}

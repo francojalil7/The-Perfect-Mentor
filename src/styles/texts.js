@@ -20,7 +20,7 @@ export const PagesSection = styled.div`
 
   @media only screen and (max-width: 700px) {
     background-color: #f5f6f7 !important;
-    height: 1100px;
+    height: 100vh;
   }
 `;
 export const Rectangle = styled.div`
@@ -323,7 +323,6 @@ export const WhiteRectangle = styled.div`
 
   @media only screen and (max-width: 1080px) {
     width: 620px !important;
-
   }
 `;
 
@@ -349,7 +348,6 @@ export const TopRectangle = styled.div`
   }
   @media only screen and (max-width: 1080px) {
     width: 620px !important;
-
   }
 `;
 
@@ -480,64 +478,100 @@ export const SubTitle = styled.h2`
 `;
 
 export const DHead = styled.thead`
-  position: absolute;
   width: 1018px;
   height: 40px;
-  left: 20px;
-  top: 100px;
   flex-direction: row;
-  margin: 0 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   background: #f5f6f7;
   mix-blend-mode: normal;
   border-radius: 20px 20px 0px 0px;
+  display: flex;
+  /* align-items: left; */
+  /* justify-content: left; */
+ 
 `;
 
 export const DBodyUnverified = styled.tr`
-  position: relative;
   display: flex;
   width: 1018px;
   height: 60px;
-  left: 4px;
-  top: 145px;
   background: rgba(230, 21, 135, 0.1);
   mix-blend-mode: normal;
-  justify-content: space-around;
+  /* justify-content: space-between; */
   margin: 2px;
+
+  td:nth-child(2){
+    width: 120px;
+    padding-right: 80px;
+    
+  }
+
+  td:nth-child(3){
+      padding-right: 30px;
+    
+  }
+  td:nth-child(4){ 
+    padding-right: 120px;
+    
+  }
+  td:nth-child(5){
+    padding-right: 30px;
+  }
+  td:nth-child(6){
+    padding-right: 40px;
+  }
+  td:nth-child(7){
+ padding-right: 20px;
+}
 `;
 
 export const DBodyVerified = styled.tr`
-  position: relative;
   display: flex;
   width: 1018px;
   height: 60px;
-  left: 4px;
-  top: 145px;
   background: #39b54a1a;
   mix-blend-mode: normal;
-  justify-content: space-around;
+  /* justify-content: space-between; */
   margin: 2px;
+  td:nth-child(2){
+    width: 120px;
+    padding-right: 80px;
+    
+  }
+
+  td:nth-child(3){
+      padding-right: 30px;
+    
+  }
+  td:nth-child(4){ 
+    padding-right: 120px;
+    
+  }
+  td:nth-child(5){
+    padding-right: 30px;
+  }
+  td:nth-child(6){
+    padding-right: 40px;
+  }
+  td:nth-child(7){
+ padding-right: 20px;
+}
+
 `;
 
 export const DTitle = styled.th`
   position: relative;
   width: 170px;
   top: 9px;
-  justify-content: space-between;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   /* identical to box height */
-
   color: #444444;
-
   mix-blend-mode: normal;
+
+
 `;
 
 export const DData = styled.td`
@@ -545,36 +579,51 @@ export const DData = styled.td`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  text-align: left;
+  /* text-align: left; */
   color: #444444;
   mix-blend-mode: normal;
   max-width: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  text-align: justify;
+  /* justify-content: left; */
+  padding-left: 50px;
+  /* padding-right: 60px; */
+
+
 `;
 
 export const DPagination = styled.div`
   position: absolute;
   width: 1018px;
   height: 40px;
-  left: 29px;
+  left: 26px;
   top: 710px;
   background: #f5f6f7;
   mix-blend-mode: normal;
-  border-radius: 20px 20px 0px 0px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: left;
+
+  @media only screen and (max-width: 1400px) {
+    width: 850px;
+    left: 17px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 680px;
+    left: 0px !important;
+  }
 `;
 
 export const RedBookmark = styled.div`
   position: relative;
   width: 4px;
   height: 40px;
-  left: -47px;
+  left: 0px;
   top: 10px;
-
   background: #e61587;
   border-radius: 0px 10px 10px 0px;
 `;
@@ -583,10 +632,19 @@ export const GreenBookmark = styled.div`
   position: relative;
   width: 4px;
   height: 40px;
-  left: -47px;
+  left: 0px;
   top: 10px;
-
   background: #39b54a;
+  border-radius: 0px 10px 10px 0px;
+`;
+
+export const GreyBookmark = styled.div`
+  position: relative;
+  width: 90px;
+  height: 10px;
+  left: 0px;
+  top: 30px;
+  background-color: red;
   border-radius: 0px 10px 10px 0px;
 `;
 
@@ -599,6 +657,8 @@ export const MobileScreen = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
 
   h6 {
     font-style: normal;
@@ -723,13 +783,42 @@ export const MobileScreen = styled.div`
       padding-left: 54px;
     }
   }
-    
+`;
 
-  
+export const MobileScreenTable = styled.div`
+  position: relative;
+  width: 380px;
+  height: 1000vh;
+  top: 20px;
+  padding-top: 109px;
+  padding-bottom: 109px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 40px;
+
+  .usersinfo {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    align-self: center;
+    /* padding: 20px 20px 20px 20px; */
+  }
+
+  p {
+    font-family: "Heebo";
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
+
+    height: 2px;
+    color: #444444;
+  }
 `;
 
 export const DashboardSearch = styled.div`
-
   position: absolute;
   width: 513px;
   height: 55px;
@@ -750,6 +839,7 @@ export const DashboardSearch = styled.div`
   @media only screen and (max-width: 700px) {
     width: 315px !important;
     top: -50px !important;
+    left: 30px !important;
   }
 `;
 
@@ -773,7 +863,6 @@ export const DashboardInput = styled.input`
 
   @media only screen and (max-width: 700px) {
     width: 200px !important;
-
   }
 `;
 
@@ -790,7 +879,7 @@ export const DashboardFilter = styled.div`
   @media only screen and (max-width: 700px) {
     width: 315px !important;
     height: 50px !important;
-    left: 20px !important;
+    left: 30px !important;
   }
 `;
 
@@ -838,7 +927,7 @@ export const StatusButton = styled.button`
   height: 40px;
   left: 220px;
   top: 9px;
-
+  border: solid 1px #444444;
   background: #444444;
   mix-blend-mode: normal;
   border-radius: 40px;
