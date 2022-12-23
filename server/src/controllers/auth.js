@@ -141,6 +141,7 @@ const completeRegisterCtrl = async ({ body }, res) => {
     description: body.description,
     skills: body.skills,
     profession: body.profession,
+    registerForm: true,
   };
 
   let updatedUser = await User.findOneAndUpdate(filter, update, {

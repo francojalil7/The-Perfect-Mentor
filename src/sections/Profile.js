@@ -13,6 +13,8 @@ import profileImg from "../assets/Profile/philip.png";
 import MobileBar from "../components/MobileBar.js";
 import ProfileForm from "../components/ProfileForm";
 import Sidebar from "../components/Sidebar";
+import { useSelector } from "react-redux";
+
 
 const Profile = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -21,14 +23,17 @@ const Profile = () => {
   }, []);
   const medium = 700;
 
+  let user = useSelector((state) => state.user);
+
+  console.log("USER EN PROFILE", user);
   return (
     <>
       <Section>
         {width >= medium ? (
           <>
             <MentorSidebar src={mentor} />
+            {user.registerForm ? <Sidebar /> : <></>}
 
-            <Sidebar />
             <WhiteRectangle>
               <TopRectangle>
                 <ProfileTitle>Profile</ProfileTitle>
@@ -86,12 +91,10 @@ const ProfileDetails = styled.div`
 
   @media only screen and (max-width: 1400px) {
     left: 120px;
-   
   }
 
   @media only screen and (max-width: 1080px) {
     left: 35px;
-
   }
 `;
 
