@@ -8,6 +8,8 @@ const {
 } = require("../utils/tokens");
 const { transporter, getTemplate } = require("../utils/mail");
 const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+const { body } = require("express-validator");
 
 const registerCtrl = async (req, res) => {
   try {
@@ -89,14 +91,12 @@ const validateUserCtrl = async (req, res) => {
     //   return res.redirect("http://localhost:3000/error.html");
     // }
 
-
     // Actualizar usuario
     user.status = "VERIFIED";
     await user.save();
 
     // Redireccionar a la confirmación
     return res.redirect("http://localhost:3000/signin");
-
   } catch (error) {
     console.log(error);
     return res.json({
@@ -104,7 +104,6 @@ const validateUserCtrl = async (req, res) => {
       msg: "Error al confirmar usuario",
     });
   }
-
 };
 
 const loginCtrl = async ({ body }, res) => {
@@ -124,7 +123,6 @@ const loginCtrl = async ({ body }, res) => {
       error: "unverified user",
     });
   }
-
 
   const token = generateToken(user);
   return res.status(200).send({ user, token });
@@ -150,80 +148,88 @@ const completeRegisterCtrl = async ({ body }, res) => {
   res.status(201).send(updatedUser);
 };
 
+const forgotPasswordCtrl = async (req, res) => {
+  const { email } = req.body;
 
-// const forgotPasswordCtrl = async (req, res) => {
-//   const { email } = req.body;
+  if (!email) {
+    res.json({ message: "email is required" });
+        //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
+        return;
+  }
 
-//   if (!email) {
-//     return res.send(400).json({ message: "email is required" });
-//   }
+  let verificationLink;
 
-//   const message = "Check your email for a link to reset your password";
-//   let verificationLink;
+  try {
+    const user = await User.findOne({ email });
+    if (user === null) {
+      res.json({
+        success: false,
+        msg: "Usuario no existe",
+      });
+    }
+    const token = generateToken(user);
+    verificationLink = `http://localhost:3000/changepass/${token}`;
+    user.resetToken = token;
+    await user.save();
+  } catch (error) {
+    res.json({
+      message: error,
+    });
+  }
 
-//   try {
-//     const user = await User.findOne({ email });
-//     if (user === null) {
-//       return res.json({
-//         success: false,
-//         msg: "Usuario no existe",
-//       });
-//     }
+  try {
+    await transporter.sendMail({
+      from: `The Perfect Mentor <dolores.polito@gmail.com>`,
+      to: email,
+      subject: "Forgot Password - The Perfect Mentor",
+      text: "...",
+      html: `
+             <b>Please click on the following link</b>
+            <a href=${verificationLink}>${verificationLink}</a>
+            `,
+    });
+    res.send("Check your email for a link to reset your password");
+  } catch (error) {
+    res.json({ message: error });
+  }
+};
 
-//     const token =
-//       (verificationLink = `http://localhost:5001/new-password/${token}`);
-//     //guardo este token en el usuario para comparar cuando entre al mail a cambiar pw
-//     user.resetToken = token;
-//   } catch (error) {
-//     return res.json({ message: message });
-//   }
+const createNewPasswordCtrl = async (req, res) => {
+  const { newPassword } = req.body;
+  const resetToken = req.params.token;
 
-//   try {
-//     console.log("SEND EMAIL forgot password");
-//     await transporter.sendMail({
-//       from: `The Perfect Mentor <dolores.polito@gmail.com>`,
-//       to: email,
-//       subject: "Forgot Password - The Perfect Mentor",
-//       text: "...",
-//       html: `
-//              <b>Please click on the following link</b>
-//             <a href=${verificationLink}>${verificationLink}</a>
-//             `,
-//     });
-//   } catch {
-//     return res
-//       .status(400)
-//       .json({ message: "algo salio mail en el send email de forgot password" });
-//   }
+  if (!(newPassword && resetToken)) {
+    res.json({ message: "All fields required" });
+  }
 
-//   return res.send(verificationLink);
-// };
+  let jwtPayload;
+  let user;
 
-// const createNewPasswordCtrl = (req, res) => {
-//   const { newPassword } = req.body;
-//   const resetToken = req.body.reset;
+  try {
+    jwtPayload = jwt.verify(resetToken, process.env.SECRET);
+    user = await User.find({ resetToken: resetToken });
+  } catch (error) {
+    res.json({ message: error });
+  }
 
-//   if (!(newPassword && resetToken)) {
-//     res.status(400).json({ message: "todos los campos son requeridos" });
-//   }
-
-//   try {
-//   } catch (error) {
-//     return res.send(400).json({ message: "algo no fue bien" });
-//   }
-// };
+  try {
+    let passwordHash = await encrypt(newPassword);
+    let toFilter = { email: user[0].email };
+    let toUpdate = { password: passwordHash };
+    let bdUpdate = await User.findOneAndUpdate(toFilter, toUpdate, {
+      returnOriginal: true,
+    });
+    res.json({ message: "Password Changed" });
+  } catch (error) {
+    res.json({ message: error });
+  }
+};
 
 module.exports = {
   registerCtrl,
   loginCtrl,
   completeRegisterCtrl,
   validateUserCtrl,
-  // forgotPasswordCtrl,
-  // createNewPasswordCtrl,
+  forgotPasswordCtrl,
+  createNewPasswordCtrl,
 };
-
-
-
-module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl,validateUserCtrl };
-
-

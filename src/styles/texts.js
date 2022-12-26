@@ -905,3 +905,14 @@ export const ButtonTextStatus = styled.text`
 
   mix-blend-mode: normal;
 `;
+
+export const Modal = styled.div`
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+
+  @media only screen and (max-width: 700px) {
+    margin-left: 25px;
+  }
+`;

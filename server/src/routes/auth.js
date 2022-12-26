@@ -9,8 +9,8 @@ router.get("/validateUser/:token", validateUserCtrl)
 router.post("/login", loginCtrl);
 router.post("/completeRegister", completeRegisterCtrl)
 
-// router.put("/forgot-password", forgotPasswordCtrl)
-// router.put("/new-password", createNewPasswordCtrl)
+router.put("/forgot-password", forgotPasswordCtrl)
+router.put("/new-password", createNewPasswordCtrl)
 
 router.get("/me", validateUser, (req, res) => {
   res.send(req.user);

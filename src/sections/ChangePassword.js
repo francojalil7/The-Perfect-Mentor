@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Section, SmallRectangle } from "../styles/texts";
 import mentor from "../assets/OnBoarding/Vector.png";
 import SalyImage from "../components/SalyImage";
+import Axios from "axios"
 
 import {
   Button,
@@ -38,7 +39,7 @@ const ChangePassword = () => {
 
 
   const onSubmit = async (data) => {
-
+    const stepTwo = Axios.put("http://localhost:5001/auth/new-password", data.password)
   };
 
   return (
@@ -56,7 +57,7 @@ const ChangePassword = () => {
             <Line />
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Button>
+              {/* <Button>
           
                 <Icon src={password} />
                 <Input
@@ -73,7 +74,7 @@ const ChangePassword = () => {
                 />
               </Button>
               {errors.oldPassword &&
-                errors.oldPassword.type === "required" }
+                errors.oldPassword.type === "required" } */}
               <Button>
               <Icon src={password} />
             
