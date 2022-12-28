@@ -119,7 +119,7 @@ const SignInSection = () => {
                 errors.password.type === "maxLength" &&
                 errorMessage(maxLength)}
 
-              <Text>Do you forgot your password?</Text>
+              <a href="http://localhost:3000/forgotpass"><Text>Do you forgot your password?</Text></a>
 
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign In

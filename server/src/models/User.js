@@ -79,6 +79,9 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  resetToken: {
+    type: String,
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);
