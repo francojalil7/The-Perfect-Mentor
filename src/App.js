@@ -14,7 +14,7 @@ import { getUserMail } from "./states/user";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
-import ForgotPassword from "./sections/ForgotPassword"
+import ForgotPassword from "./sections/ForgotPassword";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,15 +25,13 @@ function App() {
     const email = localStorage.getItem("email");
     setUserByEmail(email);
 
-    if(user.succes){
-      navigate("/verification")
+    if (user.succes) {
+      navigate("/verification");
     }
     if (!user.user && email) {
       dispatch(getUserMail(email));
     }
   }, [user.succes]);
-
-
 
   if (user.user || userByEmail) {
     return (
@@ -44,7 +42,6 @@ function App() {
             <Route path="/users" element={<Users />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/stadistics" element={<Stadistics />} />
-            <Route path="/changepass/:token" element={<ChangePassword />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </>
         ) : (
@@ -67,6 +64,7 @@ function App() {
             <Route path="/signup" element={<SignUpSection />} />
             <Route path="/signin" element={<SignInSection />} />
             <Route path="/forgotpass" element={<ForgotPassword />} />
+            <Route path="/changepass/:token" element={<ChangePassword />} />
           </>
         )}
         <></>
@@ -76,5 +74,3 @@ function App() {
 }
 
 export default App;
-
-

@@ -10,9 +10,10 @@ router.post("/login", loginCtrl);
 router.post("/completeRegister", completeRegisterCtrl)
 
 router.put("/forgot-password", forgotPasswordCtrl)
-router.put("/new-password", createNewPasswordCtrl)
+router.put("/new-password/:newPassword/:token", createNewPasswordCtrl)
 
 router.get("/me", validateUser, (req, res) => {
   res.send(req.user);
 });
+
 module.exports = router;

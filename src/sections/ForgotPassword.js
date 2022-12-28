@@ -4,19 +4,19 @@ import { Section, SmallRectangle, Modal } from "../styles/texts";
 import mentor from "../assets/OnBoarding/Vector.png";
 import SalyImage from "../components/SalyImage";
 import Axios from "axios";
-
-
 import {
   Button,
   GreyButtonInside,
   GreyButtonOutside,
   Line,
   VerticalLine,
-  H2
+  H2,
+  Input
 } from "../styles/texts";
 import password from "../assets/Sing/icon 32px 3/light/password.png";
 import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
+import swal from "sweetalert";
 
 const ForgotPassword = () => {
   const {
@@ -30,13 +30,14 @@ const ForgotPassword = () => {
         "http://localhost:5001/auth/forgot-password",
         {email: data.email}
       );
+      swal(
+        "Congratulations!",
+        "Check your email to change your password",
+        "success"
+      );
     } catch (error) {
       console.log("Error", error);
     }
-  };
-
-  const Modal = () => {
-    return <Modal>Check your email for a link to change your password</Modal>;
   };
 
   return (
@@ -52,14 +53,13 @@ const ForgotPassword = () => {
           <section>
             <H2>Forgot Password</H2>
             <Line />
-
             <form onSubmit={handleSubmit(onSubmit)}>
               <Button>
                 <Icon src={password} />
-                <input
+                <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="email"
+                  placeholder="Insert your email"
                   name="email"
                   {...register("email", {
                     required: true,

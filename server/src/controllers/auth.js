@@ -9,7 +9,6 @@ const {
 const { transporter, getTemplate } = require("../utils/mail");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
-const { body } = require("express-validator");
 
 const registerCtrl = async (req, res) => {
   try {
@@ -34,7 +33,6 @@ const registerCtrl = async (req, res) => {
     const template = getTemplate(userName, token);
 
     try {
-      console.log("SEND EMAIL");
       await transporter.sendMail({
         from: `The Perfect Mentor <dolores.polito@gmail.com>`,
         to: email,
@@ -151,14 +149,17 @@ const completeRegisterCtrl = async ({ body }, res) => {
 const forgotPasswordCtrl = async (req, res) => {
   const { email } = req.body;
 
+  //Chequea recibir el email por body
   if (!email) {
     res.json({ message: "email is required" });
-        //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
-        return;
+      //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
+      return;
   }
 
   let verificationLink;
 
+  //Busca el user por email, crea el token y lo guarda en la base de datos
+  //Envía el correo con el link para cambiar la contraseña
   try {
     const user = await User.findOne({ email });
     if (user === null) {
@@ -195,23 +196,26 @@ const forgotPasswordCtrl = async (req, res) => {
 };
 
 const createNewPasswordCtrl = async (req, res) => {
-  const { newPassword } = req.body;
-  const resetToken = req.params.token;
+  const { newPassword, token } = req.params;
 
-  if (!(newPassword && resetToken)) {
+  //Chequea recibir por params la password y el token
+  if (!(newPassword && token)) {
     res.json({ message: "All fields required" });
+    return
   }
 
   let jwtPayload;
   let user;
 
+  //Chequea el token, busca el user con el token en la BD
   try {
-    jwtPayload = jwt.verify(resetToken, process.env.SECRET);
-    user = await User.find({ resetToken: resetToken });
+    jwtPayload = jwt.verify(token, process.env.SECRET);
+    user = await User.find({ resetToken: token });
   } catch (error) {
     res.json({ message: error });
   }
-
+  
+  //Encripta la contraseña, busca el usuario en la BD y le hace update a la contraseña
   try {
     let passwordHash = await encrypt(newPassword);
     let toFilter = { email: user[0].email };
@@ -224,6 +228,7 @@ const createNewPasswordCtrl = async (req, res) => {
     res.json({ message: error });
   }
 };
+
 
 module.exports = {
   registerCtrl,
