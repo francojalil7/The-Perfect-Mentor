@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { BulletPagination, DPagination, MentorSidebar } from "../styles/texts";
+import { DPagination, MentorSidebar } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
-import { useSelector } from "react-redux";
 import Axios from "axios";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
 
 const Dashboard = () => {
-  const user = useSelector((state) => state.user);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +27,7 @@ const Dashboard = () => {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -60,11 +58,11 @@ const Dashboard = () => {
           </DashboardFilter>
           <Table users={currentUsers}></Table>
           <DPagination>
-          <Pagination
-            usersPerPage={usersPerPage}
-            totalUsers={users.length}
-            paginate={paginate}
-          ></Pagination>
+            <Pagination
+              usersPerPage={usersPerPage}
+              totalUsers={users.length}
+              paginate={paginate}
+            ></Pagination>
           </DPagination>
         </DashboardDetails>
       </DashboardWhiteRectangle>
@@ -90,97 +88,45 @@ const DashboardDetails = styled.div`
   @media only screen and (max-width: 900px) {
     width: 500px;
   }
+
+  @media only screen and (max-width: 1400px) {
+    width: 880px !important;
+
+    left: 10px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 680px !important;
+    left: 10px !important;
+  }
 `;
 
-const EditButton = styled.button`
-  box-sizing: border-box;
+const DashboardWhiteRectangle = styled.div`
   position: absolute;
-  width: 100px;
-  height: 32px;
-  top: 128px;
-  border: 1px solid rgba(68, 68, 68, 0.15);
-  background: transparent;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    font-family: "Heebo";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 22px;
-    color: rgba(68, 68, 68, 0.5);
-    mix-blend-mode: normal;
-    padding-right: 10px;
-  }
-
-  /* @media only screen and (max-width: 700px) {
-
-    position: absolute;
-
-    top: 48px;
-    left: 250px;
-    width: 32px;
-    height: 32px;
-    background-color: white;
-
-    p {
-      display: none;
-    }
-  } */
-`;
-
-const Logo = styled.img`
-  width: 20px;
-  height: 21px;
-  padding-right: 10px;
-  :hover {
-    display: none;
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  flex-direction: row !important;
-  position: relative;
-  left: -95px;
-
-  div {
-    position: relative;
-    top: 45px;
-    left: 15px;
-    background-color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 20px;
-
-    img {
-      position: relative;
-      top: 8px;
-      left: 8px;
-      width: 16px;
-      height: 16px;
-    }
-  }
-`;
-
-export const DashboardWhiteRectangle = styled.div`
-  position: relative;
   width: 1128px;
   height: 944px;
-  left: 272px;
+  left: 270px;
   top: 40px;
   background: #ffffff;
   box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
     0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
     0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
   border-radius: 35px;
+
+  @media only screen and (max-width: 1400px) {
+    width: 900px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 700px !important;
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 500px;
+  }
 `;
 
-export const DashboardTitle = styled.h2`
+const DashboardTitle = styled.h2`
   position: absolute;
   width: 129px;
   height: 73px;
@@ -194,7 +140,7 @@ export const DashboardTitle = styled.h2`
   color: #444444;
 `;
 
-export const DashboardSubtitle = styled.h3`
+const DashboardSubtitle = styled.h3`
   position: absolute;
   width: 157px;
   height: 29px;
@@ -208,7 +154,7 @@ export const DashboardSubtitle = styled.h3`
   color: #444444;
 `;
 
-export const DashboardTopRectangle = styled.div`
+const DashboardTopRectangle = styled.div`
   position: absolute;
   width: 1128px;
   height: 184px;
@@ -216,9 +162,21 @@ export const DashboardTopRectangle = styled.div`
   justify-content: center;
   background: #f5f6f7;
   border-radius: 35px 35px 0px 0px;
+
+  @media only screen and (max-width: 1400px) {
+    width: 900px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 700px !important;
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 500px;
+  }
 `;
 
-export const DashboardSearch = styled.div`
+const DashboardSearch = styled.div`
   position: absolute;
   width: 513px;
   height: 55px;
@@ -235,15 +193,19 @@ export const DashboardSearch = styled.div`
     color: #444444;
     right: 100px;
   }
+
+  @media only screen and (max-width: 1080px) {
+    height: 50px;
+    top: 10px;
+  }
 `;
 
-export const DashboardInput = styled.input`
+const DashboardInput = styled.input`
   position: relative;
   width: 400px;
   height: 21px;
   left: 60px;
   top: 18px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
@@ -251,13 +213,11 @@ export const DashboardInput = styled.input`
   line-height: 21px;
   outline: none;
   border: 0;
-
   color: #444444;
-
   mix-blend-mode: normal;
 `;
 
-export const DashboardFilter = styled.div`
+const DashboardFilter = styled.div`
   position: absolute;
   width: 319px;
   height: 55px;
@@ -266,31 +226,40 @@ export const DashboardFilter = styled.div`
   mix-blend-mode: normal;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
+  @media only screen and (max-width: 1080px) {
+    left: 20px;
+    top: 65px;
+    height: 40px;
+  }
 `;
 
-export const Ellipse = styled.img`
+const Ellipse = styled.img`
   position: absolute;
   left: 50px;
   right: 74.19%;
   top: 40px;
   bottom: 76.37%;
+  @media only screen and (max-width: 1080px) {
+    top: 30px;
+  }
 `;
 
-export const FilterButton = styled.button`
+const FilterButton = styled.button`
   box-sizing: border-box;
-
   position: absolute;
   width: 128px;
   height: 40px;
   left: 10px;
   top: 9px;
-
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
+  @media only screen and (max-width: 1080px) {
+    height: 25px;
+  }
 `;
 
-export const AgeButton = styled.button`
+const AgeButton = styled.button`
   box-sizing: border-box;
 
   position: absolute;
@@ -298,82 +267,88 @@ export const AgeButton = styled.button`
   height: 40px;
   left: 142px;
   top: 9px;
-
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
+  @media only screen and (max-width: 1080px) {
+    height: 25px;
+  }
 `;
 
-export const StatusButton = styled.button`
+const StatusButton = styled.button`
   position: relative;
   width: 92px;
   height: 40px;
   left: 220px;
   top: 9px;
-
+  border: solid 1px #444444;
   background: #444444;
   mix-blend-mode: normal;
   border-radius: 40px;
+  @media only screen and (max-width: 1080px) {
+    height: 25px;
+    top: 6px;
+  }
 `;
 
-export const ButtonTextFilter = styled.text`
+const ButtonTextFilter = styled.text`
   position: absolute;
   width: 80px;
   height: 22px;
   left: 24px;
   top: 10px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-
   color: rgba(68, 68, 68, 0.5);
-
   mix-blend-mode: normal;
+  @media only screen and (max-width: 1080px) {
+    top: 2px;
+  }
 `;
 
-export const ButtonTextAge = styled.text`
+const ButtonTextAge = styled.text`
   position: absolute;
   width: 27px;
   height: 22px;
   left: 24px;
   top: 10px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-
   color: rgba(68, 68, 68, 0.5);
-
   mix-blend-mode: normal;
+  @media only screen and (max-width: 1080px) {
+    top: 2px;
+  }
 `;
 
-export const ButtonTextStatus = styled.text`
+const ButtonTextStatus = styled.text`
   position: absolute;
   width: 44px;
   height: 22px;
   left: 23px;
   top: 10px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-
   color: #dadada;
-
   mix-blend-mode: normal;
+  @media only screen and (max-width: 1080px) {
+    top: 2px;
+  }
 `;
 
-export const FirstImage = styled.img`
+const FirstImage = styled.img`
   position: absolute;
   left: 780px;
   right: -1.33%;
@@ -382,15 +357,33 @@ export const FirstImage = styled.img`
 
   background: url(doodle-4.png);
   transform: rotate(1.5deg);
+
+  @media only screen and (max-width: 1400px) {
+    left: 580px;
+    top: -200px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    left: 400px;
+    top: -200px;
+  }
 `;
 
-export const SecondImage = styled.img`
+const SecondImage = styled.img`
   position: absolute;
   left: 720px;
   right: 2.75%;
   top: -180px;
   bottom: 81.02%;
   background: url(doodle-5.png);
+
+  @media only screen and (max-width: 1400px) {
+    left: 520px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    left: 360px;
+  }
 `;
 
 export default Dashboard;
