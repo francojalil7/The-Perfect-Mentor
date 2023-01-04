@@ -18,9 +18,11 @@ export const PagesSection = styled.div`
   flex-direction: column;
   align-items: center;
 
+
   @media only screen and (max-width: 700px) {
     background-color: #f5f6f7 !important;
-    height: 100vh;
+    height: ${(props) => props.height + "px"};
+  
   }
 `;
 export const Rectangle = styled.div`
@@ -35,14 +37,6 @@ export const Rectangle = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: 100px;
-
-  /* aside {
-    display: flex;
-    /* position: relative;
-    top: 110px;
-    right: 270px; 
-  } */
-
   section {
     display: flex;
     flex-direction: column;
@@ -53,9 +47,6 @@ export const Rectangle = styled.div`
     width: 100%;
     flex-direction: column !important;
     border: 2px solid #bfd732;
-
-    section {
-    }
   }
 `;
 
@@ -487,7 +478,6 @@ export const DHead = styled.thead`
   display: flex;
   /* align-items: left; */
   /* justify-content: left; */
- 
 `;
 
 export const DBodyUnverified = styled.tr`
@@ -499,29 +489,26 @@ export const DBodyUnverified = styled.tr`
   /* justify-content: space-between; */
   margin: 2px;
 
-  td:nth-child(2){
+  td:nth-child(2) {
     width: 120px;
     padding-right: 80px;
-    
   }
 
-  td:nth-child(3){
-      padding-right: 30px;
-    
-  }
-  td:nth-child(4){ 
-    padding-right: 120px;
-    
-  }
-  td:nth-child(5){
+  td:nth-child(3) {
     padding-right: 30px;
   }
-  td:nth-child(6){
+  td:nth-child(4) {
+    padding-right: 120px;
+  }
+  td:nth-child(5) {
+    padding-right: 30px;
+  }
+  td:nth-child(6) {
     padding-right: 40px;
   }
-  td:nth-child(7){
- padding-right: 20px;
-}
+  td:nth-child(7) {
+    padding-right: 20px;
+  }
 `;
 
 export const DBodyVerified = styled.tr`
@@ -532,30 +519,26 @@ export const DBodyVerified = styled.tr`
   mix-blend-mode: normal;
   /* justify-content: space-between; */
   margin: 2px;
-  td:nth-child(2){
+  td:nth-child(2) {
     width: 120px;
     padding-right: 80px;
-    
   }
 
-  td:nth-child(3){
-      padding-right: 30px;
-    
-  }
-  td:nth-child(4){ 
-    padding-right: 120px;
-    
-  }
-  td:nth-child(5){
+  td:nth-child(3) {
     padding-right: 30px;
   }
-  td:nth-child(6){
+  td:nth-child(4) {
+    padding-right: 120px;
+  }
+  td:nth-child(5) {
+    padding-right: 30px;
+  }
+  td:nth-child(6) {
     padding-right: 40px;
   }
-  td:nth-child(7){
- padding-right: 20px;
-}
-
+  td:nth-child(7) {
+    padding-right: 20px;
+  }
 `;
 
 export const DTitle = styled.th`
@@ -570,8 +553,6 @@ export const DTitle = styled.th`
   /* identical to box height */
   color: #444444;
   mix-blend-mode: normal;
-
-
 `;
 
 export const DData = styled.td`
@@ -589,8 +570,6 @@ export const DData = styled.td`
   /* justify-content: left; */
   padding-left: 50px;
   /* padding-right: 60px; */
-
-
 `;
 
 export const DPagination = styled.div`
@@ -615,6 +594,13 @@ export const DPagination = styled.div`
   @media only screen and (max-width: 1080px) {
     width: 680px;
     left: 0px !important;
+  }
+  @media only screen and (max-width: 700px) {
+    position: absolute;
+    width: 380px !important;
+    background: transparent;
+    top:230px;
+    left: 80px !important;
   }
 `;
 
@@ -788,10 +774,10 @@ export const MobileScreen = styled.div`
 export const MobileScreenTable = styled.div`
   position: relative;
   width: 380px;
-  height: 1000vh;
+  /* height: 1000vh; */
   top: 20px;
   padding-top: 109px;
-  padding-bottom: 109px;
+  padding-bottom: 50px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -856,13 +842,12 @@ export const DashboardInput = styled.input`
   line-height: 21px;
   outline: none;
   border: 0;
-
   color: #444444;
-
   mix-blend-mode: normal;
 
   @media only screen and (max-width: 700px) {
     width: 200px !important;
+    top: 13px;
   }
 `;
 
@@ -894,13 +879,17 @@ export const FilterButton = styled.button`
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
+  background-color: ${(props) =>
+    props.mode === "" ? "grey" : "rgba(68, 68, 68, 0.15)"};
 
   @media only screen and (max-width: 700px) {
     top: 4px;
     width: 80px !important;
-    left: 0px;
+    left: 10px;
     border: none;
     background-color: transparent;
+    background-color: ${(props) =>
+      props.mode === "" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   }
 `;
 
@@ -914,10 +903,13 @@ export const AgeButton = styled.button`
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
-
+  background-color: ${(props) =>
+    props.mode === "role" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   @media only screen and (max-width: 700px) {
     top: 4px;
     left: 122px;
+    background-color: ${(props) =>
+      props.mode === "role" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   }
 `;
 
@@ -927,14 +919,17 @@ export const StatusButton = styled.button`
   height: 40px;
   left: 220px;
   top: 9px;
-  border: solid 1px #444444;
-  background: #444444;
+  border: solid 1px rgba(68, 68, 68, 0.15);
   mix-blend-mode: normal;
   border-radius: 40px;
+  background-color: ${(props) =>
+    props.mode === "userName" ? "grey" : "rgba(68, 68, 68, 0.15)"};
 
   @media only screen and (max-width: 700px) {
     top: 4px;
     left: 210px;
+    background-color: ${(props) =>
+      props.mode === "userName" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   }
 `;
 
@@ -942,7 +937,7 @@ export const ButtonTextFilter = styled.text`
   position: absolute;
   width: 80px;
   height: 22px;
-  left: 24px;
+  left: 2px;
   top: 10px;
 
   font-family: "Heebo";
@@ -952,7 +947,7 @@ export const ButtonTextFilter = styled.text`
   line-height: 22px;
   /* identical to box height */
 
-  color: rgba(68, 68, 68, 0.5);
+  color: ${(props) => (props.mode === "" ? "white" : "rgba(68, 68, 68, 0.5)")};
 
   mix-blend-mode: normal;
 `;
@@ -971,7 +966,8 @@ export const ButtonTextAge = styled.text`
   line-height: 22px;
   /* identical to box height */
 
-  color: rgba(68, 68, 68, 0.5);
+  color: ${(props) =>
+    props.mode === "role" ? "white" : "rgba(68, 68, 68, 0.5)"};
 
   mix-blend-mode: normal;
 `;
@@ -990,7 +986,105 @@ export const ButtonTextStatus = styled.text`
   line-height: 22px;
   /* identical to box height */
 
-  color: #dadada;
+  color: ${(props) =>
+    props.mode === "userName" ? "white" : "rgba(68, 68, 68, 0.5)"};
 
   mix-blend-mode: normal;
+`;
+
+export const SearchButton = styled.button`
+  background-color: lightgray;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  color: grey;
+  position: relative;
+  top: 5px;
+  @media only screen and (max-width: 700px) {
+    top: 13px;
+    left: 50px;
+  }
+`;
+
+
+export const Ellipse = styled.img`
+  position: absolute;
+  left: 50px;
+  right: 74.19%;
+  top: 40px;
+  bottom: 76.37%;
+  @media only screen and (max-width: 1080px) {
+    top: 30px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    position: absolute;
+  top: -30px;
+
+  }
+`;
+
+
+export const UsersHeader = styled.div`
+  width: 100%;
+  background-color: #bfd732;
+  height: 137px;
+  border-bottom-right-radius: 45px;
+  display: flex;
+  justify-content: flex-start;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    height: 137px;
+  }
+`;
+
+export const Image1 = styled.img`
+  position: absolute;
+  left: 120px;
+  top: -160px;
+  width: 256px;
+  height: 256px;
+`;
+export const Image2 = styled.img`
+  position: absolute;
+  left: 140px;
+  top: -160px;
+  width: 140px;
+  height: 140px;
+`;
+
+export const Title1 = styled.h2`
+  position: absolute;
+  left: -65px;
+  top: -160px;
+  font-family: "Heebo";
+  font-style: normal;
+
+  color: #444444;
+  margin-left: 80px;
+  mix-blend-mode: normal;
+  height: 0px;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 44px;
+  margin-top: 50px;
+`;
+
+export const SubTitle1 = styled.h2`
+  position: absolute;
+  left: -65px;
+  top: -87px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  color: #444444;
+  margin-left: 80px;
+  margin-bottom: 75px;
+  height: 0px;
+  font-size: 14px;
+  line-height: 15px;
+  width: 150px;
+  margin-top: 15px;
 `;

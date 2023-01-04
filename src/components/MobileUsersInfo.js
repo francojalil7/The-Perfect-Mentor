@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsersInfo } from "../states/usersInfo";
 
-const MobileUsersInfo = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUsersInfo());
-  }, []);
-
-  const usersInfo = useSelector((state) => state.usersInfo);
+const MobileUsersInfo = ({ users }) => {
   return (
     <>
-      {usersInfo.map((data) => {
+      {users.map((data) => {
         const parsedDate = data.joinedDate.split("T")[0];
 
         if (data.status === "UNVERIFIED") {
@@ -40,7 +32,9 @@ const MobileUsersInfo = () => {
                     </p>
                   </Details>
 
-                  <SendMessageButton />
+                  <SendMessageButton >
+                  <img src="Group 6.png" alt="pencil"></img>
+                  </SendMessageButton >
                 </MobileRowUnverified>
               </div>
             </>
@@ -71,7 +65,9 @@ const MobileUsersInfo = () => {
                     </p>
                   </Details>
 
-                  <SendMessageButton />
+                  <SendMessageButton >
+                  <img src="Group 6.png" alt="pencil"></img>
+                  </SendMessageButton >
                 </MobileRow>
               </div>{" "}
             </>
@@ -122,15 +118,12 @@ const MobileRowUnverified = styled.div`
   }
 `;
 
-const SendMessageButton = styled.button`
+const SendMessageButton = styled.div`
   position: absolute;
   left: 250px;
   top: 40px;
   width: 32px;
   height: 32px;
-  border-radius: 30px;
-  border: solid 1px rgba(68, 68, 68, 0.25);
-  background-color: white;
 `;
 
 const VerifiedLine = styled.div`

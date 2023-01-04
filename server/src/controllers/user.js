@@ -94,17 +94,20 @@ const newUsers = async (req, res) => {
   res.send(newUsers);
 };
 
-const filteredUser = async ({ body }, res) => {
+const filteredUser = async (req, res) => {
+  
+  const search = {[req.params.filter]: req.params.value}
+
   try {
     let users;
-    if (body.hasOwnProperty("role")) {
-      users = await User.find({ role: body.role });
+    if (search.hasOwnProperty("role")) {
+      users = await User.find({ role: search.role });
       res.send(users);
-    } else if (body.hasOwnProperty("skills")) {
-      users = await User.find({ skills: body.skills });
+    } else if (search.hasOwnProperty("skills")) {
+      users = await User.find({ skills: search.skills });
       res.send(users);
-    } else if (body.hasOwnProperty("userName")) {
-      users = await User.find({ userName: body.userName });
+    } else if (search.hasOwnProperty("userName")) {
+      users = await User.find({ userName: search.userName });
       res.send(users);
     } else {
       res.sendStatus(403);

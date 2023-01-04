@@ -9,6 +9,7 @@ export const getTotalUsers = createAsyncThunk(
         `http://localhost:5001/user/totalUsers`
       );
       let data = totalUsers.data;
+      console.log("data total users", data)
       return data;
     } catch {
       console.log("Error");

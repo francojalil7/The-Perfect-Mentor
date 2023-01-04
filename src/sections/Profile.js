@@ -25,7 +25,6 @@ const Profile = () => {
 
   let user = useSelector((state) => state.user);
 
-  console.log("USER EN PROFILE", user);
   return (
     <>
       <Section>

@@ -11,22 +11,98 @@ import {
   ButtonTextAge,
   ButtonTextStatus,
   ButtonTextFilter,
+  SearchButton,
+  DPagination,
+  Ellipse,
+  UsersHeader,
+  Image1,
+  Image2,
+  Title1,
+  SubTitle1
 } from "../styles/texts";
-import styled from "styled-components";
 import Dashboard from "./Dashboard";
 import MobileBar from "../components/MobileBar";
 import MobileUsersInfo from "../components/MobileUsersInfo";
 import image1 from "../assets/Users/doodle-4 1.png";
 import image2 from "../assets/Users/doodle-5 1.png";
+import Pagination from "../components/Pagination";
+import { getUsersFilter } from "../states/usersFilter";
+import { useDispatch } from "react-redux";
+import Axios from "axios";
+
 const Users = () => {
   const [width, setWidth] = useState(window.innerWidth);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage, setUsersPerPage] = useState(9);
+  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
+  const [value, setValue] = useState("");
+  
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
-  }, []);
+
+    const fetchUsers = async () => {
+      setLoading(true);
+      let res;
+      if (filter === "" || search === "") {
+        res = await Axios.get("http://localhost:5001/user/users");
+      } else {
+        res = await Axios.get(
+          `http://localhost:5001/user/filtered/${filter}/${value}`
+        );
+      }
+      setUsers(res.data);
+      setLoading(false);
+    };
+    fetchUsers();
+  }, [search]);
   const medium = 700;
 
+  function useInput() {
+    function onChange({ target }) {
+      setValue(target.value);
+    }
+    return { onChange, value };
+  }
+  const searcher = useInput();
+
+  const handleSearch = function () {
+    if (filter === "") {
+      alert("debe seleccionar un filtro");
+    }
+    dispatch(getUsersFilter({ value, filter }));
+    setSearch("buscar");
+  };
+
+  const clearFilter = () => {
+    setSearch("");
+    setFilter("");
+  };
+  const filterRole = () => {
+    if (search !== "") {
+      setSearch("");
+    }
+    setFilter("role");
+  };
+  const filterName = () => {
+    if (search !== "") {
+      setSearch("");
+    }
+    setFilter("userName");
+  };
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  let pageHeight = currentUsers.length * 100 + 510;
+
   return (
-    <PagesSection>
+    <PagesSection height={pageHeight}>
       {width >= medium ? (
         <>
           <Dashboard />
@@ -34,8 +110,7 @@ const Users = () => {
       ) : (
         <>
           <UsersHeader>
-            <div>
-            </div>
+            <div></div>
           </UsersHeader>
 
           <MobileScreenTable>
@@ -44,24 +119,35 @@ const Users = () => {
             <Image1 src={image1} />
             <Image2 src={image2} />
             <DashboardSearch>
-              <DashboardInput placeholder="Search"></DashboardInput>
+              <DashboardInput
+                placeholder={searcher.value ? searcher.value : "Search"}
+                {...searcher}
+              ></DashboardInput>
+              <SearchButton onClick={handleSearch}>Go</SearchButton>
             </DashboardSearch>
-            {/* <Ellipse src="ellipse.svg" /> */}
+            <Ellipse src="ellipse.svg" />
 
             <DashboardFilter>
-              <FilterButton>
-                <ButtonTextFilter>Filters</ButtonTextFilter>
+              <FilterButton mode={filter} onClick={clearFilter}>
+                <ButtonTextFilter mode={filter}>No Filter</ButtonTextFilter>
               </FilterButton>
-              <AgeButton>
-                <ButtonTextAge>Age</ButtonTextAge>
+              <AgeButton mode={filter} onClick={filterRole}>
+                <ButtonTextAge mode={filter}>Role</ButtonTextAge>
               </AgeButton>
-              <StatusButton>
-                <ButtonTextStatus>Status</ButtonTextStatus>
+              <StatusButton mode={filter} onClick={filterName}>
+                <ButtonTextStatus mode={filter}>Name</ButtonTextStatus>
               </StatusButton>
             </DashboardFilter>
 
-            <MobileUsersInfo />
+            <MobileUsersInfo users={currentUsers} />
           </MobileScreenTable>
+          <DPagination>
+            <Pagination
+              usersPerPage={usersPerPage}
+              totalUsers={users.length}
+              paginate={paginate}
+            ></Pagination>
+          </DPagination>
 
           <MobileBar />
         </>
@@ -70,70 +156,6 @@ const Users = () => {
   );
 };
 
-const UsersHeader = styled.div`
-  width: 100%;
-  background-color: #bfd732;
-  height: 137px;
-  border-bottom-right-radius: 45px;
-  display: flex;
-  justify-content: flex-start;
 
-  div {
-    display: flex;
-    flex-direction: column;
-    height: 137px;
-  }
-`;
-
-const Image1 = styled.img`
-  position: absolute;
-  left: 120px;
-  top: -160px;
-  width: 256px;
-  height: 256px;
-`;
-const Image2 = styled.img`
-  position: absolute;
-  left: 140px;
-  top: -160px;
-  width: 140px;
-  height: 140px;
-`;
-
-const Title1 = styled.h2`
-  position: absolute;
-  left: -65px;
-  top: -160px;
-  font-family: "Heebo";
-  font-style: normal;
-
-  color: #444444;
-  margin-left: 80px;
-  mix-blend-mode: normal;
-  height: 0px;
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 44px;
-  margin-top: 50px;
-`;
-
-const SubTitle1 = styled.h2`
-  position: absolute;
-  left: -65px;
-  top: -87px;
-  font-family: "Heebo";
-  font-style: normal;
-  font-weight: 400;
-  color: #444444;
-  margin-left: 80px;
-  margin-bottom: 75px;
-  height: 0px;
-  font-size: 14px;
-  line-height: 15px;
-  width: 150px;
-  margin-top: 15px;
-
-
-`;
 
 export default Users;

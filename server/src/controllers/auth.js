@@ -102,6 +102,7 @@ const validateUserCtrl = async (req, res) => {
       msg: "Error al confirmar usuario",
     });
   }
+
 };
 
 
@@ -157,6 +158,7 @@ const forgotPasswordCtrl = async (req, res) => {
       //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
       return;
   }
+
 
   let verificationLink;
 

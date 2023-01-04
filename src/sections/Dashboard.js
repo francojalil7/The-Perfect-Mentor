@@ -1,27 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { DPagination, MentorSidebar } from "../styles/texts";
+import { DPagination, MentorSidebar, SearchButton, Ellipse } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
 import Sidebar from "../components/Sidebar";
 import Axios from "axios";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
+import { getUsersFilter } from "../states/usersFilter";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
+  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
+  const [value, setValue] = useState("");
+  const [view, setView] = useState("");
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
+   setView(window.location.href.split("/")[3])
     const fetchUsers = async () => {
       setLoading(true);
-      const res = await Axios.get("http://localhost:5001/user/users");
+      let res;
+      if (filter === "" || search === "") {
+        res = await Axios.get("http://localhost:5001/user/users");
+      } else {
+        res = await Axios.get(
+          `http://localhost:5001/user/filtered/${filter}/${value}`
+        );
+      }
       setUsers(res.data);
       setLoading(false);
     };
     fetchUsers();
-  }, []);
+  }, [search]);
+
+  function useInput() {
+    function onChange({ target }) {
+      setValue(target.value);
+    }
+    return { onChange, value };
+  }
+  const searcher = useInput();
+
+  const handleSearch = function (e) {
+    if (filter === "") {
+      alert("debe seleccionar un filtro");
+    }
+    dispatch(getUsersFilter({ value, filter }));
+    setSearch("buscar");
+  };
+
+  const clearFilter = () => {
+    setSearch("");
+    setFilter("");
+  };
+  const filterRole = () => {
+    if (search !== "") {
+      setSearch("");
+    }
+    setFilter("role");
+  };
+  const filterName = () => {
+    if (search !== "") {
+      setSearch("");
+    }
+    setFilter("userName");
+  };
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -35,27 +84,33 @@ const Dashboard = () => {
       <Sidebar />
       <DashboardWhiteRectangle>
         <DashboardTopRectangle>
-          <DashboardTitle>Users</DashboardTitle>
-          <DashboardSubtitle>View all the users</DashboardSubtitle>
+          <DashboardTitle>{view === "users" ? "Users" : "Reports"}</DashboardTitle>
+          <DashboardSubtitle>{view === "users" ? "View all the users" : "Check the reports of the users"}</DashboardSubtitle>
         </DashboardTopRectangle>
         <DashboardDetails>
           <FirstImage src="doodle1.svg"></FirstImage>
           <SecondImage src="doodle2.svg"></SecondImage>
           <DashboardSearch>
-            <DashboardInput placeholder="Search"></DashboardInput>
+            <DashboardInput
+              placeholder={view === "users" ? "Search" : "Search for id"}
+              // onKeyDown={handleSearch}
+              {...searcher}
+            ></DashboardInput>
+            <SearchButton onClick={handleSearch}>Go</SearchButton>
           </DashboardSearch>
           <Ellipse src="ellipse.svg" />
-          <DashboardFilter>
-            <FilterButton>
-              <ButtonTextFilter>Clear filters</ButtonTextFilter>
+          {view === "users" ? (<> <DashboardFilter>
+            <FilterButton mode={filter} onClick={clearFilter}>
+              <ButtonTextFilter mode={filter}>No filter</ButtonTextFilter>
             </FilterButton>
-            <AgeButton>
-              <ButtonTextAge>Age</ButtonTextAge>
+            <AgeButton mode={filter} onClick={filterRole}>
+              <ButtonTextAge mode={filter}>Role</ButtonTextAge>
             </AgeButton>
-            <StatusButton>
-              <ButtonTextStatus>Status</ButtonTextStatus>
+            <StatusButton mode={filter} onClick={filterName}>
+              <ButtonTextStatus mode={filter}>Name</ButtonTextStatus>
             </StatusButton>
-          </DashboardFilter>
+          </DashboardFilter></>) : (<></>)}
+         
           <Table users={currentUsers}></Table>
           <DPagination>
             <Pagination
@@ -142,7 +197,7 @@ const DashboardTitle = styled.h2`
 
 const DashboardSubtitle = styled.h3`
   position: absolute;
-  width: 157px;
+  width: 357px;
   height: 29px;
   left: 54px;
   top: 70px;
@@ -205,7 +260,7 @@ const DashboardInput = styled.input`
   width: 400px;
   height: 21px;
   left: 60px;
-  top: 18px;
+  top: 13px;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
@@ -233,16 +288,7 @@ const DashboardFilter = styled.div`
   }
 `;
 
-const Ellipse = styled.img`
-  position: absolute;
-  left: 50px;
-  right: 74.19%;
-  top: 40px;
-  bottom: 76.37%;
-  @media only screen and (max-width: 1080px) {
-    top: 30px;
-  }
-`;
+
 
 const FilterButton = styled.button`
   box-sizing: border-box;
@@ -254,6 +300,8 @@ const FilterButton = styled.button`
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
+  background-color: ${(props) =>
+    props.mode === "" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   @media only screen and (max-width: 1080px) {
     height: 25px;
   }
@@ -270,6 +318,8 @@ const AgeButton = styled.button`
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
+  background-color: ${(props) =>
+    props.mode === "role" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   @media only screen and (max-width: 1080px) {
     height: 25px;
   }
@@ -281,10 +331,11 @@ const StatusButton = styled.button`
   height: 40px;
   left: 220px;
   top: 9px;
-  border: solid 1px #444444;
-  background: #444444;
+  border: solid 1px rgba(68, 68, 68, 0.15);
   mix-blend-mode: normal;
   border-radius: 40px;
+  background-color: ${(props) =>
+    props.mode === "userName" ? "grey" : "rgba(68, 68, 68, 0.15)"};
   @media only screen and (max-width: 1080px) {
     height: 25px;
     top: 6px;
@@ -303,7 +354,8 @@ const ButtonTextFilter = styled.text`
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-  color: rgba(68, 68, 68, 0.5);
+  color: ${(props) => (props.mode === "" ? "white" : "rgba(68, 68, 68, 0.5)")};
+
   mix-blend-mode: normal;
   @media only screen and (max-width: 1080px) {
     top: 2px;
@@ -322,7 +374,9 @@ const ButtonTextAge = styled.text`
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-  color: rgba(68, 68, 68, 0.5);
+  color: ${(props) =>
+    props.mode === "role" ? "white" : "rgba(68, 68, 68, 0.5)"};
+
   mix-blend-mode: normal;
   @media only screen and (max-width: 1080px) {
     top: 2px;
@@ -341,7 +395,9 @@ const ButtonTextStatus = styled.text`
   font-size: 15px;
   line-height: 22px;
   /* identical to box height */
-  color: #dadada;
+  color: ${(props) =>
+    props.mode === "userName" ? "white" : "rgba(68, 68, 68, 0.5)"};
+
   mix-blend-mode: normal;
   @media only screen and (max-width: 1080px) {
     top: 2px;
@@ -385,5 +441,7 @@ const SecondImage = styled.img`
     left: 360px;
   }
 `;
+
+
 
 export default Dashboard;

@@ -9,6 +9,7 @@ export const getNewUsers = createAsyncThunk(
         `http://localhost:5001/user/newUsers`
       );
       let data = newUsers.data;
+      console.log("data new users", data)
       return data;
     } catch {
       console.log("Error");
