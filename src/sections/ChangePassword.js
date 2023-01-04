@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Section, SmallRectangle } from "../styles/texts";
 import mentor from "../assets/OnBoarding/Vector.png";
 import SalyImage from "../components/SalyImage";
+import Axios from "axios"
+import swal from "sweetalert";
 
 import {
   Button,
@@ -17,6 +19,7 @@ import {
 import password from "../assets/Sing/icon 32px 3/light/password.png";
 import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 
 // Messages
@@ -30,6 +33,9 @@ const errorMessage = (error) => {
 };
 
 const ChangePassword = () => {
+
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -38,8 +44,18 @@ const ChangePassword = () => {
 
 
   const onSubmit = async (data) => {
-
+    const url = window.location.href
+    let resetToken = url.split("/")[4]
+    const stepTwo = await Axios.put(`http://localhost:5001/auth/new-password/${data.newPassword}/${resetToken}`).then(
+      swal(
+          "Congratulations!",
+          "Your password has been changed",
+          "success"
+        )
+      )
+      navigate('/signin')
   };
+  
 
   return (
     <>
@@ -56,7 +72,7 @@ const ChangePassword = () => {
             <Line />
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Button>
+              {/* <Button>
           
                 <Icon src={password} />
                 <Input
@@ -73,7 +89,7 @@ const ChangePassword = () => {
                 />
               </Button>
               {errors.oldPassword &&
-                errors.oldPassword.type === "required" }
+                errors.oldPassword.type === "required" } */}
               <Button>
               <Icon src={password} />
             
@@ -153,3 +169,4 @@ const Mentor = styled.img`
 `;
 
 export default ChangePassword;
+  
