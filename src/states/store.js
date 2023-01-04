@@ -3,6 +3,7 @@ import logger from "redux-logger";
 import newUsersReducer from "./newUsers";
 import totalUsersReducer from "./totalUsers";
 import userReducer from "./user"
+import usersFilterReducer from "./usersFilter";
 import usersInfoReducer from "./usersInfo";
 import usersPerMonthReducer from "./usersPerMonth";
 
@@ -14,7 +15,8 @@ const store = configureStore({
       usersPerMonth: usersPerMonthReducer,
       totalUsers: totalUsersReducer,
       newUsers: newUsersReducer,
-      usersInfo: usersInfoReducer
+      usersInfo: usersInfoReducer,
+      usersFilter: usersFilterReducer
     },
   });
   

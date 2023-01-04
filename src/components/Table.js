@@ -7,7 +7,7 @@ import {
   DTitle,
   RedBookmark,
   GreenBookmark,
-  GreyBookmark
+  GreyBookmark,
 } from "../styles/texts";
 import styled from "styled-components";
 
@@ -16,13 +16,13 @@ const Table = ({ users }) => {
     let arr = [];
     for (let i = 0; i < users.length; i++) {
       let user = {};
-      user.name = users[i].userName || "No definido";
+      user.name = users[i].userName || "Not defined";
       user.age = users[i].age || 0;
-      user.email = users[i].email || "No definido";
-      user.role = users[i].role || "No definido";
+      user.email = users[i].email || "Not defined";
+      user.role = users[i].role || "Not defined";
       user.joined =
         new Date(users[i].joinedDate).toDateString().slice(4, 15) ||
-        "No definido";
+        "Not defined";
       user.status = users[i].status;
       arr.push(user);
     }
@@ -48,50 +48,34 @@ const Table = ({ users }) => {
         if (data.status === "UNVERIFIED") {
           return (
             <DBodyUnverified>
-              <RedBookmark/>
-              <DData >{data.name}</DData>
-              <DData>
-                <b>{data.age}</b>
-              </DData>
-              <DData >
-                <b >{data.email}</b>
-              </DData>
-              <DData>
-                <b >{data.role}</b>
-              </DData>
-              <DData>
-                <b>{data.joined}</b>
-              </DData>
+              <RedBookmark />
+              <DData>{data.name}</DData>
+              <DData>{data.age}</DData>
+              <DData>{data.email}</DData>
+              <DData>{data.role}</DData>
+              <DData>{data.joined}</DData>
               <DData>
                 <img src="unverified.svg" alt="unverified"></img>
               </DData>
               <DData>
-                <img src="pencil.svg" alt="pencil"></img>
+                <img src="Group 6.png" alt="pencil"></img>
               </DData>
             </DBodyUnverified>
           );
         }
         return (
           <DBodyVerified>
-            <GreenBookmark/>
-            <DData >{data.name}</DData>
-            <DData>
-              <b>{data.age}</b>
-            </DData>
-            <DData >
-              <b >{data.email}</b>
-            </DData>
-            <DData>
-              <b >{data.role}</b>
-            </DData>
-            <DData>
-              <b>{data.joined}</b>
-            </DData>
+            <GreenBookmark />
+            <DData>{data.name}</DData>
+            <DData>{data.age}</DData>
+            <DData>{data.email}</DData>
+            <DData>{data.role}</DData>
+            <DData>{data.joined}</DData>
             <DData>
               <img src="verified.svg" alt="verified"></img>
             </DData>
             <DData>
-              <img src="pencil.svg" alt="pencil"></img>
+            <img src="Group 6.png" alt="pencil"></img>
             </DData>
           </DBodyVerified>
         );
@@ -121,8 +105,6 @@ const TableSection = styled.table`
   @media only screen and (max-width: 900px) {
     width: 500px;
   }
-
-
 `;
 
 export default Table;

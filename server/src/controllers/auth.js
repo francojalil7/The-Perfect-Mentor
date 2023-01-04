@@ -104,6 +104,7 @@ const validateUserCtrl = async (req, res) => {
       msg: "Error al confirmar usuario",
     });
   }
+}
 
 const loginCtrl = async ({ body }, res) => {
   const user = await User.findOne({ email: body.email });
@@ -212,17 +213,15 @@ const completeRegisterCtrl = async ({ body }, res) => {
 //   }
 // };
 
-module.exports = {
-  registerCtrl,
-  loginCtrl,
-  completeRegisterCtrl,
-  validateUserCtrl,
-  // forgotPasswordCtrl,
-  // createNewPasswordCtrl,
-};
+// module.exports = {
+//   registerCtrl,
+//   loginCtrl,
+//   completeRegisterCtrl,
+//   validateUserCtrl,
+//   // forgotPasswordCtrl,
+//   // createNewPasswordCtrl,
+// };
 
 
 
-module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl,validateUserCtrl };
-
-
+module.exports = { registerCtrl, loginCtrl, completeRegisterCtrl, validateUserCtrl }
