@@ -10,15 +10,16 @@ import stadisticsGreen from "../assets/Profile/GreenIcons/Rectangle 92.png";
 import profileGreen from "../assets/Profile/GreenIcons/Group 163.png";
 import logout from "../assets/Bar/login.png";
 import mask from "../assets/Bar/Mask group.svg";
-import {setUser} from "../states/user"
+import { setUser } from "../states/user";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const [selected, setSelected] = useState("profile");
+  const dispatch = useDispatch();
+  const [selected, setSelected] = useState("");
   const [age, setAge] = useState(0);
+  const [view, setView] = useState("");
 
   const handleSelected = (view) => {
     setSelected(view);
@@ -28,85 +29,101 @@ const Sidebar = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    setAge(localStorage.getItem("age"))
-  },[])
+    setAge(localStorage.getItem("age"));
+    setView(window.location.href.split("/")[3]);
+  }, []);
+
   const handleLogout = () => {
-    localStorage.clear()
-    dispatch(setUser({}))
-    navigate("/")
-  }
+    localStorage.clear();
+    dispatch(setUser({}));
+    navigate("/");
+  };
 
   return (
-
     <SidebarContainer>
-        { age === 0   ? (<>
-          <SidebarButton onClick={() => handleSelected("profile")}>
-        <div>
-          <img src={profileGreen} alt="profile" />
-        </div>
-        <img src={profile} alt="profile" />
+      {age === 0 ? (
+        <>
+          <SidebarButtonProfile onClick={() => handleSelected("profile")}>
+            <div>
+              <img src={profileGreen} alt="profile" />
+            </div>
+            <img src={profile} alt="profile" />
 
-        <p>Profile</p>
-        <span>
-          <img src={mask} alt="mask"/>
-        </span>
-      </SidebarButton>
-        
-        </>) : (<>
-          <SidebarButton onClick={() => handleSelected("users")}>
-        <div>
-          <img src={usersGreen} alt="users" />
-        </div>
+            <p>Profile</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonProfile>
+        </>
+      ) : (
+        <>
+          <SidebarButtonUsers
+            mode={view}
+            onClick={() => handleSelected("users")}
+          >
+            <div>
+              <img src={usersGreen} alt="users" />
+            </div>
 
-        <img src={users} alt="users" />
+            <img src={users} alt="users" />
 
-        <p>Users</p>
-        <span>
-          <img src={mask} alt="mask"/>
-        </span>
-      </SidebarButton>
-      <SidebarButton onClick={() => handleSelected("stadistics")}>
-        <div>
-          <img src={stadisticsGreen} alt="stadistics" />
-        </div>
-        <img src={stadistics} alt="stadistics" />
+            <p>Users</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonUsers>
+          <SidebarButtonStadistics
+            mode={view}
+            onClick={() => handleSelected("stadistics")}
+          >
+            <div>
+              <img src={stadisticsGreen} alt="stadistics" />
+            </div>
+            <img src={stadistics} alt="stadistics" />
 
-        <p>Stadistics</p>
-        <span>
-          <img src={mask} alt="mask"/>
-        </span>
-      </SidebarButton>
-      <SidebarButton onClick={() => handleSelected("reports")}>
-        <div>
-          <img src={reportsGreen} alt="reports" />
-        </div>
-        <img src={reports} alt="reports" />
+            <p>Stadistics</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonStadistics>
+          <SidebarButtonReports mode={view} onClick={() => handleSelected("reports")}>
+            <div>
+              <img src={reportsGreen} alt="reports" />
+            </div>
+            <img src={reports} alt="reports" />
 
-        <p>Reports</p>
-        <span>
-          <img src={mask} alt="mask"/>
-        </span>
-      </SidebarButton>
-      <SidebarButton onClick={() => handleSelected("profile")}>
-        <div>
-          <img src={profileGreen} alt="profile" />
-        </div>
-        <img src={profile} alt="profile" />
+            <p>Reports</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonReports>
+          <SidebarButtonProfile mode={view} onClick={() => handleSelected("profile")}>
+            <div>
+              <img src={profileGreen} alt="profile" />
+            </div>
+            <img src={profile} alt="profile" />
 
-        <p>Profile</p>
-        <span>
-          <img src={mask} alt="mask"/>
-        </span>
-      </SidebarButton>
-      
-      </>)}
-      
-      
+            <p>Profile</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonProfile>
 
-      <LogoutButton 
-      onClick={() => handleLogout()}
-      >
-        <img src={logout} alt="logout"/>
+          <SidebarButtonChat mode={view} onClick={() => handleSelected("chat")}>
+            <div>
+              <img src="chat1big.svg" alt="chat" />
+            </div>
+            <img src="chat1big.svg" alt="chat" />
+
+            <p>Chat</p>
+            <span>
+              <img src={mask} alt="mask" />
+            </span>
+          </SidebarButtonChat>
+        </>
+      )}
+      <LogoutButton mode={view} onClick={() => handleLogout()}>
+        <img src={logout} alt="logout" />
         <p>Logout</p>
       </LogoutButton>
     </SidebarContainer>
@@ -119,14 +136,13 @@ const SidebarContainer = styled.div`
   top: 240px;
   left: 0;
 `;
-
-const SidebarButton = styled.button`
+const SidebarButtonUsers = styled.button`
   display: flex;
   align-items: center;
   padding: 10px 25px;
-  color: rgba(68, 68, 68, 0.5);
-  border:none;
-  background:transparent;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "users" ? "#bfd732" : "#444444"};
   width: 280px;
   p {
     font-family: "Heebo";
@@ -134,69 +150,273 @@ const SidebarButton = styled.button`
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
+    color: ${(props) =>
+    props.mode !== "users" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
+
   img {
+    display: ${(props) => (props.mode !== "users" ? "flex" : "none")};
     width: 20px;
     height: 21px;
     padding-right: 10px;
   }
 
   div img {
-    display: none;
+    display: ${(props) => (props.mode !== "users" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
   }
   span img {
-    display: none;
-  }
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "users" ? "none" : "inline")
+  }}
 
-  //hover del boton: texto verde, fondo gris, display none
+
   :hover {
     background: #444444;
-    color: #bfd732 !important;
-
-   
+    p{
+      color: #bfd732 !important;
+    }
 
     img {
       display: none;
     }
-
     div img {
       width: 20px;
       height: 21px;
       padding-right: 10px;
       display: flex;
     }
-
-   
-
   }
-  :focus{
-    background: #444444;
-    color: #bfd732 !important;
-
-    img {
-      display: none;
-    }
-
-    div img {
-      width: 20px;
-      height: 21px;
-      padding-right: 10px;
-      display: flex;
-    }
-    span {
-      position: absolute;
-      left: 223px;
-    }
-    span img {
-      display: inline;
-      width: 72px;
-      height: 72px;
-    }
-  }
-
-  
 `;
+const SidebarButtonStadistics = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "stadistics" ? "#bfd732" : "#444444"};
+  width: 280px;
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${(props) =>
+    props.mode !== "stadistics" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+  }
 
+  img {
+    display: ${(props) => (props.mode !== "stadistics" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+    padding-right: 10px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "stadistics" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
+  }
+  span img {
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "stadistics" ? "none" : "inline")
+  }}
+
+  :hover {
+    background: #444444;
+    p{
+      color: #bfd732 !important;
+    }
+
+    img {
+      display: none;
+    }
+    div img {
+      width: 20px;
+      height: 21px;
+      padding-right: 10px;
+      display: flex;
+    }
+  }
+`;
+const SidebarButtonReports = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "reports" ? "#bfd732" : "#444444"};
+  width: 280px;
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${(props) =>
+    props.mode !== "reports" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+  }
+
+  img {
+    display: ${(props) => (props.mode !== "reports" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+    padding-right: 10px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "reports" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
+  }
+  span img {
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "reports" ? "none" : "inline")
+  }}
+
+  :hover {
+    background: #444444;
+    p{
+      color: #bfd732 !important;
+    }
+
+    img {
+      display: none;
+    }
+    div img {
+      width: 20px;
+      height: 21px;
+      padding-right: 10px;
+      display: flex;
+    }
+  }
+`;
+const SidebarButtonProfile = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "profile" ? "#bfd732" : "#444444"};
+  width: 280px;
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${(props) =>
+    props.mode !== "profile" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+  }
+
+  img {
+    display: ${(props) => (props.mode !== "profile" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+    padding-right: 10px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "profile" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
+  }
+  span img {
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "profile" ? "none" : "inline")
+  }}
+
+  :hover {
+    background: #444444;
+    p{
+      color: #bfd732 !important;
+    }
+
+    img {
+      display: none;
+    }
+    div img {
+      width: 20px;
+      height: 21px;
+      padding-right: 10px;
+      display: flex;
+    }
+  }
+`;
+const SidebarButtonChat = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "chat" ? "#bfd732" : "#444444"};
+  width: 280px;
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${(props) =>
+    props.mode !== "chat" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+  }
+
+  img {
+    display: ${(props) => (props.mode !== "chat" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+    padding-right: 10px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "chat" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
+  }
+  span img {
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "chat" ? "none" : "inline")
+  }}
+
+  :hover {
+    background: #444444;
+    p{
+      color: #bfd732 !important;
+    }
+
+    img {
+      display: none;
+    }
+    div img {
+      width: 20px;
+      height: 21px;
+      padding-right: 10px;
+      display: flex;
+    }
+  }
+`;
 const LogoutButton = styled.button`
   display: flex;
   align-items: center;
@@ -205,7 +425,8 @@ const LogoutButton = styled.button`
   border: none;
   padding-left: 10px;
   color: rgba(68, 68, 68, 0.5);
-  margin-top: 350px;
+
+  margin-top: ${(props) => (props.mode !== "chat" ? "300px" : "100px")};
 
   p {
     margin-left: 10px;

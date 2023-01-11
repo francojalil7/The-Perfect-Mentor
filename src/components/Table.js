@@ -35,13 +35,14 @@ const Table = ({ users }) => {
     <TableSection>
       <DHead>
         <tr>
-          <DTitle>Name</DTitle>
-          <DTitle className="age">Age</DTitle>
-          <DTitle className="email">Email</DTitle>
-          <DTitle className="role">Role</DTitle>
-          <DTitle className="date">Joined Date</DTitle>
-          <DTitle>Status</DTitle>
-          <DTitle></DTitle>
+          <DTitle className="nameTitle">Name</DTitle>
+          <DTitle className="ageTitle">Age</DTitle>
+          <DTitle className="emailTitle">Email</DTitle>
+          <DTitle className="roleTitle">Role</DTitle>
+          <DTitle className="dateTitle">Joined Date</DTitle>
+          <DTitle className="statusTitle">Status</DTitle>
+          <DTitle className="editTitle">Edit</DTitle>
+          <DTitle className="matchTitle">Match</DTitle>
         </tr>
       </DHead>
       {parsedList.map((data) => {
@@ -49,16 +50,19 @@ const Table = ({ users }) => {
           return (
             <DBodyUnverified>
               <RedBookmark />
-              <DData>{data.name}</DData>
-              <DData>{data.age}</DData>
-              <DData>{data.email}</DData>
-              <DData>{data.role}</DData>
-              <DData>{data.joined}</DData>
-              <DData>
+              <DData className="name">{data.name}</DData>
+              <DData  className="age">{data.age}</DData>
+              <DData  className="email">{data.email}</DData>
+              <DData  className="role">{data.role}</DData>
+              <DData  className="date">{data.joined}</DData>
+              <DData  className="status">
                 <img src="unverified.svg" alt="unverified"></img>
               </DData>
-              <DData>
+              <DData  className="edit">
                 <img src="Group 6.png" alt="pencil"></img>
+              </DData>
+              <DData  className="match">
+                <img  src="match.svg" alt="pencil"></img>
               </DData>
             </DBodyUnverified>
           );
@@ -66,16 +70,19 @@ const Table = ({ users }) => {
         return (
           <DBodyVerified>
             <GreenBookmark />
-            <DData>{data.name}</DData>
-            <DData>{data.age}</DData>
-            <DData>{data.email}</DData>
-            <DData>{data.role}</DData>
-            <DData>{data.joined}</DData>
-            <DData>
+            <DData className="name">{data.name}</DData>
+            <DData  className="age">{data.age}</DData>
+              <DData  className="email">{data.email}</DData>
+              <DData  className="role">{data.role}</DData>
+              <DData  className="date">{data.joined}</DData>
+            <DData className="status">
               <img src="verified.svg" alt="verified"></img>
             </DData>
-            <DData>
+            <DData className="edit">
             <img src="Group 6.png" alt="pencil"></img>
+            </DData>
+            <DData className="match">
+            <img src="match.svg" alt="pencil"></img>
             </DData>
           </DBodyVerified>
         );

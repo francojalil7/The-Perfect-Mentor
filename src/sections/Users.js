@@ -149,7 +149,7 @@ const Users = () => {
             ></Pagination>
           </DPagination>
 
-          <MobileBar />
+          <MobileBar props="users"/>
         </>
       )}
     </PagesSection>

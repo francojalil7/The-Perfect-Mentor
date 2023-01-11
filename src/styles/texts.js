@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// genereal elements
 export const Section = styled.div`
   background-color: #bfd732;
   display: flex;
@@ -18,11 +19,9 @@ export const PagesSection = styled.div`
   flex-direction: column;
   align-items: center;
 
-
   @media only screen and (max-width: 700px) {
     background-color: #f5f6f7 !important;
     height: ${(props) => props.height + "px"};
-  
   }
 `;
 export const Rectangle = styled.div`
@@ -148,6 +147,81 @@ export const Button = styled.div`
   }
 `;
 
+export const WhiteRectangle = styled.div`
+  position: absolute;
+  width: 1128px;
+  /* height: 980px; */
+  left: 272px;
+  top: 40px;
+  background: #ffffff;
+  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
+    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
+    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
+  border-radius: 35px;
+
+  height: ${(props) => (props.mode !== "chat" ? "980px" : "750px")};
+
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    width: 800px !important;
+
+    height: ${(props) => (props.mode !== "chat" ? "984px" : "750px")};
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 620px !important;
+  }
+`;
+
+export const TopRectangle = styled.div`
+  position: absolute;
+  width: 1128px;
+  display: flex;
+  justify-content: center;
+  background: #f5f6f7;
+  border-radius: 35px 35px 0px 0px;
+  display: flex;
+  flex-direction: column;
+
+  height: ${(props) => (props.mode !== "chat" ? "184px" : "100px")};
+
+  @media only screen and (max-width: 1400px) {
+    width: 800px !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
+  @media only screen and (max-width: 1080px) {
+    width: 620px !important;
+  }
+`;
+
+// profile, este se puede unificar con otro
+export const ProfileTitle = styled.h2`
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 73px;
+  color: #444444;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (max-width: 700px) {
+    font-style: bold;
+    font-size: 30px;
+    line-height: 44px;
+  }
+`;
+
+// onBoarding, SignIn, SignUp
 export const GreyButtonInside = styled.div`
   display: flex;
   justify-content: center;
@@ -166,8 +240,6 @@ export const GreyButtonInside = styled.div`
   }
   @media only screen and (max-width: 700px) {
     display: none;
-    /* margin-top: 30px;
-    width: 315px !important; */
   }
 `;
 
@@ -188,8 +260,6 @@ export const GreyButtonOutside = styled.div`
     position: relative;
     top: 80px;
     left: 0;
-    /* margin-top: 30px;
-    width: 315px !important; */
   }
 `;
 
@@ -200,7 +270,6 @@ export const H2 = styled.h2`
   font-size: 40px;
   height: 30px;
   margin-bottom: 40px;
-  /* line-height: 59px; */
   color: #444444;
   mix-blend-mode: normal;
 
@@ -291,57 +360,6 @@ export const Input = styled.input`
   }
 `;
 
-export const WhiteRectangle = styled.div`
-  position: absolute;
-  width: 1128px;
-  height: 980px;
-  left: 272px;
-  top: 40px;
-  background: #ffffff;
-  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
-    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
-    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
-  border-radius: 35px;
-
-  @media only screen and (max-width: 700px) {
-    display: none;
-  }
-
-  @media only screen and (max-width: 1400px) {
-    width: 800px !important;
-    height: 984px;
-  }
-
-  @media only screen and (max-width: 1080px) {
-    width: 620px !important;
-  }
-`;
-
-export const TopRectangle = styled.div`
-  position: absolute;
-  width: 1128px;
-  height: 184px;
-  display: flex;
-  justify-content: center;
-  background: #f5f6f7;
-  border-radius: 35px 35px 0px 0px;
-  display: flex;
-  flex-direction: column;
-
-  @media only screen and (max-width: 1400px) {
-    width: 800px !important;
-    display: flex;
-    justify-content: center;
-  }
-
-  @media only screen and (max-width: 700px) {
-    display: none;
-  }
-  @media only screen and (max-width: 1080px) {
-    width: 620px !important;
-  }
-`;
-
 export const ButtonOnBoardingGrey = styled.div`
   display: flex;
   justify-content: center;
@@ -356,9 +374,6 @@ export const ButtonOnBoardingGrey = styled.div`
   cursor: pointer;
   @media only screen and (max-width: 700px) {
     margin-top: 240px !important;
-    /* position: absolute !important;
-    bottom: 130px;
-    left: 30px; */
   }
   @media only screen and (max-width: 320px) {
     width: 300px;
@@ -380,9 +395,6 @@ export const ButtonOnBoardingGreen = styled.div`
   cursor: pointer;
 
   @media only screen and (max-width: 700px) {
-    /* position: absolute !important;
-    bottom: 60px;
-    left: 30px; */
     margin-top: 20px !important;
   }
 
@@ -410,24 +422,6 @@ export const MentorSidebar = styled.img`
   width: 200;
 `;
 
-export const ProfileTitle = styled.h2`
-  font-family: "Heebo";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 50px;
-  line-height: 73px;
-  color: #444444;
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-
-  @media only screen and (max-width: 700px) {
-    font-style: bold;
-    font-size: 30px;
-    line-height: 44px;
-  }
-`;
-
 //Dashboard & Table
 
 export const Title = styled.h2`
@@ -445,7 +439,9 @@ export const Title = styled.h2`
     font-size: 30px;
     font-weight: 800;
     line-height: 44px;
-    margin-top: 50px;
+
+    margin-top: ${(props) => (props.mode !== "chat" ? "50px" : "20px")};
+    margin-left: ${(props) => (props.mode !== "chat" ? "80px" : "0px")};
   }
 `;
 
@@ -465,6 +461,7 @@ export const SubTitle = styled.h2`
     line-height: 15px;
     width: 150px;
     margin-top: 15px;
+    margin-left: ${(props) => (props.mode !== "chat" ? "80px" : "0px")};
   }
 `;
 
@@ -476,8 +473,21 @@ export const DHead = styled.thead`
   mix-blend-mode: normal;
   border-radius: 20px 20px 0px 0px;
   display: flex;
-  /* align-items: left; */
-  /* justify-content: left; */
+  align-items: left;
+`;
+
+export const DTitle = styled.th`
+  position: relative;
+  top: 9px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #444444;
+  mix-blend-mode: normal;
+  text-align: left;
+  padding-left: 20px;
 `;
 
 export const DBodyUnverified = styled.tr`
@@ -486,29 +496,8 @@ export const DBodyUnverified = styled.tr`
   height: 60px;
   background: rgba(230, 21, 135, 0.1);
   mix-blend-mode: normal;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   margin: 2px;
-
-  td:nth-child(2) {
-    width: 120px;
-    padding-right: 80px;
-  }
-
-  td:nth-child(3) {
-    padding-right: 30px;
-  }
-  td:nth-child(4) {
-    padding-right: 120px;
-  }
-  td:nth-child(5) {
-    padding-right: 30px;
-  }
-  td:nth-child(6) {
-    padding-right: 40px;
-  }
-  td:nth-child(7) {
-    padding-right: 20px;
-  }
 `;
 
 export const DBodyVerified = styled.tr`
@@ -517,42 +506,7 @@ export const DBodyVerified = styled.tr`
   height: 60px;
   background: #39b54a1a;
   mix-blend-mode: normal;
-  /* justify-content: space-between; */
   margin: 2px;
-  td:nth-child(2) {
-    width: 120px;
-    padding-right: 80px;
-  }
-
-  td:nth-child(3) {
-    padding-right: 30px;
-  }
-  td:nth-child(4) {
-    padding-right: 120px;
-  }
-  td:nth-child(5) {
-    padding-right: 30px;
-  }
-  td:nth-child(6) {
-    padding-right: 40px;
-  }
-  td:nth-child(7) {
-    padding-right: 20px;
-  }
-`;
-
-export const DTitle = styled.th`
-  position: relative;
-  width: 170px;
-  top: 9px;
-  font-family: "Heebo";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 21px;
-  /* identical to box height */
-  color: #444444;
-  mix-blend-mode: normal;
 `;
 
 export const DData = styled.td`
@@ -560,16 +514,11 @@ export const DData = styled.td`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  /* text-align: left; */
   color: #444444;
   mix-blend-mode: normal;
-  max-width: 40px;
   display: flex;
   align-items: center;
-  text-align: justify;
-  /* justify-content: left; */
-  padding-left: 50px;
-  /* padding-right: 60px; */
+  padding-left: 10px;
 `;
 
 export const DPagination = styled.div`
@@ -596,11 +545,11 @@ export const DPagination = styled.div`
     left: 0px !important;
   }
   @media only screen and (max-width: 700px) {
-    position: absolute;
+    position: relative;
     width: 380px !important;
     background: transparent;
-    top:230px;
-    left: 80px !important;
+    top: -30px;
+    left: 0px !important;
   }
 `;
 
@@ -643,7 +592,6 @@ export const MobileScreen = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
-  display: flex;
   flex-direction: column;
 
   h6 {
@@ -715,11 +663,13 @@ export const MobileScreen = styled.div`
 
   @media only screen and (max-width: 700px) {
     width: 355px !important;
-    /* height: 963px !important; */
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: ${(props) =>
+      props.mode !== "chat" ? "repeat(2, 1fr)" : "repeat(1, 1fr)"};
     grid-gap: 10px;
-    padding-top: 50px;
+    padding-top: 10px;
+    top: 10px;
+    padding-bottom: 80px;
 
     h6 {
       font-weight: 900;
@@ -834,7 +784,7 @@ export const DashboardInput = styled.input`
   width: 400px;
   height: 21px;
   left: 60px;
-  top: 18px;
+  top: 10px;
   font-family: "Heebo";
   font-style: normal;
   font-weight: 400;
@@ -875,7 +825,6 @@ export const FilterButton = styled.button`
   height: 40px;
   left: 10px;
   top: 9px;
-
   mix-blend-mode: normal;
   border: 1px solid rgba(68, 68, 68, 0.15);
   border-radius: 40px;
@@ -939,16 +888,12 @@ export const ButtonTextFilter = styled.text`
   height: 22px;
   left: 2px;
   top: 10px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
-  /* identical to box height */
-
   color: ${(props) => (props.mode === "" ? "white" : "rgba(68, 68, 68, 0.5)")};
-
   mix-blend-mode: normal;
 `;
 
@@ -964,11 +909,8 @@ export const ButtonTextAge = styled.text`
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
-  /* identical to box height */
-
   color: ${(props) =>
     props.mode === "role" ? "white" : "rgba(68, 68, 68, 0.5)"};
-
   mix-blend-mode: normal;
 `;
 
@@ -978,17 +920,13 @@ export const ButtonTextStatus = styled.text`
   height: 22px;
   left: 23px;
   top: 10px;
-
   font-family: "Heebo";
   font-style: normal;
   font-weight: 700;
   font-size: 15px;
   line-height: 22px;
-  /* identical to box height */
-
   color: ${(props) =>
     props.mode === "userName" ? "white" : "rgba(68, 68, 68, 0.5)"};
-
   mix-blend-mode: normal;
 `;
 
@@ -1000,12 +938,20 @@ export const SearchButton = styled.button`
   color: grey;
   position: relative;
   top: 5px;
+  left: ${(props) => (props.mode !== "chat" ? "0px" : "40px")};
+  @media only screen and (max-width: 1080px) {
+    top: ${(props) => (props.mode !== "chat" ? "5px" : "0px")};
+    left: ${(props) => (props.mode !== "chat" ? "0px" : "10px")};
+  }
+  @media only screen and (max-width: 1400px) {
+    top: ${(props) => (props.mode !== "chat" ? "5px" : "0px")};
+    left: ${(props) => (props.mode !== "chat" ? "0px" : "10px")};
+  }
   @media only screen and (max-width: 700px) {
-    top: 13px;
-    left: 50px;
+    top: ${(props) => (props.mode !== "chat" ? "5px" : "0px")};
+    left: ${(props) => (props.mode !== "chat" ? "0px" : "40px")};
   }
 `;
-
 
 export const Ellipse = styled.img`
   position: absolute;
@@ -1019,11 +965,9 @@ export const Ellipse = styled.img`
 
   @media only screen and (max-width: 700px) {
     position: absolute;
-  top: -30px;
-
+    top: -30px;
   }
 `;
-
 
 export const UsersHeader = styled.div`
   width: 100%;

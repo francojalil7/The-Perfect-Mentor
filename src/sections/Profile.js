@@ -65,7 +65,7 @@ const Profile = () => {
             <ProfileDetailsMobile>
               <ProfileForm />
             </ProfileDetailsMobile>
-            <MobileBar />
+            <MobileBar props="profile"/>
           </>
         )}
       </Section>

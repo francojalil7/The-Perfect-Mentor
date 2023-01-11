@@ -8,21 +8,24 @@ import mobileProfileGreen from "../assets/Profile/MobileIcons/Hover/Frame 7 (1).
 import mobileUsersGreen from "../assets/Profile/MobileIcons/Hover/Vector (1).png";
 import mobileStadisticsGreen from "../assets/Profile/MobileIcons/Hover/Rectangle 92.png";
 import mobileReportsGreen from "../assets/Profile/MobileIcons/Hover/Frame 6 (1).png";
-
+import chatGreen from "../assets/chat2100.png"
 import mask from "../assets/Bar/Mask group mobile.png";
 import { useNavigate } from "react-router-dom";
-const MobileBar = () => {
+
+const MobileBar = ({ props }) => {
   const navigate = useNavigate();
-  const [mobileSelected, setMobileSelected] = useState("profile");
+  const [mobileSelected, setMobileSelected] = useState("");
 
   const handleMobileSelected = (view) => {
     setMobileSelected(view);
     navigate(`/${view}`);
   };
+  
   return (
     <>
       <BottomBar>
-        <button
+        <ButtonUsers
+          mode={props}
           onClick={() => {
             handleMobileSelected("users");
           }}
@@ -34,9 +37,10 @@ const MobileBar = () => {
           <span>
             <img src={mask} alt="mask" />
           </span>
-        </button>
+        </ButtonUsers>
 
-        <button
+        <ButtonStadistics
+          mode={props}
           onClick={() => {
             handleMobileSelected("stadistics");
           }}
@@ -46,10 +50,11 @@ const MobileBar = () => {
           </div>
           <img src={mobileStadistics} alt="stadistics" />
           <span>
-            <img src={mask} alt="mask"/>
+            <img src={mask} alt="mask" />
           </span>
-        </button>
-        <button
+        </ButtonStadistics>
+        <ButtonReports
+          mode={props}
           onClick={() => {
             handleMobileSelected("reports");
           }}
@@ -59,10 +64,11 @@ const MobileBar = () => {
           </div>
           <img src={mobileReports} alt="reports" />
           <span>
-            <img src={mask} alt="mask"/>
+            <img src={mask} alt="mask" />
           </span>
-        </button>
-        <button
+        </ButtonReports>
+        <ButtonProfile
+          mode={props}
           onClick={() => {
             handleMobileSelected("profile");
           }}
@@ -72,9 +78,24 @@ const MobileBar = () => {
           </div>
           <img src={mobileProfile} alt="profile" />
           <span>
-            <img src={mask} alt="mask"/>
+            <img src={mask} alt="mask" />
           </span>
-        </button>
+        </ButtonProfile>
+
+        <ButtonChat
+          mode={props}
+          onClick={() => {
+            handleMobileSelected("chat");
+          }}
+        >
+          <div>
+            <img src={chatGreen} alt="chat" />
+          </div>
+          <img src={chatGreen}  alt="chat" />
+          <span>
+            <img src={mask} alt="mask" />
+          </span>
+        </ButtonChat>
       </BottomBar>
     </>
   );
@@ -91,75 +112,160 @@ const BottomBar = styled.div`
   border-top-right-radius: 40px;
   width: 375px;
   height: 82px;
+`;
 
-  button {
-    display: flex;
-    flex-direction: column !important;
-    border: none;
-    background: transparent;
+const ButtonUsers = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
 
-    img {
-      width: 20px;
-      height: 21px;
-    }
+  img {
+    display: ${(props) => (props.mode !== "users" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
 
-    div img {
-      display: none;
-    }
-    span img {
-      display: none;
-    }
+  div img {
+    display: ${(props) => (props.mode !== "users" ? "none" : "flex")};
+  }
 
-    :hover {
-      background: #444444;
-      color: #bfd732 !important;
+  span {
+    position: absolute;
+    top: 40px;
+  }
 
-      img {
-        display: none;
-      }
+  span img {
+    display: ${(props) => (props.mode !== "users" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
+  }
+`;
 
-      div img {
-        width: 20px;
-        height: 21px;
-        display: flex;
-      }
-      /* span {
-        position: absolute;
-        top: 40px;
-      }
-      span img {
-        display: inline;
-        width: 92px;
-        height: 92px;
-        position: relative;
-        left: -25px;
-      } */
-    }
+const ButtonStadistics = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
 
-    :focus {
-      img {
-        display: none;
-      }
+  img {
+    display: ${(props) => (props.mode !== "stadistics" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
 
-      div img {
-        width: 20px;
-        height: 21px;
-        display: flex;
-      }
+  div img {
+    display: ${(props) => (props.mode !== "stadistics" ? "none" : "flex")};
+  }
 
-      span {
-        position: absolute;
-        top: 40px;
-      }
-      span img {
-        display: inline;
-        width: 72px;
-        height: 25px;
-        position: relative;
-        left: -23px;
-        top:15px;
-      }
-    }
+  span {
+    position: absolute;
+    top: 40px;
+  }
+
+  span img {
+    display: ${(props) => (props.mode !== "stadistics" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
+  }
+`;
+
+const ButtonReports = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
+
+  img {
+    display: ${(props) => (props.mode !== "reports" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "reports" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    top: 40px;
+  }
+
+  span img {
+    display: ${(props) => (props.mode !== "reports" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
+  }
+`;
+
+const ButtonProfile = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
+
+  img {
+    display: ${(props) => (props.mode !== "profile" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "profile" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    top: 40px;
+  }
+
+  span img {
+    display: ${(props) => (props.mode !== "profile" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
+  }
+`;
+
+const ButtonChat = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
+
+  img {
+    display: ${(props) => (props.mode !== "chat" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "chat" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    top: 40px;
+  }
+
+  span img {
+    display: ${(props) => (props.mode !== "chat" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
   }
 `;
 

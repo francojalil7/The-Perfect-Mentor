@@ -119,7 +119,7 @@ const Stadistics = () => {
             </div>
           </MobileScreen>
 
-          <MobileBar />
+          <MobileBar props="stadistics" />
         </>
       )}
     </PagesSection>

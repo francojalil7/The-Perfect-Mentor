@@ -33,7 +33,7 @@ const MobileUsersInfo = ({ users }) => {
                   </Details>
 
                   <SendMessageButton >
-                  <img src="Group 6.png" alt="pencil"></img>
+                  <img src="match.svg" alt="match"></img>
                   </SendMessageButton >
                 </MobileRowUnverified>
               </div>
@@ -66,7 +66,7 @@ const MobileUsersInfo = ({ users }) => {
                   </Details>
 
                   <SendMessageButton >
-                  <img src="Group 6.png" alt="pencil"></img>
+                  <img src="match.svg" alt="match"></img>
                   </SendMessageButton >
                 </MobileRow>
               </div>{" "}
@@ -119,11 +119,12 @@ const MobileRowUnverified = styled.div`
 `;
 
 const SendMessageButton = styled.div`
+
   position: absolute;
-  left: 250px;
-  top: 40px;
-  width: 32px;
-  height: 32px;
+  left: 260px;
+  top: 50px;
+  width: 60px;
+  height: 60px;
 `;
 
 const VerifiedLine = styled.div`
