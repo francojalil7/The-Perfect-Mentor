@@ -47,16 +47,90 @@
   margin: 2px;
 }
 
+.name{
+  /* background-color: blue !important; */
+  width: 200px;
+}
+
 .age{
-  padding-left: 50px;
+  /* background-color: yellow !important; */
+  width: 50px;
 }
+
 .email{
-  padding-left: -10px;
+  /* background-color: pink !important; */
+  width: 220px;
 }
+
 .role{
-  padding-left: 40px;
+  /* background-color: violet !important; */
+  width: 110px;
 }
 
 .date{
-  padding-left: 40px;
+  /* background-color: green !important; */
+  width: 110px;
 }
+
+.status{
+  /* background-color: grey !important; */
+  width: 100px;
+}
+
+.edit{
+  /* background-color: white !important; */
+  width: 70px;
+}
+
+.match{
+  /* background-color: black !important; */
+  width: 70px;
+  margin-top: 30px;
+}
+
+
+
+
+
+.nameTitle{
+
+  /* background-color: blue !important; */
+  width: 200px;
+}
+
+.ageTitle{
+  /* background-color: yellow !important; */
+  width: 50px;
+}
+
+.emailTitle{
+  /* background-color: pink !important; */
+  width: 220px;
+}
+
+.roleTitle{
+  /* background-color: violet !important; */
+  width: 110px;
+}
+
+.dateTitle{
+  /* background-color: green !important; */
+  width: 110px;
+}
+
+.statusTitle{
+  /* background-color: grey !important; */
+  width: 100px;
+}
+
+.editTitle{
+  /* background-color: white !important; */
+  width: 70px;
+}
+
+.matchTitle{
+  /* background-color: black !important; */
+  width: 70px;
+
+}
+

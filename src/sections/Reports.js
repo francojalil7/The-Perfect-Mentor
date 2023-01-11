@@ -83,7 +83,7 @@ const Reports = () => {
             ></Pagination> */}
           </DPagination>
 
-          <MobileBar />
+          <MobileBar props="reports"/>
         </>
       )}
     </PagesSection>

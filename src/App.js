@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 import ForgotPassword from "./sections/ForgotPassword";
+import Chat from "./sections/Chat";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/stadistics" element={<Stadistics />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/chat" element={<Chat />} />
           </>
         ) : (
           <>
