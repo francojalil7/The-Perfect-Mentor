@@ -17,7 +17,7 @@ export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
     let data = response.data;
 
     if (!data.succes) {
-      swal("Oops... Something went wrong!", "User allready exist", "error");
+      swal("Oops... Something went wrong!", "User already exist", "error");
     } else {
       swal(
         "Congratulations!",
@@ -48,8 +48,7 @@ export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
         "You have entered an invalid username or password",
         "error"
       );
-
-      return;
+      return "error";
     }
 
     if (response.status === 401) {
@@ -58,7 +57,7 @@ export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
         "Please create an account first or verify you email",
         "error"
       );
-      return;
+      return "error";
     }
 
     const data = await response.json();
