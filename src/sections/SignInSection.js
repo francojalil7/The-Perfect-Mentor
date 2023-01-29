@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { effectLogin } from "../states/user";
-
+import { useEffect, useState } from "react";
 
 // Messages
 const required = "This field is required";
@@ -36,25 +36,25 @@ const errorMessage = (error) => {
 };
 
 const SignInSection = () => {
+  const [loggedUser, setLoggedUser] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const onSubmit = async (data) =>{
-    await dispatch(effectLogin(data))
-    const loggedUser = localStorage.getItem("email")
-    if(loggedUser){
-      navigate("/profile")
-    }else{
-      navigate("/signup")
-    }
+  const onSubmit = async (data) => {
+    dispatch(effectLogin(data)).then(response => response.payload !== "error" ? setLoggedUser(true) : setLoggedUser(false))
+  };
 
-  } 
+  useEffect(() => {
+    loggedUser ? navigate("/profile") : navigate("/signin");
+  }, [loggedUser]);
+
   return (
     <>
       <Section>
@@ -68,8 +68,6 @@ const SignInSection = () => {
           <section>
             <H2>Sign In</H2>
             <Line />
-
-            <H3>Hi, name!</H3>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Button>
                 <Icon src={email} />
@@ -77,7 +75,7 @@ const SignInSection = () => {
                 <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="email"
+                  placeholder="Email"
                   name="email"
                   {...register("email", {
                     required: true,
@@ -85,22 +83,21 @@ const SignInSection = () => {
                   })}
                 />
               </Button>
-    
+
               {errors.email &&
                 errors.email.type === "required" &&
                 errorMessage(required)}
               {errors.email &&
                 errors.email.type === "pattern" &&
                 errorMessage("The email is not valid")}
- 
-             
+
               <Button>
                 <Icon src={password} />
 
                 <Input
                   type="password"
                   autoComplete="off"
-                  placeholder="password"
+                  placeholder="Password"
                   name="password"
                   {...register("password", {
                     required: true,
@@ -119,7 +116,13 @@ const SignInSection = () => {
                 errors.password.type === "maxLength" &&
                 errorMessage(maxLength)}
 
-              <a href="http://localhost:3000/forgotpass"><Text>Do you forgot your password?</Text></a>
+              <a href="http://localhost:3000/forgotpass">
+                <Text>Forgot password?</Text>
+              </a>
+              <Text>
+                Don't have an account?{" "}
+                <a href="http://localhost:3000/signUp">Sign up</a>
+              </Text>
 
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign In
