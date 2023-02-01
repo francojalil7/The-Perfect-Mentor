@@ -8,8 +8,8 @@ const MailVerification = () => {
   return (
     <Section>
       <VerificationRectangle>
-        <H2>¡Oh no! Página no encontrada.</H2>
-        <H3>No pudimos encontrar la página que estás buscando.</H3>
+        <H2>¡Oh no! Page not found.</H2>
+        <H3>We couldn't find the page you requested.</H3>
         <SalySingleImage src={saly2} />
       </VerificationRectangle>
     </Section>

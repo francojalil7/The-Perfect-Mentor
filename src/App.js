@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import OnBoarding from "./sections/OnBoarding";
 import SignUpSection from "./sections/SignUpSection";
 import SignInSection from "./sections/SignInSection";
 import Profile from "./sections/Profile";
@@ -10,7 +9,7 @@ import MailVerification from "./sections/MailVerification";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./sections/Dashboard";
 import "./App.css";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 import ForgotPassword from "./sections/ForgotPassword";
@@ -18,14 +17,13 @@ import Route404 from "./components/Route404";
 import Chat from "./sections/Chat";
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [userByEmail, setUserByEmail] = useState();
 
   useEffect(() => {
     if (user.succes) {
-      console.log(user.succes, "es succes")
       navigate("/verification");
     }
     if(localStorage.getItem("email")){
