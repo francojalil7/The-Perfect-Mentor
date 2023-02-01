@@ -18,7 +18,7 @@ import {
   Image1,
   Image2,
   Title1,
-  SubTitle1
+  SubTitle1,
 } from "../styles/texts";
 import Dashboard from "./Dashboard";
 import MobileBar from "../components/MobileBar";
@@ -39,7 +39,7 @@ const Users = () => {
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,6 +60,7 @@ const Users = () => {
     };
     fetchUsers();
   }, [search]);
+
   const medium = 700;
 
   function useInput() {
@@ -68,11 +69,12 @@ const Users = () => {
     }
     return { onChange, value };
   }
+
   const searcher = useInput();
 
   const handleSearch = function () {
     if (filter === "") {
-      alert("debe seleccionar un filtro");
+      alert("Must select a filter");
     }
     dispatch(getUsersFilter({ value, filter }));
     setSearch("buscar");
@@ -149,13 +151,11 @@ const Users = () => {
             ></Pagination>
           </DPagination>
 
-          <MobileBar props="users"/>
+          <MobileBar props="users" />
         </>
       )}
     </PagesSection>
   );
 };
-
-
 
 export default Users;

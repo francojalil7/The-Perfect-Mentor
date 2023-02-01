@@ -84,7 +84,8 @@ const ProfileForm = () => {
         language: languages,
         skills: skills,
         profession: selectedProfession.value,
-        registerForm: true
+        registerForm: true,
+        isAdmin: false
       })
     );
 
