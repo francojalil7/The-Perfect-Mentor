@@ -25,7 +25,9 @@ const UserSchema = new Schema({
     required: true,
     default: "UNVERIFIED",
   },
+
   code: { type: String, required: false },
+
   isAdmin: {
     type: Boolean,
     default: false,
@@ -54,12 +56,6 @@ const UserSchema = new Schema({
   skills: {
     type: Array,
   },
-  assignedMentee: {
-    type: String,
-  },
-  assignedMentor: {
-    type: String,
-  },
   joinedDate: {
     type: Date,
     default: Date.now,
@@ -74,7 +70,7 @@ const UserSchema = new Schema({
   },
   resetToken: {
     type: String,
-  },
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);

@@ -7,12 +7,13 @@ import Profile from "./sections/Profile";
 import Stadistics from "./sections/Stadistics";
 import AdminUsers from "./sections/AdminUsers";
 import Reports from "./sections/Reports";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import "./App.css";
 import ChangePassword from "./sections/ChangePassword";
 import ForgotPassword from "./sections/ForgotPassword";
+import Route404 from "./components/Route404";
 import Chat from "./sections/Chat";
 import UsersNew from "./sections/UsersNew";
-import "./App.css";
-import Route404 from "./components/Route404";
 // import MailVerification from "./sections/MailVerification";
 
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/stadistics" element={<Stadistics />} />
           <Route path="*" element={<Route404/>} />
         </>
+
       </Routes>
     );
   } 
@@ -83,6 +85,7 @@ function App() {
           <Route path="/changepass/:token" element={<ChangePassword />} />
           <Route path="*" element={<Route404/>} />
         </>
+
       </Routes>
     );
   }

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import saly2 from "../assets/Sing/Saly-2.png";
 
 
+
 const Route404 = () => {
   return (
     <Section>
@@ -25,8 +26,10 @@ const SalySingleImage = styled.img`
     width: 350px;
 
   } 
+
 ;
 `
+
 
 
 
@@ -49,7 +52,9 @@ const VerificationRectangle = styled.div`
     flex-direction: column !important;
     border: 2px solid #bfd732;
   }
+
 ;
 `
 
 export default Route404;
+
