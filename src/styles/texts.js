@@ -176,6 +176,32 @@ export const WhiteRectangle = styled.div`
   }
 `;
 
+export const AdminProfileWhiteRectangle = styled.div`
+  position: absolute;
+  width: 1128px;
+  left: 272px;
+  top: 40px;
+  background: #ffffff;
+  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
+    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
+    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
+  border-radius: 35px;
+
+  height:640px;
+
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    width: 800px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 620px !important;
+  }
+`;
+
 export const TopRectangle = styled.div`
   position: absolute;
   width: 1128px;
@@ -216,8 +242,9 @@ export const ProfileTitle = styled.h2`
 
   @media only screen and (max-width: 700px) {
     font-style: bold;
-    font-size: 30px;
+    font-size: 35px;
     line-height: 44px;
+    font-weight: 700;
   }
 `;
 
@@ -487,7 +514,7 @@ export const DTitle = styled.th`
   color: #444444;
   mix-blend-mode: normal;
   text-align: left;
-  padding-left: 20px;
+  padding-left: 10px;
 `;
 
 export const DBodyUnverified = styled.tr`
@@ -1032,3 +1059,154 @@ export const SubTitle1 = styled.h2`
   width: 150px;
   margin-top: 15px;
 `;
+
+
+
+export const DashboardWhiteRectangle = styled.div`
+  position: absolute;
+  width: 1128px;
+  height: 944px;
+  left: 270px;
+  top: 40px;
+  background: #ffffff;
+  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
+    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
+    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
+  border-radius: 35px;
+
+  @media only screen and (max-width: 1400px) {
+    width: 900px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 700px !important;
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 500px;
+  }
+`;
+
+
+export const DashboardTopRectangle = styled.div`
+  position: absolute;
+  width: 1128px;
+  height: 184px;
+  display: flex;
+  justify-content: center;
+  background: #f5f6f7;
+  border-radius: 35px 35px 0px 0px;
+
+  @media only screen and (max-width: 1400px) {
+    width: 900px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 700px !important;
+  }
+
+  @media only screen and (max-width: 900px) {
+    width: 500px;
+  }
+`;
+
+
+export const DashboardTitle = styled.h2`
+  position: absolute;
+  width: 210px;
+  height: 73px;
+  left: 50px;
+  top: -10px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 73px;
+  color: #444444;
+`;
+
+export const DashboardSubtitle = styled.h3`
+  position: absolute;
+  width: 357px;
+  height: 29px;
+  left: 54px;
+  top: 70px;
+  font-family: "Heebo";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 29px;
+  color: #444444;
+`;
+
+export const DashboardDetails = styled.div`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 1070px;
+  height: 790px;
+  left: 30px;
+  top: 130px;
+
+  background: #ffffff;
+  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
+    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
+    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
+  border-radius: 35px;
+
+  @media only screen and (max-width: 900px) {
+    width: 500px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    width: 880px !important;
+
+    left: 10px !important;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 680px !important;
+    left: 10px !important;
+  }
+`;
+
+
+export const FirstImage = styled.img`
+  position: absolute;
+  left: 780px;
+  right: -1.33%;
+  top: -173px;
+  bottom: 62.45%;
+
+  background: url(doodle-4.png);
+  transform: rotate(1.5deg);
+
+  @media only screen and (max-width: 1400px) {
+    left: 580px;
+    top: -200px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    left: 400px;
+    top: -200px;
+  }
+`;
+
+export const SecondImage = styled.img`
+  position: absolute;
+  left: 720px;
+  right: 2.75%;
+  top: -180px;
+  bottom: 81.02%;
+  background: url(doodle-5.png);
+
+  @media only screen and (max-width: 1400px) {
+    left: 520px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    left: 360px;
+  }
+`;
+
+

@@ -1,5 +1,8 @@
-import { createReducer, createAsyncThunk } from "@reduxjs/toolkit";
+import { createReducer, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
+
+
+export const setUsersFilter = createAction("SET_USERS_FILTER");
 
 export const getUsersFilter = createAsyncThunk(
   "GET_USERS_FILTER",
@@ -15,7 +18,9 @@ export const getUsersFilter = createAsyncThunk(
   }
 );
 
+
 const usersFilterReducer = createReducer([], {
+  [setUsersFilter]: (state, action) => action.payload,
   [getUsersFilter.fulfilled]: (state, action) => action.payload,
 });
 

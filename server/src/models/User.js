@@ -25,10 +25,9 @@ const UserSchema = new Schema({
     required: true,
     default: "UNVERIFIED",
   },
-  code: { 
-    type: String, 
-    required: true 
-  },
+
+  code: { type: String, required: false },
+
   isAdmin: {
     type: Boolean,
     default: false,

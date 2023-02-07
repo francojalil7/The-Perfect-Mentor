@@ -62,10 +62,17 @@ export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
 
     const data = await response.json();
 
+
+    if(data.user.role){
+      localStorage.setItem("role", data.user.role);
+    }
+
     localStorage.setItem("email", data.user.email);
     localStorage.setItem("userName", data.user.userName);
     localStorage.setItem("_id", data.user._id);
     localStorage.setItem("token", data.token);
+    localStorage.setItem("isAdmin", data.user.isAdmin);
+    localStorage.setItem("status", data.user.status);
 
     return data;
   } catch (error) {
@@ -87,10 +94,12 @@ export const updateUser = createAsyncThunk("UPDATE_USER", async (body, res) => {
     return;
   }
 
-  swal("Congratulations!", "Your account has been UPDATED!", "success");
-  // res.redirect("http://localhost:3000/profile");
+  const data = await response.json();
+  localStorage.setItem("role", data.role);
 
-  return await response.json();
+  swal("Congratulations!", "Your account has been UPDATED!", "success");
+
+  return response;
 });
 
 export const getUserMail = createAsyncThunk("GET_USER", async (email) => {

@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { effectLogin } from "../states/user";
 import { useEffect, useState } from "react";
 
+
 // Messages
 const required = "This field is required";
 const maxLength = "You must enter a maximum of 15 characters";
@@ -36,6 +37,8 @@ const errorMessage = (error) => {
 };
 
 const SignInSection = () => {
+
+
   const [loggedUser, setLoggedUser] = useState(false);
 
   const {
@@ -47,13 +50,30 @@ const SignInSection = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
-    dispatch(effectLogin(data)).then(response => response.payload !== "error" ? setLoggedUser(true) : setLoggedUser(false))
-  };
 
-  useEffect(() => {
-    loggedUser ? navigate("/profile") : navigate("/signin");
-  }, [loggedUser]);
+
+  const onSubmit = async (data) =>{
+    await dispatch(effectLogin(data))
+    const loggedUser = localStorage.getItem("email")
+    if(loggedUser){
+      if(localStorage.getItem("isAdmin") === "true"){
+        navigate("/stadistics")
+      }
+      else if (localStorage.getItem("age")){
+        navigate("/chat")
+      }else{
+        navigate("/profile")
+      }
+
+
+    }else{
+      navigate("/signup")
+    }
+
+  }
+
+
+
 
   return (
     <>
