@@ -13,8 +13,8 @@ import {
   Title1,
   SubTitle1,
 } from "../styles/texts";
+
 import MobileBar from "../components/MobileBar";
-import Dashboard from "./Dashboard";
 import image1 from "../assets/Users/doodle-4 1.png";
 import image2 from "../assets/Users/doodle-5 1.png";
 
@@ -46,7 +46,7 @@ const Reports = () => {
     <PagesSection /*height={pageHeight}*/>
       {width >= medium ? (
         <>
-          <Dashboard />
+         
         </>
       ) : (
         <>
@@ -55,8 +55,10 @@ const Reports = () => {
           </UsersHeader>
 
           <MobileScreenTable>
+  
             <Title1>Reports</Title1>
             <SubTitle1>Check the reports of the users</SubTitle1>
+       
             <Image1 src={image1} />
             <Image2 src={image2} />
             <DashboardSearch>

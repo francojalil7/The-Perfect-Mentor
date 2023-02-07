@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { effectLogin } from "../states/user";
 
 
+
 // Messages
 const required = "This field is required";
 const maxLength = "You must enter a maximum of 15 characters";
@@ -45,11 +46,21 @@ const SignInSection = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+
   const onSubmit = async (data) =>{
     await dispatch(effectLogin(data))
     const loggedUser = localStorage.getItem("email")
     if(loggedUser){
-      navigate("/profile")
+      if(localStorage.getItem("isAdmin") === "true"){
+        navigate("/stadistics")
+      }
+      else if (localStorage.getItem("age")){
+        navigate("/chat")
+      }else{
+        navigate("/profile")
+      }
+
+
     }else{
       navigate("/signup")
     }

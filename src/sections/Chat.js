@@ -39,8 +39,9 @@ const Chat = () => {
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const [view, setView] = useState("");
-
   const [selectedChat, setSelectedChat] = useState(" ");
+
+  const [messages, setMessages] = useState([])
 
   useEffect(() => {
     setView(window.location.href.split("/")[3]);
@@ -62,6 +63,7 @@ const Chat = () => {
 
   const handleSelectChat = function (userName) {
     setSelectedChat(userName);
+    
   };
 
   const handleBack = function () {

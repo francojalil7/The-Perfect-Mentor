@@ -21,14 +21,24 @@ const deleteUser = async (req, res) => {
 
 const findAllUsers = async (req, res) => {
   let userList = [];
-  userList = await User.find();
+  userList = await User.find({ isAdmin: false });
   res.status(200).send(userList);
+};
+
+const mentorUsers = async (req, res) => {
+  const mentors = await User.find({ role: "mentor" });
+  res.send(mentors);
+};
+
+const menteeUsers = async (req, res) => {
+  const mentees = await User.find({ role: "mentee" });
+  res.send(mentees);
 };
 
 const totalUsers = async (req, res) => {
   const users = await User.find();
-  const mentees = await User.find({ isMentee: true });
-  const mentors = await User.find({ isMentor: true });
+  const mentees = await User.find({ role: "mentee" });
+  const mentors = await User.find({ role: "mentor" });
 
   res.send({
     users: users.length,
@@ -126,4 +136,6 @@ module.exports = {
   singPerMounth,
   newUsers,
   filteredUser,
+  mentorUsers,
+  menteeUsers
 };

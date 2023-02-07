@@ -9,9 +9,9 @@ const {
   searchCtrl,
 } = require("../controllers/admin");
 
-router.put("/upgrade/:id", validateUser, checkAdmin, upgradeUser);
+router.put("/upgrade/:email", /*validateUser, checkAdmin,*/ upgradeUser);
 router.put("/downgrade/:id", validateUser, checkAdmin, downgradeUser);
-router.delete("/:id", validateUser, checkAdmin, deleteUser);
+router.delete("/:email", /*validateUser, checkAdmin,*/ deleteUser);
 router.get("/search/:data", validateUser, checkAdmin, searchCtrl);
 
 module.exports = router;

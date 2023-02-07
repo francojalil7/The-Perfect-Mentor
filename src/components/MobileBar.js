@@ -8,94 +8,204 @@ import mobileProfileGreen from "../assets/Profile/MobileIcons/Hover/Frame 7 (1).
 import mobileUsersGreen from "../assets/Profile/MobileIcons/Hover/Vector (1).png";
 import mobileStadisticsGreen from "../assets/Profile/MobileIcons/Hover/Rectangle 92.png";
 import mobileReportsGreen from "../assets/Profile/MobileIcons/Hover/Frame 6 (1).png";
-import chatGreen from "../assets/chat2100.png"
+import chatGreen from "../assets/greenchat24.png";
+import chatGrey from "../assets/greychat30.png";
 import mask from "../assets/Bar/Mask group mobile.png";
+import greenlogout from "../assets/greylogout22.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../states/user";
 
 const MobileBar = ({ props }) => {
   const navigate = useNavigate();
   const [mobileSelected, setMobileSelected] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleMobileSelected = (view) => {
     setMobileSelected(view);
     navigate(`/${view}`);
   };
-  
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch(setUser({}));
+    navigate("/");
+  };
+
   return (
     <>
       <BottomBar>
-        <ButtonUsers
-          mode={props}
-          onClick={() => {
-            handleMobileSelected("users");
-          }}
-        >
-          <div>
-            <img src={mobileUsersGreen} alt="users" />
-          </div>
-          <img src={mobileUsers} alt="users" />
-          <span>
-            <img src={mask} alt="mask" />
-          </span>
-        </ButtonUsers>
+        {localStorage.getItem("isAdmin") === "true" ? (
+          <>
+            <ButtonProfile
+              mode={props}
+              onClick={() => {
+                handleMobileSelected("profile");
+              }}
+            >
+              <div>
+                <img src={mobileProfileGreen} alt="profile" />
+              </div>
+              <img src={mobileProfile} alt="profile" />
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </ButtonProfile>
+            <ButtonUsers
+              mode={props}
+              onClick={() => {
+                handleMobileSelected("users");
+              }}
+            >
+              <div>
+                <img src={mobileUsersGreen} alt="users" />
+              </div>
+              <img src={mobileUsers} alt="users" />
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </ButtonUsers>
 
-        <ButtonStadistics
-          mode={props}
-          onClick={() => {
-            handleMobileSelected("stadistics");
-          }}
-        >
-          <div>
-            <img src={mobileStadisticsGreen} alt="stadistics" />
-          </div>
-          <img src={mobileStadistics} alt="stadistics" />
-          <span>
-            <img src={mask} alt="mask" />
-          </span>
-        </ButtonStadistics>
-        <ButtonReports
-          mode={props}
-          onClick={() => {
-            handleMobileSelected("reports");
-          }}
-        >
-          <div>
-            <img src={mobileReportsGreen} alt="reports" />
-          </div>
-          <img src={mobileReports} alt="reports" />
-          <span>
-            <img src={mask} alt="mask" />
-          </span>
-        </ButtonReports>
-        <ButtonProfile
-          mode={props}
-          onClick={() => {
-            handleMobileSelected("profile");
-          }}
-        >
-          <div>
-            <img src={mobileProfileGreen} alt="profile" />
-          </div>
-          <img src={mobileProfile} alt="profile" />
-          <span>
-            <img src={mask} alt="mask" />
-          </span>
-        </ButtonProfile>
+            <ButtonStadistics
+              mode={props}
+              onClick={() => {
+                handleMobileSelected("stadistics");
+              }}
+            >
+              <div>
+                <img src={mobileStadisticsGreen} alt="stadistics" />
+              </div>
+              <img src={mobileStadistics} alt="stadistics" />
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </ButtonStadistics>
 
-        <ButtonChat
-          mode={props}
-          onClick={() => {
-            handleMobileSelected("chat");
-          }}
-        >
-          <div>
-            <img src={chatGreen} alt="chat" />
-          </div>
-          <img src={chatGreen}  alt="chat" />
-          <span>
-            <img src={mask} alt="mask" />
-          </span>
-        </ButtonChat>
+            <ButtonReports
+              mode={props}
+              onClick={() => {
+                handleMobileSelected("reports");
+              }}
+            >
+              <div>
+                <img src={mobileReportsGreen} alt="reports" />
+              </div>
+              <img src={mobileReports} alt="reports" />
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </ButtonReports>
+
+            <ButtonLogOut
+              mode={props}
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+           <img src={greenlogout} alt="logout" />
+            </ButtonLogOut>
+          </>
+        ) : (
+          <>
+            {localStorage.getItem("role") === "mentor" ||
+            localStorage.getItem("role") === "mentee" ? (
+              <>
+                <ButtonProfile
+                  mode={props}
+                  onClick={() => {
+                    handleMobileSelected("profile");
+                  }}
+                >
+                  <div>
+                    <img src={mobileProfileGreen} alt="profile" />
+                  </div>
+                  <img src={mobileProfile} alt="profile" />
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </ButtonProfile>
+
+                <ButtonFilteredUsers
+                  mode={props}
+                  onClick={() => handleMobileSelected("filtered")}
+                >
+                  <div>
+                    <img src={mobileUsersGreen} alt="filtered" />
+                  </div>
+                  <img src={mobileUsers} alt="filtered" />
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </ButtonFilteredUsers>
+                <ButtonStadistics
+                  mode={props}
+                  onClick={() => {
+                    handleMobileSelected("stadistics");
+                  }}
+                >
+                  <div>
+                    <img src={mobileStadisticsGreen} alt="stadistics" />
+                  </div>
+                  <img src={mobileStadistics} alt="stadistics" />
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </ButtonStadistics>
+
+                <ButtonChat
+                  mode={props}
+                  onClick={() => {
+                    handleMobileSelected("chat");
+                  }}
+                >
+                  <div>
+                    <img src={chatGreen} alt="chat" />
+                  </div>
+                  <img src={chatGrey} alt="chat" />
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </ButtonChat>
+
+                <ButtonLogOut
+                  mode={props}
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  <img src={greenlogout} alt="logout" />
+                </ButtonLogOut>
+              </>
+            ) : (
+              <>
+                <ButtonProfile
+                  mode={props}
+                  onClick={() => {
+                    handleMobileSelected("profile");
+                  }}
+                >
+                  <div>
+                    <img src={mobileProfileGreen} alt="profile" />
+                  </div>
+                  <img src={mobileProfile} alt="profile" />
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </ButtonProfile>
+
+                <ButtonLogOut
+                  mode={props}
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                    <img src={greenlogout} alt="logout" />
+                </ButtonLogOut>
+              </>
+            )}
+          </>
+        )}
       </BottomBar>
     </>
   );
@@ -137,6 +247,37 @@ const ButtonUsers = styled.button`
 
   span img {
     display: ${(props) => (props.mode !== "users" ? "none" : "inline")};
+    width: 72px;
+    height: 25px;
+    position: relative;
+    left: -23px;
+    top: 15px;
+  }
+`;
+
+const ButtonFilteredUsers = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
+
+  img {
+    display: ${(props) => (props.mode !== "filtered" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "filtered" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    top: 40px;
+  }
+
+  span img {
+    display: ${(props) => (props.mode !== "filtered" ? "none" : "inline")};
     width: 72px;
     height: 25px;
     position: relative;
@@ -267,6 +408,13 @@ const ButtonChat = styled.button`
     left: -23px;
     top: 15px;
   }
+`;
+
+const ButtonLogOut = styled.button`
+  display: flex;
+  flex-direction: column !important;
+  border: none;
+  background: transparent;
 `;
 
 export default MobileBar;

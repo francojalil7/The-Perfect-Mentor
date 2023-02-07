@@ -6,6 +6,8 @@ import userReducer from "./user"
 import usersFilterReducer from "./usersFilter";
 import usersInfoReducer from "./usersInfo";
 import usersPerMonthReducer from "./usersPerMonth";
+import mentorsUsersReducer from "./mentorsUsers";
+import menteesUsersReducer from "./menteesUsers";
 
 
 const store = configureStore({
@@ -16,7 +18,9 @@ const store = configureStore({
       totalUsers: totalUsersReducer,
       newUsers: newUsersReducer,
       usersInfo: usersInfoReducer,
-      usersFilter: usersFilterReducer
+      usersFilter: usersFilterReducer,
+      mentorsUsers: mentorsUsersReducer,
+      menteesUsers: menteesUsersReducer,
     },
   });
   

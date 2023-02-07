@@ -1,0 +1,96 @@
+[
+  {
+    "userName": "lolipolitoo",
+    "fullName": "Dolores Polito",
+    "email": "lolipolito@hotmail.com",
+    "password": "lolipolito",
+    "isAdmin": false,
+    "role": "mentee",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 29
+  },
+
+  {
+    "userName": "delfipolito",
+    "fullName": "Delfina Polito",
+    "email": "delfipolito@gmail.com",
+    "password": "delfipolito",
+    "isAdmin": false,
+    "role": "mentor",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 32
+  },
+  {
+    "userName": "facuspagnuolo",
+    "fullName": "Facundo Spagnuolo",
+    "email": "facu@gmail.com",
+    "password": "facuspagnuolo",
+    "isAdmin": false,
+    "role": "mentor",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 32
+  },
+
+  {
+    "userName": "toiacabrera",
+    "fullName": "Victoria Cabrera",
+    "email": "toiacabrera@gmail.com",
+    "password": "toiacabrera",
+    "isAdmin": false,
+    "role": "mentor",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 29
+  },
+
+  {
+    "userName": "inespolito",
+    "fullName": "Ines Polito",
+    "email": "politoines@gmail.com",
+    "password": "inespolito",
+    "isAdmin": false,
+    "role": "mentee",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 24
+  },
+
+  {
+    "userName": "mariacabrera",
+    "fullName": "Maria Cabrera",
+    "email": "mariacabrera@gmail.com",
+    "password": "mariacabrera",
+    "isAdmin": false,
+    "role": "mentee",
+    "status": "VERIFIED",
+    "registerForm": true,
+    "country": "Argentina",
+    "profession": ["fullstack"],
+    "language": ["spanish", "english"],
+    "skills": ["react"],
+    "age": 27
+  }
+]
