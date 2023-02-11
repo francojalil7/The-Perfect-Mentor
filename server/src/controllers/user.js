@@ -127,6 +127,75 @@ const filteredUser = async (req, res) => {
   }
 };
 
+const createRelation = async (req, res) => {
+  // Espera recibir el id de ambos users a actualizar
+  // Colocar res.send y code status
+  // Ver cómo manejar varias relations
+  try {
+    let updateRequesterUser = await User.findOneAndUpdate(
+      {
+        "_id": req.body.notifier,
+      },
+      {
+        $set: {
+          "relations.$[].id": req.body.notified,
+          "relations.$[].match": "pending",
+          "relations.$[].userName": null,
+        },
+      }
+    );
+    let updateRequestedUser = await User.findOneAndUpdate(
+      {
+        "_id": req.body.notified,
+      },
+      {
+        $set: {
+          "relations.$[].id": req.body.notifier,
+          "relations.$[].match": "pending",
+          "relations.$[].userName": req.body.notifierUserName,
+        },
+      }
+    );
+    res.send([updateRequesterUser, updateRequestedUser])
+  } catch (error) {
+    res.send({ error: error.message });
+  }
+};
+
+const updateRelation = async (req, res) => {
+  console.log("req.body en user.js controller", req.body)
+  //Espera recibir el id de los users a actualizar y la respuesta "accepted"/ "rejected"
+  //Colocar res.send y code status
+  //Ver cómo manejar varias relations
+  try {
+    let updateRequesterUser = await User.findOneAndUpdate(
+      {
+        "_id": req.body.user,
+      },
+      {
+        $set: {
+          "relations.$[].id": req.body.otherUserId,
+          "relations.$[].match": req.body.selectedOption,
+        },
+      }
+    );
+    let updateRequestedUser = await User.findOneAndUpdate(
+      {
+        "_id": req.body.otherUserId,
+      },
+      {
+        $set: {
+          "relations.$[].id": req.body.user,
+          "relations.$[].match": req.body.selectedOption,
+        },
+      }
+    );
+    res.status(200).send(updateRequesterUser, updateRequestedUser)
+  } catch (error) {
+    res.status(400).send({ error: error.message })
+  }
+};
+
 module.exports = {
   me,
   updateUser,
@@ -137,5 +206,7 @@ module.exports = {
   newUsers,
   filteredUser,
   mentorUsers,
-  menteeUsers
+  menteeUsers,
+  createRelation,
+  updateRelation
 };

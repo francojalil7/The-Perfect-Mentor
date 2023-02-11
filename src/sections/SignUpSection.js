@@ -48,8 +48,6 @@ const SignUpSection = () => {
   const onSubmit = (data) => {
     console.log(data, "data en dispatch")
     try {
-
-      await
         dispatch(
           signUpUser({
             userName: data.userName,

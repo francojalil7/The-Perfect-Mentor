@@ -187,7 +187,7 @@ export const AdminProfileWhiteRectangle = styled.div`
     0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
   border-radius: 35px;
 
-  height:640px;
+  height: 640px;
 
   @media only screen and (max-width: 700px) {
     display: none;
@@ -1060,8 +1060,6 @@ export const SubTitle1 = styled.h2`
   margin-top: 15px;
 `;
 
-
-
 export const DashboardWhiteRectangle = styled.div`
   position: absolute;
   width: 1128px;
@@ -1087,7 +1085,6 @@ export const DashboardWhiteRectangle = styled.div`
   }
 `;
 
-
 export const DashboardTopRectangle = styled.div`
   position: absolute;
   width: 1128px;
@@ -1109,7 +1106,6 @@ export const DashboardTopRectangle = styled.div`
     width: 500px;
   }
 `;
-
 
 export const DashboardTitle = styled.h2`
   position: absolute;
@@ -1170,7 +1166,6 @@ export const DashboardDetails = styled.div`
   }
 `;
 
-
 export const FirstImage = styled.img`
   position: absolute;
   left: 780px;
@@ -1209,4 +1204,17 @@ export const SecondImage = styled.img`
   }
 `;
 
+export const Bell = styled.img`
+  position: fixed;
+  width: 30px;
+  height: 50px;
+  right: 360px;
+  top: 65px;
+`;
 
+export const Notification = styled.div`
+  width: 250px;
+  height: 100px;
+  border: 3px solid #555;
+  background: #428bca;
+`;

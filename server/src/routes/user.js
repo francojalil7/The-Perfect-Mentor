@@ -10,7 +10,9 @@ const {
   singPerMounth,
   newUsers,
   filteredUser,
-  mentorUsers, menteeUsers
+  mentorUsers, menteeUsers,
+  createRelation,
+  updateRelation
 } = require("../controllers/user");
 
 
@@ -25,6 +27,8 @@ router.get("/totalUsers", /*validateUser,*/ totalUsers);
 router.get("/singPerMounth", /*validateUser,*/ singPerMounth);
 router.get("/newUsers", /*validateUser,*/ newUsers);
 router.get("/filtered/:filter/:value", /*validateUser*/ filteredUser);
+router.put("/createRelation", createRelation);
+router.put("/updateRelation", updateRelation);
 
 module.exports = router;
 

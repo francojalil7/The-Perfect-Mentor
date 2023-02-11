@@ -26,11 +26,6 @@ import {
   SubTitle1,
   Image1,
   Image2,
-<<<<<<< HEAD:src/sections/AdminUsers.js
-=======
-  Title1,
-  SubTitle1,
->>>>>>> main:src/sections/Users.js
 } from "../styles/texts";
 import MobileBar from "../components/MobileBar";
 import MobileUsersInfo from "../components/MobileUsersInfo";
@@ -51,13 +46,10 @@ const AdminUsers = () => {
   const [filter, setFilter] = useState("name");
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
-<<<<<<< HEAD:src/sections/AdminUsers.js
   const [view, setView] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
-=======
 
->>>>>>> main:src/sections/Users.js
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -75,13 +67,9 @@ const AdminUsers = () => {
     fetchUsers();
   }, [search]);
 
-<<<<<<< HEAD:src/sections/AdminUsers.js
   const users = useSelector((state) => state.usersInfo);
   const usersFilter = useSelector((state) => state.usersFilter);
-=======
->>>>>>> main:src/sections/Users.js
   const medium = 700;
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -222,8 +210,4 @@ const AdminUsers = () => {
   );
 };
 
-<<<<<<< HEAD:src/sections/AdminUsers.js
 export default AdminUsers;
-=======
-export default Users;
->>>>>>> main:src/sections/Users.js
