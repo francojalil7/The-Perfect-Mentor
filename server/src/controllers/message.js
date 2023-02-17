@@ -1,23 +1,39 @@
 const Message = require("../models/Message");
-const { socket } = require("../socket");
+const Chat = require("../models/Chat");
+var mongoose = require("mongoose");
+const addMessage = async (req, res) => {
+  try {
+    if (!req.body.message || !req.body.to) {
+      return res.status(404).send({ error: "falta mensaje o destinatario" });
+    }
+    const { to, from, chat, message } = req.body;
+    const mensaje = new Message({ message, to, from, chat });
+    mensaje.save();
 
-const addMessage = async ({ body, user }, res) => {
-  const { message, to } = body;
-  if (!message || !to) {
-    return res.status(404).send({ error: "falta mensaje o destinatario" });
+    const conversacion = await Chat.updateOne(
+      { _id: chat },
+      { $push: { messages: mensaje._id } }
+    );
+
+    res.send(conversacion);
+  } catch (error) {
+    res.send(error);
   }
-  const mensaje = new Message({ message, to, from: user.id });
-  mensaje.save();
-  socket.io.emit("mensaje", mensaje);
-  res.send(mensaje);
 };
 
-const getMessages = async ({ body, user }, res) => {
-  const messages = await Message.find({ from: user.id, to: body.to })
-    .populate("from", "userName")
-    .populate("to", "userName")
-    .exec();
-  res.send(messages);
+const getMessages = async (req, res) => {
+  try {
+    const { chat } = req.query;
+    var objectId = mongoose.Types.ObjectId(chat);
+
+    const messages = await Message.find({ chat: objectId }).populate(
+      "to from",
+      "userName"
+    );
+    res.send(messages);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const updateMessage = async ({ params, body }, res) => {

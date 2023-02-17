@@ -8,8 +8,8 @@ const {
 const { validateUser } = require("../middleware/auth");
 const router = express.Router();
 
-router.post("/", validateUser, addMessage);
-router.get("/get", validateUser, getMessages);
+router.post("/", addMessage);
+router.get("/", getMessages);
 router.put("/:idMessage", validateUser, updateMessage);
 router.delete("/:idMessage", validateUser, deleteMessage);
 

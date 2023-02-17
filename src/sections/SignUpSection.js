@@ -1,14 +1,24 @@
-import React from "react";
-import styled from "styled-components";
-import { Section, SmallRectangle } from "../styles/texts";
-import mentor from "../assets/OnBoarding/Vector.png";
-import SalyImage from "../components/SalyImage";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
+import mentor from '../assets/OnBoarding/Vector.png';
+import email from '../assets/Sing/icon 32px 2/light/email.png';
+import password from '../assets/Sing/icon 32px 3/light/password.png';
+import line from '../assets/Sing/Line 2.png';
+import SalyImage from '../components/SalyImage';
+import { signUpUser } from '../states/user';
 import {
   Button,
+  ErrorMessage,
   GreyButtonInside,
   GreyButtonOutside,
+  H2,
+  Input,
   Line,
+  Section,
+  SmallRectangle,
   VerticalLine,
   Input,
   H2,
@@ -48,7 +58,6 @@ const SignUpSection = () => {
   const onSubmit = (data) => {
     console.log(data, "data en dispatch")
     try {
-
       await
         dispatch(
           signUpUser({
@@ -61,7 +70,6 @@ const SignUpSection = () => {
         localStorage.setItem("signup", "ok")
 
         navigate("/verification");
-      
 
     } catch (error) {
       console.log("error", error);

@@ -49,6 +49,7 @@ const registerCtrl = async (req, res) => {
     await user.save();
 
     res.json({
+      user: user.id,
       succes: true,
       msg: "Registrado correctamente",
     });
@@ -102,9 +103,7 @@ const validateUserCtrl = async (req, res) => {
       msg: "Error al confirmar usuario",
     });
   }
-
 };
-
 
 const loginCtrl = async ({ body }, res) => {
   const user = await User.findOne({ email: body.email });
@@ -112,8 +111,7 @@ const loginCtrl = async ({ body }, res) => {
 
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(body.password, user.password);
-
-
+    
   if (!(user && passwordCorrect)) {
 
     return res.status(400).send({
@@ -161,10 +159,9 @@ const forgotPasswordCtrl = async (req, res) => {
   //Chequea recibir el email por body
   if (!email) {
     res.json({ message: "email is required" });
-      //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
-      return;
+    //El return dentro de este if evita que se produzca el error "Cannot set headers after they are sent to the client" de Axios.
+    return;
   }
-
 
   let verificationLink;
 
@@ -211,7 +208,7 @@ const createNewPasswordCtrl = async (req, res) => {
   //Chequea recibir por params la password y el token
   if (!(newPassword && token)) {
     res.json({ message: "All fields required" });
-    return
+    return;
   }
 
   let jwtPayload;
@@ -224,7 +221,7 @@ const createNewPasswordCtrl = async (req, res) => {
   } catch (error) {
     res.json({ message: error });
   }
-  
+
   //Encripta la contraseña, busca el usuario en la BD y le hace update a la contraseña
   try {
     let passwordHash = await encrypt(newPassword);
@@ -238,7 +235,6 @@ const createNewPasswordCtrl = async (req, res) => {
     res.json({ message: error });
   }
 };
-
 
 module.exports = {
   registerCtrl,

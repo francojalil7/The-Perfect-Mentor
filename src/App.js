@@ -17,7 +17,6 @@ import UsersNew from "./sections/UsersNew";
 // import MailVerification from "./sections/MailVerification";
 
 
-
 function App() {
   const navigate = useNavigate();
 
@@ -43,10 +42,6 @@ function App() {
           <Route path="/stadistics" element={<Stadistics />} />
           <Route path="*" element={<Route404/>} />
         </>
-
-      </Routes>
-    );
-  } 
 
   if (
     localStorage.getItem("email") &&
