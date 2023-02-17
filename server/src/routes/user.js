@@ -10,7 +10,7 @@ const {
   singPerMounth,
   newUsers,
   filteredUser,
-  searchUsers
+  searchUsers,
   mentorUsers, 
   menteeUsers
 } = require("../controllers/user");
