@@ -20,18 +20,9 @@ import {
   Section,
   SmallRectangle,
   VerticalLine,
-  Input,
-  H2,
-  ErrorMessage,
   Text,
 } from "../styles/texts";
 import users from "../assets/Sing/icon 32px/light/user.png";
-import email from "../assets/Sing/icon 32px 2/light/email.png";
-import password from "../assets/Sing/icon 32px 3/light/password.png";
-import line from "../assets/Sing/Line 2.png";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { signUpUser } from "../states/user";
 import {  useNavigate } from "react-router-dom";
 
 // Messages
@@ -55,7 +46,7 @@ const SignUpSection = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data, "data en dispatch")
     try {
       await
