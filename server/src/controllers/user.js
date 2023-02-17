@@ -163,7 +163,7 @@ const createRelation = async (req, res) => {
 };
 
 const updateRelation = async (req, res) => {
-  console.log("req.body en user.js controller", req.body)
+  console.log("req.body en user.js controllerSSS", req.body)
   //Espera recibir el id de los users a actualizar y la respuesta "accepted"/ "rejected"
   //Colocar res.send y code status
   //Ver cómo manejar varias relations
@@ -174,7 +174,7 @@ const updateRelation = async (req, res) => {
       },
       {
         $set: {
-          "relations.$[].id": req.body.otherUserId,
+          // "relations.$[].id": req.body.otherUserId,
           "relations.$[].match": req.body.selectedOption,
         },
       }
@@ -185,12 +185,12 @@ const updateRelation = async (req, res) => {
       },
       {
         $set: {
-          "relations.$[].id": req.body.user,
+        //   "relations.$[].id": req.body.user,
           "relations.$[].match": req.body.selectedOption,
         },
       }
     );
-    res.status(200).send(updateRequesterUser, updateRequestedUser)
+    res.status(200).send([updateRequesterUser, updateRequestedUser])
   } catch (error) {
     res.status(400).send({ error: error.message })
   }

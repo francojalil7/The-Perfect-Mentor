@@ -152,24 +152,26 @@ const UsersNew = () => {
 
   //Setea el valor del botón seleccionado (Si/No)
   const notificationLogic = (e) => {
-    setResponseNotificationValue(e.target.value)
-    notificationResponse(e)
+    // setResponseNotificationValue(e.target.value)
+    notificationResponse(e.target.value)
   };
 
   //quedé aca<------------------------ me falta lograr q se actualice en pendign/rejected
   //Función para el mentor
   //Actualiza los valores en la db, cierra el div, cambia la imagen de la campanita
-  const notificationResponse = async (e) => {
+  const notificationResponse = async (optionSelected) => {
     console.log("entré a notif response")
-    const mentorEmail = localStorage.getItem("email");
-    const mentorId = localStorage.getItem("id")
-    const mentee = await axios
-      .get(`http://localhost:5001/user/me/${mentor}`)
-      .then((response) => {
-        const id = response.data.notifications[0].id;
-      });
+    const mentorEmail = localStorage.getItem("email")
+    
+    // Obtener menteeId mediante una solicitud GET y esperar la respuesta
+    const menteeResponse = await axios.get(`http://localhost:5001/user/me/${mentorEmail}`);
+    console.log("menteeResponse", menteeResponse)
+    const mentorId = menteeResponse.data._id;
+    const menteeId = menteeResponse.data.relations[0].id;
+    
+    // Realizar la solicitud PUT con los datos actualizados
     const response = await axios.put(
-      "http://localhost:5001/user/updateRelation", {user: mentorId, otherUserId: mentee, selectedOption: responseNotificationValue}
+      "http://localhost:5001/user/updateRelation", {"user": mentorId, "otherUserId": menteeId, "selectedOption": optionSelected}
     );
   };
 
