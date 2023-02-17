@@ -75,7 +75,7 @@ const UserSchema = new Schema({
   },
   notifications: {
     type: Array,
-    default: [{id: 0, pending: false}]
+    default: [{pending: false}]
   }
 });
 

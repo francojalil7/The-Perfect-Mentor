@@ -55,8 +55,8 @@ const UsersNew = () => {
   const [usersPerPage, setUsersPerPage] = useState(9);
   const [pendingNotification, setPendingNotification] = useState();
   const [toNotifyUser, setToNotifyUser] = useState();
-  const [showNotification, setShowNotification] = useState(true);
-  const [responseNotificationValue, setResponseNotificationValue] = useState();
+  const [showNotification, setShowNotification] = useState(false);
+  const [openNotification, setOpenNotification] = useState(false);
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -115,65 +115,66 @@ const UsersNew = () => {
 
   const medium = 700;
 
-  //Lógica notificaciones
+  //-------Inicio Lógica notificaciones------
 
-  //Consulta si el user tiene una notificación con pending true
-  //Espera recibir user email
-  //Busca en el user los valores en notifications, si hay alguna pendiente y el user id a notificar y lo mete en un estado
-  //Se va a llamar con el chron cada 1 minuto
+  //La función "notificationStack" consulta si el mentor tiene una notificación que está pendiente de ser mostrada y lo muestra en el frontend.
+  //Esta función se ejecuta cada 1 minuto de manera persistente para chequear si existe una notificación pendiente
   const notificationStack = async () => {
-    console.log("entre a notif stack")
     let mentor = localStorage.getItem("email");
     let search = await axios
       .get(`http://localhost:5001/user/me/${mentor}`)
       .then((response) => {
-        const pending = response.data.notifications[0].pending;
-        const id = response.data.notifications[0].id;
-        //Setea el valor de pending en true/false
-        setPendingNotification(pending);
-        //setea el valor del userId a notificar
-        setToNotifyUser(id);
+        const pendingValue = response.data.notifications[0].pending;
+        const userName = response.data.relations[0].userName;
+        //Setea el valor de pendingNotification en true/false, según exista o no una notificación pendiente
+        setPendingNotification(pendingValue);
+        //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
+        setToNotifyUser(userName);
       });
     if (pendingNotification) {
-      //Estado para lanzar la campanita con botón rojo
+      //Estado para lanzar la campanita con botón rojo si existe una notificación
       setShowNotification(true);
     }
   };
-  notificationStack()
+  notificationStack();
 
-  //Función para el click en la campanita con botón rojo
-  //Debe abrir el div y setear el valor de mentee con el que se va a conectar
-  //El div debe estar posicionado sobre la campanita
-  const openNotificationDiv = async () => {
-    //lógica para abrir el div
-    //Se abre si el valor de showNotif está en true
-
+  //La función "openNotificationDiv" se ejecuta al hacer click sobre la campanita de notificación con botón rojo
+  //Abre el div de notificación con el nombre del username a conectar
+  //El div se posicionará sobre la campanita, ahora sin botón rojo
+  const openNotificationDiv = () => {
+    setOpenNotification(true);
   };
 
-  //Setea el valor del botón seleccionado (Si/No)
+  //La función "notificationLogic" captura el valor del botón seleccionado para aceptar o rechazar la solicitud de relación
   const notificationLogic = (e) => {
-    // setResponseNotificationValue(e.target.value)
-    notificationResponse(e.target.value)
+    notificationResponse(e.target.value);
   };
 
-  //quedé aca<------------------------ me falta lograr q se actualice en pendign/rejected
-  //Función para el mentor
-  //Actualiza los valores en la db, cierra el div, cambia la imagen de la campanita
+  //La función notificationResponse tiene la finalidad de actualizar en la db los valores de en user.relations.
+
+  //Actualiza los valores en la db, cierra el div, ------------------->cambia la imagen de la campanita?
   const notificationResponse = async (optionSelected) => {
-    console.log("entré a notif response")
-    const mentorEmail = localStorage.getItem("email")
-    
+    const mentorEmail = localStorage.getItem("email");
+
     // Obtener menteeId mediante una solicitud GET y esperar la respuesta
-    const menteeResponse = await axios.get(`http://localhost:5001/user/me/${mentorEmail}`);
-    console.log("menteeResponse", menteeResponse)
-    const mentorId = menteeResponse.data._id;
-    const menteeId = menteeResponse.data.relations[0].id;
-    
+    const usersData = await axios.get(
+      `http://localhost:5001/user/me/${mentorEmail}`
+    );
+    const mentorId = usersData.data._id;
+    const menteeId = usersData.data.relations[0].id;
+
     // Realizar la solicitud PUT con los datos actualizados
     const response = await axios.put(
-      "http://localhost:5001/user/updateRelation", {"user": mentorId, "otherUserId": menteeId, "selectedOption": optionSelected}
+      "http://localhost:5001/user/updateRelation",
+      { user: mentorId, otherUserId: menteeId, selectedOption: optionSelected }
     );
+
+    //Cierra el div y cambia la imagen de la campanita sin botón rojo
+    setOpenNotification(false);
+    setShowNotification(false);
   };
+
+  //-------Fin Lógica notificaciones------
 
   return (
     <PagesSection>
@@ -187,20 +188,29 @@ const UsersNew = () => {
                 {role === "mentor" ? " Mentees" : "Mentors"}
               </DashboardTitle>
               <DashboardSubtitle>View all the users</DashboardSubtitle>
+              {/* Bell Logic */}
               {showNotification ? (
-                <Bell src="bell-notification-alert.svg"></Bell>
+                <Bell
+                  onClick={openNotificationDiv}
+                  src="bell-notification-alert.svg"
+                ></Bell>
               ) : (
                 <Bell src="bell-notification.svg"></Bell>
               )}
-              <Notification>
-                <p>Accept username as a Mentee?</p>
-                <button onClick={notificationLogic} value={"accepted"}>
-                  Yes
-                </button>
-                <button onClick={notificationLogic} value={"rejected"}>
-                  No
-                </button>
-              </Notification>
+              {/* Notification Div Logic */}
+              {openNotification ? (
+                <Notification>
+                  <p>Accept {toNotifyUser} as a Mentee?</p>
+                  <button onClick={notificationLogic} value={"accepted"}>
+                    Yes
+                  </button>
+                  <button onClick={notificationLogic} value={"rejected"}>
+                    No
+                  </button>
+                </Notification>
+              ) : (
+                <></>
+              )}
             </DashboardTopRectangle>
             <DashboardDetails>
               <FirstImage src="doodle1.svg"></FirstImage>

@@ -129,8 +129,7 @@ const filteredUser = async (req, res) => {
 
 const createRelation = async (req, res) => {
   // Espera recibir el id de ambos users a actualizar
-  // Colocar res.send y code status
-  // Ver cómo manejar varias relations
+  // Queda pendiente ver cómo manejar varias relations
   try {
     let updateRequesterUser = await User.findOneAndUpdate(
       {
@@ -153,6 +152,7 @@ const createRelation = async (req, res) => {
           "relations.$[].id": req.body.notifier,
           "relations.$[].match": "pending",
           "relations.$[].userName": req.body.notifierUserName,
+          "notifications.$[].pending": true
         },
       }
     );
@@ -176,6 +176,7 @@ const updateRelation = async (req, res) => {
         $set: {
           // "relations.$[].id": req.body.otherUserId,
           "relations.$[].match": req.body.selectedOption,
+          "notifications.$[].pending": false
         },
       }
     );
