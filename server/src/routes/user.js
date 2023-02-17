@@ -10,6 +10,7 @@ const {
   singPerMounth,
   newUsers,
   filteredUser,
+  searchUsers
 } = require("../controllers/user");
 
 
@@ -22,6 +23,7 @@ router.get("/totalUsers", /*validateUser,*/ totalUsers);
 router.get("/singPerMounth", /*validateUser,*/ singPerMounth);
 router.get("/newUsers", /*validateUser,*/ newUsers);
 router.get("/filtered/:filter/:value", /*validateUser*/ filteredUser);
+router.get("/search/:value",searchUsers);
 
 module.exports = router;
 

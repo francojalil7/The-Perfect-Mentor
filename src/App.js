@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 import ForgotPassword from "./sections/ForgotPassword";
 import Chat from "./sections/Chat";
+
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,45 +35,24 @@ function App() {
     }
   }, [user.succes]);
 
-  if (user.user || userByEmail) {
-    return (
-      <Routes>
-        {user.user !== "undefined" ? (
-          <>
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/stadistics" element={<Stadistics />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/chat" element={<Chat />} />
-          </>
-        ) : (
-          <>
-            <Route path="/signin" element={<SignInSection />} />
-          </>
-        )}
-      </Routes>
-    );
-  } else {
-    return (
-      <Routes>
-        {user.succes ? (
-          <>
-            <Route path="/verification" element={<MailVerification />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<OnBoarding />} />
-            <Route path="/signup" element={<SignUpSection />} />
-            <Route path="/signin" element={<SignInSection />} />
-            <Route path="/forgotpass" element={<ForgotPassword />} />
-            <Route path="/changepass/:token" element={<ChangePassword />} />
-          </>
-        )}
-        <></>
-      </Routes>
-    );
-  }
+  return (
+    <Routes>
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/users" element={<Users />} />
+      <Route path="/reports" element={<Reports />} />
+      <Route path="/stadistics" element={<Stadistics />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/chat" element={<Chat />} />
+      <Route path="/signin" element={<SignInSection />} />
+      <Route path="/verification" element={<MailVerification />} />
+      <Route path="/" element={<OnBoarding />} />
+      <Route path="/signup" element={<SignUpSection />} />
+      <Route path="/signin" element={<SignInSection />} />
+      <Route path="/forgotpass" element={<ForgotPassword />} />
+      <Route path="/changepass/:token" element={<ChangePassword />} />
+      <Route path="/search/:value" element={<Chat />} />
+    </Routes>
+  );
 }
 
 export default App;

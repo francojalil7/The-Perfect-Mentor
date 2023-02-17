@@ -1,16 +1,15 @@
 const express = require("express");
+const http = require("http");
 const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
 const router = require("./routes");
 const dbConnect = require("./db/index");
-const server = require("http").Server(app);
-const socket = require("./socket");
+const server = http.createServer(app);
 
 dotenv.config();
 app.use(cors()); //acepta todas las URL
 app.use(express.json());
-socket.connect(server);
 app.use(router);
 
 dbConnect().then(() => {
