@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const dbConnect = async () => {
   const DB_URI = process.env.DB_URI;
 
@@ -16,7 +17,12 @@ const dbConnect = async () => {
       }
     }
   );
+
+  
+
 };
+
+
 
 module.exports = dbConnect;
 

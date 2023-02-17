@@ -104,6 +104,9 @@ const Chat = () => {
     if (username?.length === 1) setReceiverUsername(username[0].userName);
   }, [traerMensajes, selectedChat]);
 
+
+  const [messages, setMessages] = useState([])
+
   useEffect(() => {
     setView(window.location.href.split("/")[3]);
     window.addEventListener("resize", () => setWidth(window.innerWidth));
@@ -128,6 +131,7 @@ const Chat = () => {
       })
       .catch((err) => setPeopleChat([]));
   };
+
 
   const handleSelectChat = function (person) {
     if (location.pathname.includes("search")) {

@@ -12,4 +12,5 @@ router.get("/", getChats);
 router.get("/selectedChat", selectedChat);
 router.post("/new", validateUser, newChat);
 router.delete("/", validateUser, deleteChat);
+
 module.exports = router;

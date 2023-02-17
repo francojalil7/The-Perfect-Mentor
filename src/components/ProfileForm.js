@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import Select from "react-select";
 import useInput from "../hooks/useInput";
+import edit from "../assets/Profile/Group 5.png";
 
 const ProfileForm = () => {
   const navigate = useNavigate();
@@ -51,21 +52,15 @@ const ProfileForm = () => {
   }, []);
 
   let user = useSelector((state) => state.user);
- 
   const age = useInput(user.age);
   const fullName = useInput(user.fullName);
-  // const role = useInput(user.role);
   const description = useInput(user.description);
   const country = useInput(user.country);
-  // const language = useInput(user.language);
-  // const skills = useInput(user.skills);
-  // const profession = useInput(user.profession);
 
   const [selected, setSelected] = useState([]);
   const [selectedRole, setSelectedRole] = useState([]);
   const [selectedProfession, setSelectedProfession] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
-
   const onSubmit = (data) => {
     const languages = selected.map((option) => {
       return option.value;
@@ -84,137 +79,168 @@ const ProfileForm = () => {
         language: languages,
         skills: skills,
         profession: selectedProfession.value,
-        registerForm: true
+        registerForm: true,
       })
     );
 
-    navigate("/reports");
+    navigate("/chat");
   };
   return (
     <>
-      <FormContainer>
+      <FormContainer
+       mode={localStorage.getItem("isAdmin")}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Label>
-            User name: <strong>{user.userName}</strong>
-          </Label>
-          <br />
-          <br />
-          <Label>
-            Your email: <strong>{user.email}</strong>
-          </Label>
-          <br />
-          <br />
-          <Label>Full Name</Label>
-          <ProfileInput
-            {...register("fullName")}
-            value={fullName.value}
-            onChange={fullName.onChange}
-          />
+          {localStorage.getItem("isAdmin") === "true" ? (
+            <>
+              <Label>
+                User name: <strong>{user.userName}</strong>
+              </Label>
+              <br />
+              <br />
+              <Label>
+                Your email: <strong>{user.email}</strong>
+              </Label>
+              <br />
+              <br />
 
-          {errors.fullName &&
-            errors.fullName.type === "required" &&
-            errorMessage(required)}
-          <Label>Age</Label>
-          <ProfileInput
-            {...register("age")}
-            value={age.value}
-            onChange={age.onChange}
-          />
+              <Label>
+                Full Name: <strong>{user.fullName}</strong>
+              </Label>
+              <br />
+              <br />
 
-          {errors.age &&
-            errors.age.type === "required" &&
-            errorMessage(required)}
+              <Label>
+                Country: <strong>{user.country}</strong>
+              </Label>
+              <br />
+              <br />
 
-          <Label>Country of residence</Label>
-          <ProfileInput
-            {...register("country")}
-            value={country.value}
-            onChange={country.onChange}
-          />
+              <Label>
+                Age: <strong>{user.age}</strong>
+              </Label>
+            </>
+          ) : (
+            <>
+              <Label>
+                User name: <strong>{user.userName}</strong>
+              </Label>
+              <br />
+              <br />
+              <Label>
+                Your email: <strong>{user.email}</strong>
+              </Label>
+              <br />
+              <br />
+              <Label>Full Name</Label>
+              <ProfileInput
+                {...register("fullName")}
+                value={fullName.value}
+                onChange={fullName.onChange}
+              />
 
-          {errors.country &&
-            errors.country.type === "required" &&
-            errorMessage(required)}
+              {errors.fullName &&
+                errors.fullName.type === "required" &&
+                errorMessage(required)}
+              <Label>Age</Label>
+              <ProfileInput
+                {...register("age")}
+                value={age.value}
+                onChange={age.onChange}
+              />
 
-         <Label>Role</Label>
+              {errors.age &&
+                errors.age.type === "required" &&
+                errorMessage(required)}
 
-          <SelectedContainer>
-            <Select
-              options={roleOptions}
-              onChange={setSelectedRole}
-              value={selectedRole}
-              placeholder={user.role}
-              isSearchable={false}
-              required
-            />
-          </SelectedContainer>
+              <Label>Country of residence</Label>
+              <ProfileInput
+                {...register("country")}
+                value={country.value}
+                onChange={country.onChange}
+              />
 
-          {errors.role &&
-            errors.role.type === "required" &&
-            errorMessage(required)}
+              {errors.country &&
+                errors.country.type === "required" &&
+                errorMessage(required)}
+              <Label>Role</Label>
 
- 
-          <Label>Profession</Label>
+              <SelectedContainer>
+                <Select
+                  options={roleOptions}
+                  onChange={setSelectedRole}
+                  value={selectedRole}
+                  placeholder={user.role}
+                  isSearchable={false}
+                  required
+                />
+              </SelectedContainer>
 
-          <SelectedContainer>
-            <Select
-              options={professionOptions}
-              onChange={setSelectedProfession}
-              value={selectedProfession}
-              placeholder={user.profession}
-              isSearchable={false}
-              required
-            />
-          </SelectedContainer>
+              {errors.role &&
+                errors.role.type === "required" &&
+                errorMessage(required)}
 
-          <Label>Skills</Label>
+              <Label>Profession</Label>
 
-          <Options>
-            <MultiSelect
-              name="skills"
-              options={skillsOptions}
-              value={selectedSkills}
-              onChange={setSelectedSkills}
-  
-        
-              required
-            />
-          </Options>
+              <SelectedContainer>
+                <Select
+                  options={professionOptions}
+                  onChange={setSelectedProfession}
+                  value={selectedProfession}
+                  placeholder={user.profession}
+                  isSearchable={false}
+                  required
+                />
+              </SelectedContainer>
 
-          {errors.language &&
-            errors.language.type === "required" &&
-            errorMessage(required)}
+              <Label>Skills</Label>
 
-          <Label>Language</Label>
+              <Options>
+                <MultiSelect
+                  name="skills"
+                  options={skillsOptions}
+                  value={selectedSkills}
+                  onChange={setSelectedSkills}
+                  required
+                />
+              </Options>
 
-          <Options>
-            <MultiSelect
-              name="language"
-              options={options}
-              value={selected}
-              onChange={setSelected}
-          
-            />
-          </Options>
+              {errors.language &&
+                errors.language.type === "required" &&
+                errorMessage(required)}
 
-          {errors.language &&
-            errors.language.type === "required" &&
-            errorMessage(required)} 
+              <Label>Language</Label>
 
-          <Label>Description</Label>
-          <ProfileInput
-            {...register("description")}
-            value={description.value}
-            onChange={description.onChange}
-          />
+              <Options>
+                <MultiSelect
+                  name="language"
+                  options={options}
+                  value={selected}
+                  onChange={setSelected}
+                />
+              </Options>
 
-          {errors.description &&
-            errors.description.type === "required" &&
-            errorMessage(required)}
+              {errors.language &&
+                errors.language.type === "required" &&
+                errorMessage(required)}
 
-          <SaveChangesButton onClick={handleSubmit(onSubmit)}>
-            Save changes
-          </SaveChangesButton>
+              <Label>Description</Label>
+              <ProfileInput
+                {...register("description")}
+                value={description.value}
+                onChange={description.onChange}
+              />
+
+              {errors.description &&
+                errors.description.type === "required" &&
+                errorMessage(required)}
+
+              <SaveChangesButton onClick={handleSubmit(onSubmit)}>
+                <p>Save </p>
+                <Logo src={edit} alt="edit" />
+              </SaveChangesButton>
+            </>
+          )}
+
           <span></span>
         </form>
       </FormContainer>
@@ -240,14 +266,20 @@ const errorMessage = (error) => {
 
 const FormContainer = styled.div`
   display: flex;
-  margin-top: 150px;
+  margin-top: 70px;
+  margin-left:${(props) =>
+    props.mode !== "true" ? "0px" : "-200px"};
 
   form {
     justify-content: center !important;
   }
 
   @media only screen and (max-width: 700px) {
-    margin-top: 70px;
+    margin-top: ${(props) =>
+    props.mode !== "true" ? "70px" : "100px"};
+    margin-left:${(props) =>
+    props.mode !== "true" ? "0px" : "-30px"};
+
   }
 `;
 
@@ -281,7 +313,8 @@ const SaveChangesButton = styled.button`
   position: relative;
   left: 220px;
   width: 120px;
-  height: 30px;
+  height: 40px;
+cursor: pointer;
 
   border: 1px solid rgba(68, 68, 68, 0.15);
   background: transparent;
@@ -296,9 +329,15 @@ const SaveChangesButton = styled.button`
   font-size: 14px;
   line-height: 22px;
   color: rgba(68, 68, 68, 0.5);
-  margin-top: 20px;
+  margin-top: 10px;
   @media only screen and (max-width: 700px) {
     left: 110px;
+  }
+
+  :hover{
+    background-color: 
+rgba(191, 215, 50, 1);
+
   }
 `;
 
@@ -324,6 +363,13 @@ const SelectedContainer = styled.div`
     top: 5px;
     width: 90%;
   }
+`;
+
+const Logo = styled.img`
+  width: 20px;
+  height: 21px;
+  padding-right: 10px;
+  padding-left: 10px;
 `;
 
 export default ProfileForm;

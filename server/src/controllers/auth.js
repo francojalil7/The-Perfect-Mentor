@@ -108,14 +108,17 @@ const validateUserCtrl = async (req, res) => {
 const loginCtrl = async ({ body }, res) => {
   const user = await User.findOne({ email: body.email });
 
+
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(body.password, user.password);
-  
+    
   if (!(user && passwordCorrect)) {
+
     return res.status(400).send({
       error: "invalid username or password",
     });
   }
+
 
   if (user.status === "UNVERIFIED") {
     return res.status(401).send({
@@ -124,10 +127,12 @@ const loginCtrl = async ({ body }, res) => {
   }
 
   const token = generateToken(user);
+  
   return res.status(200).send({ user, token });
 };
 
 const completeRegisterCtrl = async ({ body }, res) => {
+  console.log("Es body en auth", body)
   const filter = { email: body.email };
   let update = {
     fullName: body.fullName,
@@ -144,8 +149,8 @@ const completeRegisterCtrl = async ({ body }, res) => {
   let updatedUser = await User.findOneAndUpdate(filter, update, {
     returnOriginal: false,
   });
-
-  res.status(201).send(updatedUser);
+  updatedUser.role = body.role;
+  return res.status(201).send(updatedUser);
 };
 
 const forgotPasswordCtrl = async (req, res) => {

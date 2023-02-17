@@ -12,7 +12,10 @@ import logout from "../assets/Bar/login.png";
 import mask from "../assets/Bar/Mask group.svg";
 import { setUser } from "../states/user";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+import chatGreen from "../assets/greenchat24.png";
+import chatGrey from "../assets/greychat30.png";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -20,15 +23,15 @@ const Sidebar = () => {
   const [selected, setSelected] = useState("");
   const [age, setAge] = useState(0);
   const [view, setView] = useState("");
+  const [role, setRole] = useState("");
 
   const handleSelected = (view) => {
     setSelected(view);
     navigate(`/${view}`);
   };
 
-  const user = useSelector((state) => state.user);
-
   useEffect(() => {
+    setRole(localStorage.getItem("role"));
     setAge(localStorage.getItem("age"));
     setView(window.location.href.split("/")[3]);
   }, []);
@@ -36,95 +39,154 @@ const Sidebar = () => {
   const handleLogout = () => {
     localStorage.clear();
     dispatch(setUser({}));
-    navigate("/");
+    navigate("/signIn");
   };
 
   return (
     <SidebarContainer>
-      {age === 0 ? (
-        <>
-          <SidebarButtonProfile onClick={() => handleSelected("profile")}>
-            <div>
-              <img src={profileGreen} alt="profile" />
-            </div>
-            <img src={profile} alt="profile" />
+      <>
+        {localStorage.getItem("isAdmin") === "true" ? (
+          <>
+            <SidebarButtonProfile
+              mode={view}
+              onClick={() => handleSelected("profile")}
+            >
+              <div>
+                <img src={profileGreen} alt="profile" />
+              </div>
+              <img src={profile} alt="profile" />
 
-            <p>Profile</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonProfile>
-        </>
-      ) : (
-        <>
-          <SidebarButtonUsers
-            mode={view}
-            onClick={() => handleSelected("users")}
-          >
-            <div>
-              <img src={usersGreen} alt="users" />
-            </div>
+              <p>Profile</p>
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </SidebarButtonProfile>
+            <SidebarButtonUsers
+              mode={view}
+              onClick={() => handleSelected("users")}
+            >
+              <div>
+                <img src={usersGreen} alt="users" />
+              </div>
 
-            <img src={users} alt="users" />
+              <img src={users} alt="users" />
 
-            <p>Users</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonUsers>
-          <SidebarButtonStadistics
-            mode={view}
-            onClick={() => handleSelected("stadistics")}
-          >
-            <div>
-              <img src={stadisticsGreen} alt="stadistics" />
-            </div>
-            <img src={stadistics} alt="stadistics" />
+              <p>Users</p>
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </SidebarButtonUsers>
+            <SidebarButtonStadistics
+              mode={view}
+              onClick={() => handleSelected("stadistics")}
+            >
+              <div>
+                <img src={stadisticsGreen} alt="stadistics" />
+              </div>
+              <img src={stadistics} alt="stadistics" />
 
-            <p>Stadistics</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonStadistics>
-          <SidebarButtonReports mode={view} onClick={() => handleSelected("reports")}>
-            <div>
-              <img src={reportsGreen} alt="reports" />
-            </div>
-            <img src={reports} alt="reports" />
+              <p>Stadistics</p>
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </SidebarButtonStadistics>
+            <SidebarButtonReports
+              mode={view}
+              onClick={() => handleSelected("reports")}
+            >
+              <div>
+                <img src={reportsGreen} alt="reports" />
+              </div>
+              <img src={reports} alt="reports" />
 
-            <p>Reports</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonReports>
-          <SidebarButtonProfile mode={view} onClick={() => handleSelected("profile")}>
-            <div>
-              <img src={profileGreen} alt="profile" />
-            </div>
-            <img src={profile} alt="profile" />
+              <p>Reports</p>
+              <span>
+                <img src={mask} alt="mask" />
+              </span>
+            </SidebarButtonReports>
+          </>
+        ) : (
+          <>
+            {age === 0 ? (
+              <>
+                <SidebarButtonProfile onClick={() => handleSelected("profile")}>
+                  <div>
+                    <img src={profileGreen} alt="profile" />
+                  </div>
+                  <img src={profile} alt="profile" />
 
-            <p>Profile</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonProfile>
+                  <p>Profile</p>
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </SidebarButtonProfile>
+              </>
+            ) : (
+              <>
+                <SidebarButtonProfile
+                  mode={view}
+                  onClick={() => handleSelected("profile")}
+                >
+                  <div>
+                    <img src={profileGreen} alt="profile" />
+                  </div>
+                  <img src={profile} alt="profile" />
 
-          <SidebarButtonChat mode={view} onClick={() => handleSelected("chat")}>
-            <div>
-              <img src="chat1big.svg" alt="chat" />
-            </div>
-            <img src="chat1big.svg" alt="chat" />
+                  <p>Profile</p>
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </SidebarButtonProfile>
 
-            <p>Chat</p>
-            <span>
-              <img src={mask} alt="mask" />
-            </span>
-          </SidebarButtonChat>
-        </>
-      )}
+                <SidebarButtonFilteredUsers
+                  mode={view}
+                  onClick={() => handleSelected("filtered")}
+                >
+                  <div>
+                    <img src={usersGreen} alt="filtered" />
+                  </div>
+                  <img src={users} alt="filtered" />
+
+                  <p>{role === "mentor" ? "Mentees" : "Mentors"}</p>
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </SidebarButtonFilteredUsers>
+                <SidebarButtonStadistics
+                  mode={view}
+                  onClick={() => handleSelected("stadistics")}
+                >
+                  <div>
+                    <img src={stadisticsGreen} alt="stadistics" />
+                  </div>
+                  <img src={stadistics} alt="stadistics" />
+
+                  <p>Stadistics</p>
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </SidebarButtonStadistics>
+                <SidebarButtonChat
+                  mode={view}
+                  onClick={() => handleSelected("chat")}
+                >
+                  <div>
+                    <img src={chatGreen} alt="chat" />
+                  </div>
+                  <img src={chatGrey} alt="chat" />
+
+                  <p>Chat</p>
+                  <span>
+                    <img src={mask} alt="mask" />
+                  </span>
+                </SidebarButtonChat>
+              </>
+            )}
+          </>
+        )}
+      </>
       <LogoutButton mode={view} onClick={() => handleLogout()}>
         <img src={logout} alt="logout" />
-        <p>Logout</p>
       </LogoutButton>
     </SidebarContainer>
   );
@@ -151,7 +213,7 @@ const SidebarButtonUsers = styled.button`
     font-size: 16px;
     line-height: 24px;
     color: ${(props) =>
-    props.mode !== "users" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+      props.mode !== "users" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
 
   img {
@@ -172,13 +234,12 @@ const SidebarButtonUsers = styled.button`
   span img {
     width: 72px;
     height: 72px;
-    display: ${(props) => (props.mode !== "users" ? "none" : "inline")
-  }}
-
+    display: ${(props) => (props.mode !== "users" ? "none" : "inline")};
+  }
 
   :hover {
     background: #444444;
-    p{
+    p {
       color: #bfd732 !important;
     }
 
@@ -208,7 +269,7 @@ const SidebarButtonStadistics = styled.button`
     font-size: 16px;
     line-height: 24px;
     color: ${(props) =>
-    props.mode !== "stadistics" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+      props.mode !== "stadistics" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
 
   img {
@@ -229,12 +290,12 @@ const SidebarButtonStadistics = styled.button`
   span img {
     width: 72px;
     height: 72px;
-    display: ${(props) => (props.mode !== "stadistics" ? "none" : "inline")
-  }}
+    display: ${(props) => (props.mode !== "stadistics" ? "none" : "inline")};
+  }
 
   :hover {
     background: #444444;
-    p{
+    p {
       color: #bfd732 !important;
     }
 
@@ -264,7 +325,7 @@ const SidebarButtonReports = styled.button`
     font-size: 16px;
     line-height: 24px;
     color: ${(props) =>
-    props.mode !== "reports" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+      props.mode !== "reports" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
 
   img {
@@ -285,12 +346,12 @@ const SidebarButtonReports = styled.button`
   span img {
     width: 72px;
     height: 72px;
-    display: ${(props) => (props.mode !== "reports" ? "none" : "inline")
-  }}
+    display: ${(props) => (props.mode !== "reports" ? "none" : "inline")};
+  }
 
   :hover {
     background: #444444;
-    p{
+    p {
       color: #bfd732 !important;
     }
 
@@ -320,7 +381,7 @@ const SidebarButtonProfile = styled.button`
     font-size: 16px;
     line-height: 24px;
     color: ${(props) =>
-    props.mode !== "profile" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+      props.mode !== "profile" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
 
   img {
@@ -341,12 +402,12 @@ const SidebarButtonProfile = styled.button`
   span img {
     width: 72px;
     height: 72px;
-    display: ${(props) => (props.mode !== "profile" ? "none" : "inline")
-  }}
+    display: ${(props) => (props.mode !== "profile" ? "none" : "inline")};
+  }
 
   :hover {
     background: #444444;
-    p{
+    p {
       color: #bfd732 !important;
     }
 
@@ -376,7 +437,7 @@ const SidebarButtonChat = styled.button`
     font-size: 16px;
     line-height: 24px;
     color: ${(props) =>
-    props.mode !== "chat" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+      props.mode !== "chat" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
   }
 
   img {
@@ -397,12 +458,69 @@ const SidebarButtonChat = styled.button`
   span img {
     width: 72px;
     height: 72px;
-    display: ${(props) => (props.mode !== "chat" ? "none" : "inline")
-  }}
+    display: ${(props) => (props.mode !== "chat" ? "none" : "inline")};
+  }
 
   :hover {
     background: #444444;
-    p{
+    p {
+      color: #bfd732 !important;
+    }
+
+    img {
+      display: none;
+    }
+    div img {
+      width: 20px;
+      height: 21px;
+      padding-right: 10px;
+      display: flex;
+    }
+  }
+`;
+
+const SidebarButtonFilteredUsers = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  border: none;
+  background-color: ${(props) =>
+    props.mode !== "filtered" ? "#bfd732" : "#444444"};
+  width: 280px;
+  p {
+    font-family: "Heebo";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${(props) =>
+      props.mode !== "filtered" ? "rgba(68, 68, 68, 0.5)" : "#bfd732"};
+  }
+
+  img {
+    display: ${(props) => (props.mode !== "filtered" ? "flex" : "none")};
+    width: 20px;
+    height: 21px;
+    padding-right: 10px;
+  }
+
+  div img {
+    display: ${(props) => (props.mode !== "filtered" ? "none" : "flex")};
+  }
+
+  span {
+    position: absolute;
+    left: 223px;
+  }
+  span img {
+    width: 72px;
+    height: 72px;
+    display: ${(props) => (props.mode !== "filtered" ? "none" : "inline")};
+  }
+
+  :hover {
+    background: #444444;
+    p {
       color: #bfd732 !important;
     }
 
@@ -425,8 +543,10 @@ const LogoutButton = styled.button`
   border: none;
   padding-left: 10px;
   color: rgba(68, 68, 68, 0.5);
+  margin-left: 10px;
+  margin-top: 10px;
 
-  margin-top: ${(props) => (props.mode !== "chat" ? "300px" : "100px")};
+  /* margin-top: ${(props) => (props.mode !== "chat" ? "300px" : "100px")}; */
 
   p {
     margin-left: 10px;

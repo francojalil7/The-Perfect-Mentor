@@ -1,58 +1,91 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import OnBoarding from "./sections/OnBoarding";
 import SignUpSection from "./sections/SignUpSection";
 import SignInSection from "./sections/SignInSection";
 import Profile from "./sections/Profile";
 import Stadistics from "./sections/Stadistics";
-import Users from "./sections/Users";
+import AdminUsers from "./sections/AdminUsers";
 import Reports from "./sections/Reports";
-import MailVerification from "./sections/MailVerification";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Dashboard from "./sections/Dashboard";
 import "./App.css";
-import { getUserMail } from "./states/user";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import ChangePassword from "./sections/ChangePassword";
 import ForgotPassword from "./sections/ForgotPassword";
+import Route404 from "./components/Route404";
 import Chat from "./sections/Chat";
+import UsersNew from "./sections/UsersNew";
+// import MailVerification from "./sections/MailVerification";
+
 
 function App() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
-  const [userByEmail, setUserByEmail] = useState({});
 
   useEffect(() => {
-    const email = localStorage.getItem("email");
-    setUserByEmail(email);
-
-    if (user.succes) {
+    if (
+      localStorage.getItem("email") &&
+      localStorage.getItem("status") === "UNVERIFIED"
+    ) {
       navigate("/verification");
     }
-    if (!user.user && email) {
-      dispatch(getUserMail(email));
-    }
-  }, [user.succes]);
+  }, []);
 
-  return (
-    <Routes>
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/users" element={<Users />} />
-      <Route path="/reports" element={<Reports />} />
-      <Route path="/stadistics" element={<Stadistics />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/chat" element={<Chat />} />
-      <Route path="/signin" element={<SignInSection />} />
-      <Route path="/verification" element={<MailVerification />} />
-      <Route path="/" element={<OnBoarding />} />
-      <Route path="/signup" element={<SignUpSection />} />
-      <Route path="/signin" element={<SignInSection />} />
-      <Route path="/forgotpass" element={<ForgotPassword />} />
-      <Route path="/changepass/:token" element={<ChangePassword />} />
-      <Route path="/search/:value" element={<Chat />} />
-    </Routes>
-  );
+  if (
+    localStorage.getItem("email") &&
+    localStorage.getItem("status") === "VERIFIED" && localStorage.getItem("isAdmin") === "true"
+  ) {
+    return (
+      <Routes>
+        <>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/users" element={<AdminUsers />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/stadistics" element={<Stadistics />} />
+          <Route path="*" element={<Route404/>} />
+        </>
+
+  if (
+    localStorage.getItem("email") &&
+    localStorage.getItem("status") === "VERIFIED" && localStorage.getItem("isAdmin") === "false"
+  ) {
+    return (
+      <Routes>
+        <>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/stadistics" element={<Stadistics />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/filtered" element={<UsersNew />} />
+          <Route path="*" element={<Route404/>} />
+        </>
+      </Routes>
+    );
+  } 
+  
+  // else if (localStorage.getItem("signup") === "ok") {
+  //   <>
+  //     <Routes>
+  //       <Route path="/verification" element={<MailVerification />} />
+  //     </Routes>
+  //   </>;
+  // }
+  
+  else {
+    return (
+      <Routes>
+        <>
+          <Route path="/" element={<OnBoarding />} />
+          <Route path="/signup" element={<SignUpSection />} />
+          <Route path="/signin" element={<SignInSection />} />
+          <Route path="/forgotpass" element={<ForgotPassword />} />
+          <Route path="/changepass/:token" element={<ChangePassword />} />
+          <Route path="*" element={<Route404/>} />
+        </>
+
+      </Routes>
+    );
+  }
+
+  <></>;
 }
 
 export default App;

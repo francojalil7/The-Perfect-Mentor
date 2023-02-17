@@ -7,11 +7,14 @@ import {
   DTitle,
   RedBookmark,
   GreenBookmark,
-  GreyBookmark,
 } from "../styles/texts";
+import { useSelector } from "react-redux";
+import Modals from "../components/Modals";
 import styled from "styled-components";
 
 const Table = ({ users }) => {
+  const user = useSelector((state) => state.user);
+
   const filterUsers = () => {
     let arr = [];
     for (let i = 0; i < users.length; i++) {
@@ -31,6 +34,11 @@ const Table = ({ users }) => {
 
   const parsedList = filterUsers();
 
+  const handleMatch = (data) => {
+    console.log("data", data);
+    alert("matchhhh");
+  };
+
   return (
     <TableSection>
       <DHead>
@@ -41,52 +49,85 @@ const Table = ({ users }) => {
           <DTitle className="roleTitle">Role</DTitle>
           <DTitle className="dateTitle">Joined Date</DTitle>
           <DTitle className="statusTitle">Status</DTitle>
-          <DTitle className="editTitle">Edit</DTitle>
-          <DTitle className="matchTitle">Match</DTitle>
+          {localStorage.getItem("isAdmin") === "true" ? <DTitle className="editTitle">Edit</DTitle> : <></>}
+          {localStorage.getItem("role") === "mentee" ? (
+            <>
+              <DTitle className="matchTitle">Match</DTitle>
+            </>
+          ) : (
+            <></>
+          )}
         </tr>
       </DHead>
-      {parsedList.map((data) => {
-        if (data.status === "UNVERIFIED") {
+      <tbody>
+        {parsedList.map((data) => {
+          if (data.status === "UNVERIFIED") {
+            return (
+              <DBodyUnverified key={data.email}>
+                <RedBookmark />
+                <DData className="name">{data.name}</DData>
+                <DData className="age">{data.age}</DData>
+                <DData className="email">{data.email}</DData>
+                <DData className="role">{data.role}</DData>
+                <DData className="date">{data.joined}</DData>
+                <DData className="status">
+                  <img src="unverified.svg" alt="unverified"></img>
+                </DData>
+                {localStorage.getItem("isAdmin") === "true" ? (
+                  <DData className="edit">
+                    <Modals props={data} />
+                  </DData>
+                ) : (
+                  <></>
+                )}
+                {localStorage.getItem("role") === "mentee" ? (
+                  <>
+                    <DData className="match">
+                      <img src="match.svg" alt="pencil"
+                            onClick={() => handleMatch(data)}></img>
+                    </DData>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </DBodyUnverified>
+            );
+          }
           return (
-            <DBodyUnverified>
-              <RedBookmark />
+            <DBodyVerified key={data.email}>
+              <GreenBookmark />
               <DData className="name">{data.name}</DData>
-              <DData  className="age">{data.age}</DData>
-              <DData  className="email">{data.email}</DData>
-              <DData  className="role">{data.role}</DData>
-              <DData  className="date">{data.joined}</DData>
-              <DData  className="status">
-                <img src="unverified.svg" alt="unverified"></img>
+              <DData className="age">{data.age}</DData>
+              <DData className="email">{data.email}</DData>
+              <DData className="role">{data.role}</DData>
+              <DData className="date">{data.joined}</DData>
+              <DData className="status">
+                <img src="verified.svg" alt="verified"></img>
               </DData>
-              <DData  className="edit">
-                <img src="Group 6.png" alt="pencil"></img>
-              </DData>
-              <DData  className="match">
-                <img  src="match.svg" alt="pencil"></img>
-              </DData>
-            </DBodyUnverified>
+              {localStorage.getItem("isAdmin") === "true" ? (
+                <DData className="edit">
+                  <Modals props={data} />
+                </DData>
+              ) : (
+                <></>
+              )}
+              {localStorage.getItem("role") === "mentee" ? (
+                <>
+                  <DData className="match">
+                    <img
+                      src="match.svg"
+                      alt="pencil"
+                      onClick={() => handleMatch(data)}
+                    ></img>
+                  </DData>
+                </>
+              ) : (
+                <></>
+              )}
+            </DBodyVerified>
           );
-        }
-        return (
-          <DBodyVerified>
-            <GreenBookmark />
-            <DData className="name">{data.name}</DData>
-            <DData  className="age">{data.age}</DData>
-              <DData  className="email">{data.email}</DData>
-              <DData  className="role">{data.role}</DData>
-              <DData  className="date">{data.joined}</DData>
-            <DData className="status">
-              <img src="verified.svg" alt="verified"></img>
-            </DData>
-            <DData className="edit">
-            <img src="Group 6.png" alt="pencil"></img>
-            </DData>
-            <DData className="match">
-            <img src="match.svg" alt="pencil"></img>
-            </DData>
-          </DBodyVerified>
-        );
-      })}
+        })}
+      </tbody>
     </TableSection>
   );
 };

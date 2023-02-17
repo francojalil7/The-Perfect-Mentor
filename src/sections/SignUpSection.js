@@ -20,7 +20,19 @@ import {
   Section,
   SmallRectangle,
   VerticalLine,
-} from '../styles/texts';
+  Input,
+  H2,
+  ErrorMessage,
+  Text,
+} from "../styles/texts";
+import users from "../assets/Sing/icon 32px/light/user.png";
+import email from "../assets/Sing/icon 32px 2/light/email.png";
+import password from "../assets/Sing/icon 32px 3/light/password.png";
+import line from "../assets/Sing/Line 2.png";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpUser } from "../states/user";
+import {  useNavigate } from "react-router-dom";
 
 // Messages
 const required = "This field is required";
@@ -40,17 +52,24 @@ const SignUpSection = () => {
   } = useForm();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
+    console.log(data, "data en dispatch")
     try {
-      await dispatch(
-        signUpUser({
-          userName: data.userName,
-          email: data.email,
-          password: data.password,
-        })
-      );
+      await
+        dispatch(
+          signUpUser({
+            userName: data.userName,
+            email: data.email,
+            password: data.password,
+          })
+        )
+
+        localStorage.setItem("signup", "ok")
+
+        navigate("/verification");
 
     } catch (error) {
       console.log("error", error);
@@ -75,12 +94,11 @@ const SignUpSection = () => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <Button>
-                <Icon src={user} />
-
+                <Icon src={users} />
                 <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="user name"
+                  placeholder="Username"
                   name="userName"
                   {...register("userName", {
                     required: true,
@@ -96,7 +114,7 @@ const SignUpSection = () => {
                 <Input
                   type="text"
                   autoComplete="off"
-                  placeholder="email"
+                  placeholder="Email"
                   name="email"
                   {...register("email", {
                     required: true,
@@ -115,7 +133,7 @@ const SignUpSection = () => {
                 <Input
                   type="password"
                   autoComplete="off"
-                  placeholder="password"
+                  placeholder="Password"
                   name="password"
                   {...register("password", {
                     required: true,
@@ -133,7 +151,10 @@ const SignUpSection = () => {
               {errors.password &&
                 errors.password.type === "maxLength" &&
                 errorMessage(maxLength)}
-
+              <Text>
+                Have an account?{" "}
+                <a href="http://localhost:3000/signIn">Sign in</a>
+              </Text>
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign Up
               </GreyButtonInside>
