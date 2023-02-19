@@ -43,6 +43,7 @@ import { getUsersFilter } from "../states/usersFilter";
 import { setUsersFilter } from "../states/usersFilter";
 import { Bell, Notification } from "../styles/texts";
 import axios from "axios";
+import schedule from "node-schedule";
 
 const UsersNew = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -58,6 +59,7 @@ const UsersNew = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const dispatch = useDispatch();
+  console.log(showNotification, openNotification, "VALUES")
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -136,7 +138,16 @@ const UsersNew = () => {
       setShowNotification(true);
     }
   };
-  notificationStack();
+
+  notificationStack()
+
+  // Ejecución de la función notifStack cada 60 secs
+  // schedule.scheduleJob("*/59 * * * * *", async () => {
+  //   console.log("hola")
+  //   notificationStack();
+  // });
+
+
 
   //La función "openNotificationDiv" se ejecuta al hacer click sobre la campanita de notificación con botón rojo
   //Abre el div de notificación con el nombre del username a conectar
@@ -150,9 +161,9 @@ const UsersNew = () => {
     notificationResponse(e.target.value);
   };
 
-  //La función notificationResponse tiene la finalidad de actualizar en la db los valores de en user.relations.
+  //La función notificationResponse tiene la finalidad de actualizar en la db los valores de en user.relations
 
-  //Actualiza los valores en la db, cierra el div, ------------------->cambia la imagen de la campanita?
+  //Actualiza los valores en la db, cierra el div, cambia la imagen de la campanita
   const notificationResponse = async (optionSelected) => {
     const mentorEmail = localStorage.getItem("email");
 
@@ -201,12 +212,13 @@ const UsersNew = () => {
               {openNotification ? (
                 <Notification>
                   <p>Accept {toNotifyUser} as a Mentee?</p>
-                  <button onClick={notificationLogic} value={"accepted"}>
-                    Yes
-                  </button>
-                  <button onClick={notificationLogic} value={"rejected"}>
-                    No
-                  </button>
+                  <SearchButton onClick={notificationLogic} value={"accepted"}>
+                    Accept
+                  </SearchButton>
+                  {"   "}
+                  <SearchButton onClick={notificationLogic} value={"rejected"}>
+                    Decline
+                  </SearchButton>
                 </Notification>
               ) : (
                 <></>
