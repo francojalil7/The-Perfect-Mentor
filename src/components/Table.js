@@ -8,7 +8,6 @@ import {
   RedBookmark,
   GreenBookmark,
 } from "../styles/texts";
-import { useSelector } from "react-redux";
 import Modals from "../components/Modals";
 import styled from "styled-components";
 import Axios from "axios";
@@ -16,7 +15,8 @@ import Swal from "sweetalert";
 
 
 const Table = ({ users }) => {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
+  console.log(users, "users")
 
   const filterUsers = () => {
     let arr = [];
@@ -36,6 +36,7 @@ const Table = ({ users }) => {
   };
 
   const parsedList = filterUsers();
+  console.log("parsedList", parsedList)
 
   //Lógica para crear la relación desde el botón de +
   //Sólo podrá ejecutarla un mentee hacia un mentor

@@ -59,24 +59,31 @@ const UsersNew = () => {
   const [showNotification, setShowNotification] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const dispatch = useDispatch();
-  console.log(showNotification, openNotification, "VALUES")
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    window.addEventListener("resize", () => setWidth(window.innerWidth));
-    setRole(localStorage.getItem("role"));
-    if (localStorage.getItem("role") === "mentee") {
-      dispatch(getMentorsUsers());
-    }
-    if (localStorage.getItem("role") === "mentor") {
-      dispatch(getMenteesUsers());
-    }
+    const fetchData = async () => {
+      setRole(localStorage.getItem("role"));
+      if (localStorage.getItem("role") === "mentee") {
+        await dispatch(getMentorsUsers());
+      }
+      if (localStorage.getItem("role") === "mentor") {
+        await dispatch(getMenteesUsers());
+      }
+    };
+
+    fetchData();
   }, [search]);
 
   const mentees = useSelector((state) => state.menteesUsers);
   const mentors = useSelector((state) => state.mentorsUsers);
 
+  useEffect(() => {
+    dispatch(getMenteesUsers());
+    dispatch(getMentorsUsers());
+  }, [dispatch]);
+  
   function useInput() {
     function onChange({ target }) {
       setValue(target.value);
@@ -87,7 +94,7 @@ const UsersNew = () => {
 
   const handleSearch = function (e) {
     if (filter === "") {
-      alert("debe seleccionar un filtro");
+      alert("¡Debe seleccionar un filtro!");
     }
     dispatch(getUsersFilter({ value, filter }));
     setSearch("buscar");
@@ -139,15 +146,13 @@ const UsersNew = () => {
     }
   };
 
-  notificationStack()
+  // notificationStack()
 
   // Ejecución de la función notifStack cada 60 secs
-  // schedule.scheduleJob("*/59 * * * * *", async () => {
-  //   console.log("hola")
-  //   notificationStack();
-  // });
-
-
+  const ScheduledJob = schedule.scheduleJob("1 * * * *", async () => {
+    console.log("hola");
+    notificationStack();
+  });
 
   //La función "openNotificationDiv" se ejecuta al hacer click sobre la campanita de notificación con botón rojo
   //Abre el div de notificación con el nombre del username a conectar
@@ -259,12 +264,18 @@ const UsersNew = () => {
                 <></>
               )}
 
-              <Table users={role === "mentee" ? mentors : mentees}></Table>
+              <Table
+                users={
+                  localStorage.getItem("role") === "mentee" ? mentors : mentees
+                }
+              ></Table>
               <DPagination>
                 <Pagination
                   usersPerPage={usersPerPage}
                   totalUsers={
-                    role === "mentee" ? mentors.length : mentees.length
+                    (localStorage.getItem("role") === "mentee") === "mentee"
+                      ? mentors.length
+                      : mentees.length
                   }
                   paginate={paginate}
                 ></Pagination>

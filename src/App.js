@@ -13,7 +13,7 @@ import ForgotPassword from "./sections/ForgotPassword";
 import Route404 from "./components/Route404";
 import Chat from "./sections/Chat";
 import UsersNew from "./sections/UsersNew";
-// import MailVerification from "./sections/MailVerification";
+import MailVerification from "./sections/MailVerification";
 
 function App() {
   const navigate = useNavigate();
@@ -63,13 +63,13 @@ function App() {
     );
   } 
   
-  // else if (localStorage.getItem("signup") === "ok") {
-  //   <>
-  //     <Routes>
-  //       <Route path="/verification" element={<MailVerification />} />
-  //     </Routes>
-  //   </>;
-  // }
+  else if (localStorage.getItem("signup") === "ok") {
+    return (
+      <Routes>
+        <Route path="/verification" element={<MailVerification />} />
+      </Routes>
+    );
+  }
   
   else {
     return (

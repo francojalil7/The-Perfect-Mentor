@@ -22,7 +22,7 @@ import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../states/user";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Messages
 const required = "This field is required";
@@ -46,21 +46,19 @@ const SignUpSection = () => {
   const user = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
-    console.log(data, "data en dispatch")
+    console.log(data, "data en dispatch");
     try {
-        dispatch(
-          signUpUser({
-            userName: data.userName,
-            email: data.email,
-            password: data.password,
-          })
-        )
+      dispatch(
+        signUpUser({
+          userName: data.userName,
+          email: data.email,
+          password: data.password,
+        })
+      );
 
-        localStorage.setItem("signup", "ok")
+      localStorage.setItem("signup", "ok");
 
-        navigate("/verification");
-      
-
+      navigate("/verification");
     } catch (error) {
       console.log("error", error);
     }

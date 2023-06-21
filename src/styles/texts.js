@@ -1168,7 +1168,7 @@ export const DashboardDetails = styled.div`
 
 export const FirstImage = styled.img`
   position: absolute;
-  left: 780px;
+  left: 700px;
   right: -1.33%;
   top: -173px;
   bottom: 62.45%;
@@ -1177,7 +1177,7 @@ export const FirstImage = styled.img`
   transform: rotate(1.5deg);
 
   @media only screen and (max-width: 1400px) {
-    left: 580px;
+    left: 510px;
     top: -200px;
   }
 
@@ -1189,14 +1189,14 @@ export const FirstImage = styled.img`
 
 export const SecondImage = styled.img`
   position: absolute;
-  left: 720px;
+  left: 650px;
   right: 2.75%;
   top: -180px;
   bottom: 81.02%;
   background: url(doodle-5.png);
 
   @media only screen and (max-width: 1400px) {
-    left: 520px;
+    left: 440px;
   }
 
   @media only screen and (max-width: 1080px) {
@@ -1204,20 +1204,27 @@ export const SecondImage = styled.img`
   }
 `;
 
+//quedé acá <--------------------------
 export const Bell = styled.img`
-  position: fixed;
-  width: 30px;
+  position: absolute;
+  width: 33px;
   height: 50px;
-  right: 360px;
-  top: 65px;
+  right: 50px;
+  top: 40px;
+  @media only screen and (max-width: 1400px) {
+    left: 820px;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    left: 330px;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 100px;
+  }
 `;
 
 export const Notification = styled.div`
-  // width: 250px;
-  // height: 100px;
-  // border: 3px solid #555;
-  // background: #428bca;
-  position: float;
+  position: relative;
   text-align: center;
   width: 250px;
   height: 100px;
