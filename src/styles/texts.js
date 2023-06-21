@@ -1168,7 +1168,7 @@ export const DashboardDetails = styled.div`
 
 export const FirstImage = styled.img`
   position: absolute;
-  left: 700px;
+  left: 450px;
   right: -1.33%;
   top: -173px;
   bottom: 62.45%;
@@ -1229,10 +1229,11 @@ export const Notification = styled.div`
   width: 250px;
   height: 100px;
   border: 2px solid #5555;
-  left: 272px;
-  top: 40px;
+  left: 400px;
+  top: 100px;
   background: #ffffff;
   padding: 2px;
+  z-index: 1;
 
   box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
     0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),

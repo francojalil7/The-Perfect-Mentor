@@ -44,6 +44,7 @@ import { setUsersFilter } from "../states/usersFilter";
 import { Bell, Notification } from "../styles/texts";
 import axios from "axios";
 import schedule from "node-schedule";
+import swal from "sweetalert";
 
 const UsersNew = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -58,6 +59,7 @@ const UsersNew = () => {
   const [toNotifyUser, setToNotifyUser] = useState();
   const [showNotification, setShowNotification] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
+
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -140,17 +142,14 @@ const UsersNew = () => {
         //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
         setToNotifyUser(userName);
       });
-    if (pendingNotification) {
-      //Estado para lanzar la campanita con botón rojo si existe una notificación
-      setShowNotification(true);
-    }
+      if (pendingNotification) {
+        //Estado para lanzar la campanita con botón rojo si existe una notificación
+        setShowNotification(true);
+      }
   };
 
-  // notificationStack()
-
   // Ejecución de la función notifStack cada 60 secs
-  const ScheduledJob = schedule.scheduleJob("1 * * * *", async () => {
-    console.log("hola");
+  const ScheduledJob = schedule.scheduleJob("*/1 * * * *", async () => {
     notificationStack();
   });
 
@@ -183,8 +182,7 @@ const UsersNew = () => {
     const response = await axios.put(
       "http://localhost:5001/user/updateRelation",
       { user: mentorId, otherUserId: menteeId, selectedOption: optionSelected }
-    );
-
+    )
     //Cierra el div y cambia la imagen de la campanita sin botón rojo
     setOpenNotification(false);
     setShowNotification(false);
@@ -226,7 +224,8 @@ const UsersNew = () => {
                   </SearchButton>
                 </Notification>
               ) : (
-                <></>
+                <>
+                </>
               )}
             </DashboardTopRectangle>
             <DashboardDetails>

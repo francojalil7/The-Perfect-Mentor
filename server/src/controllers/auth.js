@@ -18,7 +18,7 @@ const registerCtrl = async (req, res) => {
     if (user !== null) {
       return res.json({
         success: false,
-        msg: "User allready exist",
+        msg: "User already exist",
       });
     }
     // Generar el código

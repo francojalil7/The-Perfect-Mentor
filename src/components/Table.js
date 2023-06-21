@@ -16,7 +16,6 @@ import Swal from "sweetalert";
 
 const Table = ({ users }) => {
   // const user = useSelector((state) => state.user);
-  console.log(users, "users")
 
   const filterUsers = () => {
     let arr = [];
@@ -39,7 +38,7 @@ const Table = ({ users }) => {
   console.log("parsedList", parsedList)
 
   //Lógica para crear la relación desde el botón de +
-  //Sólo podrá ejecutarla un mentee hacia un mentor
+  // Sólo podrá ejecutarla un mentee hacia un mentor
   //Actualiza los valores de relations en la db en ambos usuarios
   const createRelation = async (data) => {
     try {
