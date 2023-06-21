@@ -85,7 +85,7 @@ const UsersNew = () => {
     dispatch(getMenteesUsers());
     dispatch(getMentorsUsers());
   }, [dispatch]);
-  
+
   function useInput() {
     function onChange({ target }) {
       setValue(target.value);
@@ -142,14 +142,14 @@ const UsersNew = () => {
         //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
         setToNotifyUser(userName);
       });
-      if (pendingNotification) {
-        //Estado para lanzar la campanita con botón rojo si existe una notificación
-        setShowNotification(true);
-      }
+    if (pendingNotification) {
+      //Estado para lanzar la campanita con botón rojo si existe una notificación
+      setShowNotification(true);
+    }
   };
 
   // Ejecución de la función notifStack cada 60 secs
-  const ScheduledJob = schedule.scheduleJob("*/1 * * * *", async () => {
+  const ScheduledJob = schedule.scheduleJob("*/1 * * * *", function() {
     notificationStack();
   });
 
@@ -182,10 +182,16 @@ const UsersNew = () => {
     const response = await axios.put(
       "http://localhost:5001/user/updateRelation",
       { user: mentorId, otherUserId: menteeId, selectedOption: optionSelected }
-    )
+    );
     //Cierra el div y cambia la imagen de la campanita sin botón rojo
     setOpenNotification(false);
     setShowNotification(false);
+
+    if (optionSelected === "accepted") {
+      swal("Congratulations!", "Your mentee has been asigned.", "success");
+    } else {
+      swal("Keep looking!", "Soon you will receive new proposals from new mentees.", "success");
+    }
   };
 
   //-------Fin Lógica notificaciones------
@@ -224,8 +230,7 @@ const UsersNew = () => {
                   </SearchButton>
                 </Notification>
               ) : (
-                <>
-                </>
+                <></>
               )}
             </DashboardTopRectangle>
             <DashboardDetails>
