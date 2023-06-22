@@ -8,12 +8,14 @@ import {
   RedBookmark,
   GreenBookmark,
 } from "../styles/texts";
-import { useSelector } from "react-redux";
 import Modals from "../components/Modals";
 import styled from "styled-components";
+import Axios from "axios";
+import Swal from "sweetalert";
+
 
 const Table = ({ users }) => {
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
 
   const filterUsers = () => {
     let arr = [];
@@ -33,10 +35,40 @@ const Table = ({ users }) => {
   };
 
   const parsedList = filterUsers();
+  console.log("parsedList", parsedList)
+
+  //Lógica para crear la relación desde el botón de +
+  // Sólo podrá ejecutarla un mentee hacia un mentor
+  //Actualiza los valores de relations en la db en ambos usuarios
+  const createRelation = async (data) => {
+    try {
+      let notifier = localStorage.getItem("_id");
+      let notifierUserName = localStorage.getItem("userName")
+      let search = await Axios.get(`http://localhost:5001/user/me/${data}`);
+      let notified = search.data._id;
+      let relation = await Axios.put(
+        `http://localhost:5001/user/createRelation`,
+        { notifier, notified, notifierUserName }
+      ).then((response) =>
+        response.data.error
+          ? Swal({
+              title: "Error",
+              text: "An error has ocurred. Please try again later.",
+              icon: "error",
+            })
+          : Swal({
+              title: "Invite sent",
+              text: "You will receive a response from the selected mentor soon.",
+              icon: "success",
+            })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleMatch = (data) => {
-    console.log("data", data);
-    alert("matchhhh");
+    createRelation(data.email);
   };
 
   return (
@@ -49,7 +81,11 @@ const Table = ({ users }) => {
           <DTitle className="roleTitle">Role</DTitle>
           <DTitle className="dateTitle">Joined Date</DTitle>
           <DTitle className="statusTitle">Status</DTitle>
-          {localStorage.getItem("isAdmin") === "true" ? <DTitle className="editTitle">Edit</DTitle> : <></>}
+          {localStorage.getItem("isAdmin") === "true" ? (
+            <DTitle className="editTitle">Edit</DTitle>
+          ) : (
+            <></>
+          )}
           {localStorage.getItem("role") === "mentee" ? (
             <>
               <DTitle className="matchTitle">Match</DTitle>
@@ -83,8 +119,11 @@ const Table = ({ users }) => {
                 {localStorage.getItem("role") === "mentee" ? (
                   <>
                     <DData className="match">
-                      <img src="match.svg" alt="pencil"
-                            onClick={() => handleMatch(data)}></img>
+                      <img
+                        src="match.svg"
+                        alt="pencil"
+                        onClick={() => handleMatch(data)}
+                      ></img>
                     </DData>
                   </>
                 ) : (

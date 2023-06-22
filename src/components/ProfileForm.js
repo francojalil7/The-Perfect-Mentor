@@ -68,6 +68,7 @@ const ProfileForm = () => {
     const skills = selectedSkills.map((option) => {
       return option.value;
     });
+    
     dispatch(
       updateUser({
         email: user.email,
@@ -83,12 +84,11 @@ const ProfileForm = () => {
       })
     );
 
-    navigate("/chat");
+    navigate("/filtered");
   };
   return (
     <>
-      <FormContainer
-       mode={localStorage.getItem("isAdmin")}>
+      <FormContainer mode={localStorage.getItem("isAdmin")}>
         <form onSubmit={handleSubmit(onSubmit)}>
           {localStorage.getItem("isAdmin") === "true" ? (
             <>
@@ -267,19 +267,15 @@ const errorMessage = (error) => {
 const FormContainer = styled.div`
   display: flex;
   margin-top: 70px;
-  margin-left:${(props) =>
-    props.mode !== "true" ? "0px" : "-200px"};
+  margin-left: ${(props) => (props.mode !== "true" ? "0px" : "-200px")};
 
   form {
     justify-content: center !important;
   }
 
   @media only screen and (max-width: 700px) {
-    margin-top: ${(props) =>
-    props.mode !== "true" ? "70px" : "100px"};
-    margin-left:${(props) =>
-    props.mode !== "true" ? "0px" : "-30px"};
-
+    margin-top: ${(props) => (props.mode !== "true" ? "70px" : "100px")};
+    margin-left: ${(props) => (props.mode !== "true" ? "0px" : "-30px")};
   }
 `;
 
@@ -314,7 +310,7 @@ const SaveChangesButton = styled.button`
   left: 220px;
   width: 120px;
   height: 40px;
-cursor: pointer;
+  cursor: pointer;
 
   border: 1px solid rgba(68, 68, 68, 0.15);
   background: transparent;
@@ -334,10 +330,8 @@ cursor: pointer;
     left: 110px;
   }
 
-  :hover{
-    background-color: 
-rgba(191, 215, 50, 1);
-
+  :hover {
+    background-color: rgba(191, 215, 50, 1);
   }
 `;
 

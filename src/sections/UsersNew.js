@@ -41,6 +41,10 @@ import { getMentorsUsers } from "../states/mentorsUsers";
 import { getMenteesUsers } from "../states/menteesUsers";
 import { getUsersFilter } from "../states/usersFilter";
 import { setUsersFilter } from "../states/usersFilter";
+import { Bell, Notification } from "../styles/texts";
+import axios from "axios";
+import schedule from "node-schedule";
+import swal from "sweetalert";
 
 const UsersNew = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -51,23 +55,36 @@ const UsersNew = () => {
   // const [view, setView] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
+  const [pendingNotification, setPendingNotification] = useState();
+  const [toNotifyUser, setToNotifyUser] = useState();
+  const [showNotification, setShowNotification] = useState(false);
+  const [openNotification, setOpenNotification] = useState(false);
+
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    window.addEventListener("resize", () => setWidth(window.innerWidth));
-    setRole(localStorage.getItem("role"));
-    if (localStorage.getItem("role") === "mentee") {
-      dispatch(getMentorsUsers());
-    }
-    if (localStorage.getItem("role") === "mentor") {
-      dispatch(getMenteesUsers());
-    }
+    const fetchData = async () => {
+      setRole(localStorage.getItem("role"));
+      if (localStorage.getItem("role") === "mentee") {
+        await dispatch(getMentorsUsers());
+      }
+      if (localStorage.getItem("role") === "mentor") {
+        await dispatch(getMenteesUsers());
+      }
+    };
+
+    fetchData();
   }, [search]);
 
   const mentees = useSelector((state) => state.menteesUsers);
   const mentors = useSelector((state) => state.mentorsUsers);
+
+  useEffect(() => {
+    dispatch(getMenteesUsers());
+    dispatch(getMentorsUsers());
+  }, [dispatch]);
 
   function useInput() {
     function onChange({ target }) {
@@ -79,7 +96,7 @@ const UsersNew = () => {
 
   const handleSearch = function (e) {
     if (filter === "") {
-      alert("debe seleccionar un filtro");
+      alert("¡Debe seleccionar un filtro!");
     }
     dispatch(getUsersFilter({ value, filter }));
     setSearch("buscar");
@@ -109,6 +126,76 @@ const UsersNew = () => {
 
   const medium = 700;
 
+  //-------Inicio Lógica notificaciones------
+
+  //La función "notificationStack" consulta si el mentor tiene una notificación que está pendiente de ser mostrada y lo muestra en el frontend.
+  //Esta función se ejecuta cada 1 minuto de manera persistente para chequear si existe una notificación pendiente
+  const notificationStack = async () => {
+    let mentor = localStorage.getItem("email");
+    let search = await axios
+      .get(`http://localhost:5001/user/me/${mentor}`)
+      .then((response) => {
+        const pendingValue = response.data.notifications[0].pending;
+        const userName = response.data.relations[0].userName;
+        //Setea el valor de pendingNotification en true/false, según exista o no una notificación pendiente
+        setPendingNotification(pendingValue);
+        //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
+        setToNotifyUser(userName);
+      });
+    if (pendingNotification) {
+      //Estado para lanzar la campanita con botón rojo si existe una notificación
+      setShowNotification(true);
+    }
+  };
+
+  // Ejecución de la función notifStack cada 60 secs
+  const ScheduledJob = schedule.scheduleJob("*/1 * * * *", function() {
+    notificationStack();
+  });
+
+  //La función "openNotificationDiv" se ejecuta al hacer click sobre la campanita de notificación con botón rojo
+  //Abre el div de notificación con el nombre del username a conectar
+  //El div se posicionará sobre la campanita, ahora sin botón rojo
+  const openNotificationDiv = () => {
+    setOpenNotification(true);
+  };
+
+  //La función "notificationLogic" captura el valor del botón seleccionado para aceptar o rechazar la solicitud de relación
+  const notificationLogic = (e) => {
+    notificationResponse(e.target.value);
+  };
+
+  //La función notificationResponse tiene la finalidad de actualizar en la db los valores de en user.relations
+
+  //Actualiza los valores en la db, cierra el div, cambia la imagen de la campanita
+  const notificationResponse = async (optionSelected) => {
+    const mentorEmail = localStorage.getItem("email");
+
+    // Obtener menteeId mediante una solicitud GET y esperar la respuesta
+    const usersData = await axios.get(
+      `http://localhost:5001/user/me/${mentorEmail}`
+    );
+    const mentorId = usersData.data._id;
+    const menteeId = usersData.data.relations[0].id;
+
+    // Realizar la solicitud PUT con los datos actualizados
+    const response = await axios.put(
+      "http://localhost:5001/user/updateRelation",
+      { user: mentorId, otherUserId: menteeId, selectedOption: optionSelected }
+    );
+    //Cierra el div y cambia la imagen de la campanita sin botón rojo
+    setOpenNotification(false);
+    setShowNotification(false);
+
+    if (optionSelected === "accepted") {
+      swal("Congratulations!", "Your mentee has been asigned.", "success");
+    } else {
+      swal("Keep looking!", "Soon you will receive new proposals from new mentees.", "success");
+    }
+  };
+
+  //-------Fin Lógica notificaciones------
+
   return (
     <PagesSection>
       {width >= medium ? (
@@ -121,6 +208,30 @@ const UsersNew = () => {
                 {role === "mentor" ? " Mentees" : "Mentors"}
               </DashboardTitle>
               <DashboardSubtitle>View all the users</DashboardSubtitle>
+              {/* Bell Logic */}
+              {showNotification ? (
+                <Bell
+                  onClick={openNotificationDiv}
+                  src="bell-notification-alert.svg"
+                ></Bell>
+              ) : (
+                <Bell src="bell-notification.svg"></Bell>
+              )}
+              {/* Notification Div Logic */}
+              {openNotification ? (
+                <Notification>
+                  <p>Accept {toNotifyUser} as a Mentee?</p>
+                  <SearchButton onClick={notificationLogic} value={"accepted"}>
+                    Accept
+                  </SearchButton>
+                  {"   "}
+                  <SearchButton onClick={notificationLogic} value={"rejected"}>
+                    Decline
+                  </SearchButton>
+                </Notification>
+              ) : (
+                <></>
+              )}
             </DashboardTopRectangle>
             <DashboardDetails>
               <FirstImage src="doodle1.svg"></FirstImage>
@@ -157,12 +268,18 @@ const UsersNew = () => {
                 <></>
               )}
 
-              <Table users={role === "mentee" ? mentors : mentees}></Table>
+              <Table
+                users={
+                  localStorage.getItem("role") === "mentee" ? mentors : mentees
+                }
+              ></Table>
               <DPagination>
                 <Pagination
                   usersPerPage={usersPerPage}
                   totalUsers={
-                    role === "mentee" ? mentors.length : mentees.length
+                    (localStorage.getItem("role") === "mentee") === "mentee"
+                      ? mentors.length
+                      : mentees.length
                   }
                   paginate={paginate}
                 ></Pagination>

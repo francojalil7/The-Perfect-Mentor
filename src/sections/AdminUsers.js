@@ -69,7 +69,6 @@ const AdminUsers = () => {
   const users = useSelector((state) => state.usersInfo);
   const usersFilter = useSelector((state) => state.usersFilter);
   const medium = 700;
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
@@ -209,5 +208,4 @@ const AdminUsers = () => {
     </PagesSection>
   );
 };
-
 export default AdminUsers;

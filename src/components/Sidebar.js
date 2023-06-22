@@ -187,6 +187,7 @@ const Sidebar = () => {
       </>
       <LogoutButton mode={view} onClick={() => handleLogout()}>
         <img src={logout} alt="logout" />
+        <p>Log Out</p>
       </LogoutButton>
     </SidebarContainer>
   );

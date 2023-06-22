@@ -25,9 +25,7 @@ const UserSchema = new Schema({
     required: true,
     default: "UNVERIFIED",
   },
-
   code: { type: String, required: false },
-
   isAdmin: {
     type: Boolean,
     default: false,
@@ -70,6 +68,14 @@ const UserSchema = new Schema({
   },
   resetToken: {
     type: String,
+  },
+  relations: {
+    type: Array,
+    default: [{ id: 0, match: "", userName: ""}],
+  },
+  notifications: {
+    type: Array,
+    default: [{pending: false}]
   }
 });
 

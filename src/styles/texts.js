@@ -187,7 +187,7 @@ export const AdminProfileWhiteRectangle = styled.div`
     0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
   border-radius: 35px;
 
-  height:640px;
+  height: 640px;
 
   @media only screen and (max-width: 700px) {
     display: none;
@@ -1060,8 +1060,6 @@ export const SubTitle1 = styled.h2`
   margin-top: 15px;
 `;
 
-
-
 export const DashboardWhiteRectangle = styled.div`
   position: absolute;
   width: 1128px;
@@ -1087,7 +1085,6 @@ export const DashboardWhiteRectangle = styled.div`
   }
 `;
 
-
 export const DashboardTopRectangle = styled.div`
   position: absolute;
   width: 1128px;
@@ -1109,7 +1106,6 @@ export const DashboardTopRectangle = styled.div`
     width: 500px;
   }
 `;
-
 
 export const DashboardTitle = styled.h2`
   position: absolute;
@@ -1170,10 +1166,9 @@ export const DashboardDetails = styled.div`
   }
 `;
 
-
 export const FirstImage = styled.img`
   position: absolute;
-  left: 780px;
+  left: 450px;
   right: -1.33%;
   top: -173px;
   bottom: 62.45%;
@@ -1182,7 +1177,7 @@ export const FirstImage = styled.img`
   transform: rotate(1.5deg);
 
   @media only screen and (max-width: 1400px) {
-    left: 580px;
+    left: 510px;
     top: -200px;
   }
 
@@ -1194,14 +1189,14 @@ export const FirstImage = styled.img`
 
 export const SecondImage = styled.img`
   position: absolute;
-  left: 720px;
+  left: 650px;
   right: 2.75%;
   top: -180px;
   bottom: 81.02%;
   background: url(doodle-5.png);
 
   @media only screen and (max-width: 1400px) {
-    left: 520px;
+    left: 440px;
   }
 
   @media only screen and (max-width: 1080px) {
@@ -1209,4 +1204,39 @@ export const SecondImage = styled.img`
   }
 `;
 
+//quedé acá <--------------------------
+export const Bell = styled.img`
+  position: absolute;
+  width: 33px;
+  height: 50px;
+  right: 50px;
+  top: 40px;
+  @media only screen and (max-width: 1400px) {
+    left: 820px;
+  }
 
+  @media only screen and (max-width: 1080px) {
+    left: 330px;
+  }
+  @media only screen and (max-width: 800px) {
+    left: 100px;
+  }
+`;
+
+export const Notification = styled.div`
+  position: relative;
+  text-align: center;
+  width: 250px;
+  height: 100px;
+  border: 2px solid #5555;
+  left: 400px;
+  top: 100px;
+  background: #ffffff;
+  padding: 2px;
+  z-index: 1;
+
+  box-shadow: 0px 38px 15px rgba(0, 19, 51, 0.01),
+    0px 21px 13px rgba(0, 19, 51, 0.05), 0px 9px 9px rgba(0, 19, 51, 0.09),
+    0px 2px 5px rgba(0, 19, 51, 0.1), 0px 0px 0px rgba(0, 19, 51, 0.1);
+  border-radius: 15px;
+`;

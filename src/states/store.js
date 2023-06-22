@@ -11,7 +11,10 @@ import menteesUsersReducer from "./menteesUsers";
 
 
 const store = configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
     reducer: {
       user: userReducer,
       usersPerMonth: usersPerMonthReducer,

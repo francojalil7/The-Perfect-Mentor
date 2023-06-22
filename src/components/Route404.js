@@ -3,15 +3,16 @@ import { H2, H3, Section } from "../styles/texts";
 import styled from "styled-components";
 import saly2 from "../assets/Sing/Saly-2.png";
 
-
-
 const Route404 = () => {
+  localStorage.clear();
   return (
     <Section>
       <VerificationRectangle>
         <H2>¡Oh no! Page not found.</H2>
         <H3>We couldn't find the page you requested.</H3>
         <SalySingleImage src={saly2} />
+        <a href="http://localhost:3000">Go to Home Page</a>
+        <br></br>
       </VerificationRectangle>
     </Section>
   );
@@ -24,14 +25,8 @@ const SalySingleImage = styled.img`
   @media only screen and (max-width: 975px) {
     height: 350px;
     width: 350px;
-
-  } 
-
-;
-`
-
-
-
+  }
+`;
 
 const VerificationRectangle = styled.div`
   display: flex;
@@ -52,9 +47,6 @@ const VerificationRectangle = styled.div`
     flex-direction: column !important;
     border: 2px solid #bfd732;
   }
-
-;
-`
+`;
 
 export default Route404;
-
