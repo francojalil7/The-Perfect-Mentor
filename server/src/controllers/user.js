@@ -1,6 +1,6 @@
 const User = require("../models/User");
 var cron = require("node-cron");
-
+const Chat = require("../models/Chat");
 
 const me = async (req, res) => {
   let user = await User.findOne({ email: req.params.email });
@@ -105,8 +105,7 @@ const newUsers = async (req, res) => {
 };
 
 const filteredUser = async (req, res) => {
-  
-  const search = {[req.params.filter]: req.params.value}
+  const search = { [req.params.filter]: req.params.value };
 
   try {
     let users;
@@ -124,6 +123,38 @@ const filteredUser = async (req, res) => {
     }
   } catch (error) {
     res.status(403).send({ error: error.message });
+  }
+};
+
+// const contacts = async (nombres, contactosChat) => {
+//   const promises = nombres.map((id) => User.findOne({ id: id }));
+//   const users = await Promise.all(promises);
+//   users.forEach((user) => {
+//     const contact = { id: user.id, userName: user.userName };
+//     contactosChat.push(contact);
+//   });
+// };
+
+const searchUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    const filteredUsers = users.filter((user) =>
+      user.userName.toUpperCase().includes(req.params.value.toUpperCase())
+    );
+
+    const promises = filteredUsers.map((user) =>
+      Chat.find({ users: { $all: [req.query.id, user._id] } }).populate(
+        "users",
+        "userName"
+      )
+    );
+
+    const chats = await Promise.all(promises);
+    res.send(filteredUsers)
+
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -206,6 +237,7 @@ module.exports = {
   singPerMounth,
   newUsers,
   filteredUser,
+  searchUsers,
   mentorUsers,
   menteeUsers,
   createRelation,

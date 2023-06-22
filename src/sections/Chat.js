@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   MentorSidebar,
@@ -14,32 +14,96 @@ import Sidebar from "../components/Sidebar";
 import MobileBar from "../components/MobileBar";
 import mentor from "../assets/Profile/ProfileVector.png";
 import profile from "../assets/Profile/Group 163.png";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const Chat = () => {
-  const peopleChat = [
-    { userName: "Dolores Polito", picture: "" },
-    { userName: "Franco Jalil", picture: "" },
-    { userName: "Agustina Cassi", picture: "" },
-  ];
-
-  const conversation = [
-    { userName: "Dolores Polito", message: "Hola, como estas?" },
-    { userName: "Franco Jalil", message: "Todo bien, vos?" },
-    { userName: "Dolores Polito", message: "Muy bien tambien :)" },
-    { userName: "Franco Jalil", message: "Todo bien, vos?" },
-    { userName: "Dolores Polito", message: "Muy bien tambien :)" },
-    { userName: "Franco Jalil", message: "Todo bien, vos?" },
-    { userName: "Dolores Polito", message: "Muy bien tambien :)" },
-    { userName: "Franco Jalil", message: "Todo bien, vos?" },
-    { userName: "Dolores Polito", message: "Muy bien tambien :)" },
-    { userName: "Franco Jalil", message: "Todo bien, vos?" },
-    { userName: "Dolores Polito", message: "Muy bien tambien :)" },
-  ];
   const [width, setWidth] = useState(window.innerWidth);
   const [value, setValue] = useState("");
   const [search, setSearch] = useState("");
   const [view, setView] = useState("");
-  const [selectedChat, setSelectedChat] = useState(" ");
+  const [peopleChat, setPeopleChat] = useState([]);
+  const [selectedChat, setSelectedChat] = useState({});
+  const navigate = useNavigate();
+  let location = useLocation();
+  const [newMessage, setNewMessage] = useState("");
+  const [conversation, setConversation] = useState([]);
+  const id = localStorage.getItem("_id");
+  const userName = localStorage.getItem("userName");
+  const [traerMensajes, setTraerMensajes] = useState(false);
+  const socket = useRef();
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [receiverUsername, setReceiverUsername] = useState("");
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      handlerConversation();
+
+      setArrivalMessage({
+        chat: selectedChat._id,
+        to: id,
+        from: data.senderId,
+        message: data.message,
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", id);
+    socket.current.on("getUsers", (users) => console.log(users));
+  }, [id]);
+
+  useEffect(() => {
+    if (arrivalMessage && selectedChat) {
+
+      (selectedChat?.users.includes(arrivalMessage.to) ||
+        selectedChat?.users.includes(arrivalMessage.from)) &&
+        setConversation((prev) => [...prev, arrivalMessage]);
+    }
+    if (selectedChat?._id) {
+      axios
+        .get(`http://localhost:5001/message?chat=${selectedChat._id}`, {
+          conversation: conversation,
+        })
+        .then((res) => {
+          setConversation(res.data);
+          setArrivalMessage(!arrivalMessage);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [arrivalMessage, selectedChat]);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:5001/chat?id=${id}`).then((chats) => {
+        setPeopleChat(chats.data);
+      });
+    }
+  }, [selectedChat]);
+
+  const handlerConversation = () => {
+    if (selectedChat?._id) {
+      axios
+        .get(`http://localhost:5001/message?chat=${selectedChat._id}`, {
+          conversation: conversation,
+        })
+        .then((res) => {
+          setConversation(res.data);
+          setArrivalMessage(!arrivalMessage);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
+  useEffect(() => {
+    handlerConversation();
+    const username = selectedChat?.users?.filter(
+      (user) => user.userName != userName
+    );
+    if (username?.length === 1) setReceiverUsername(username[0].userName);
+  }, [traerMensajes, selectedChat]);
+
 
   const [messages, setMessages] = useState([])
 
@@ -57,17 +121,71 @@ const Chat = () => {
   }
   const searcher = useInput();
 
-  const handleSearch = function () {
+  const handleSearch = async function () {
     setSearch("buscar");
+    axios
+      .get(`http://localhost:5001/user/search/${searcher.value}?id=${id}`)
+      .then((users) => {
+        setPeopleChat(users.data);
+        navigate(`/search/${searcher.value}`);
+      })
+      .catch((err) => setPeopleChat([]));
   };
 
-  const handleSelectChat = function (userName) {
-    setSelectedChat(userName);
-    
+
+  const handleSelectChat = function (person) {
+    if (location.pathname.includes("search")) {
+      axios
+        .get(
+          `http://localhost:5001/chat/selectedChat/?id=${id}&&to=${person._id}`
+        )
+        .then((chat) => {
+          setSelectedChat(chat.data[0]);
+          navigate(`/chat`);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .get(`http://localhost:5001/chat/selectedChat/?id=${person._id}`)
+        .then((chat) => {
+          setSelectedChat(chat.data[0]);
+          navigate(`/chat`);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleBack = function () {
-    setSelectedChat(" ");
+    setSelectedChat({});
+  };
+
+  const sendMessage = () => {
+    const message = {
+      chat: selectedChat._id,
+      message: newMessage,
+      to:
+        selectedChat.users[0]._id == id
+          ? selectedChat.users[1]._id
+          : selectedChat.users[0]._id,
+      from: id,
+    };
+    const receiverId =
+      selectedChat.users[0]._id == id
+        ? selectedChat.users[1]._id
+        : selectedChat.users[0]._id;
+
+    socket.current.emit("sendMessage", {
+      senderId: id,
+      receiverId,
+      text: message.message,
+    });
+
+    axios
+      .post("http://localhost:5001/message", message)
+      .then((res) => {
+        setTraerMensajes(!traerMensajes);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -93,28 +211,33 @@ const Chat = () => {
                 </ChatSearch>
 
                 <ChatPeopleContainer>
-                  {peopleChat.map((person) => {
+                  {peopleChat?.map((person) => {
                     return (
-                      <>
-                        <Person
-                          onClick={() => handleSelectChat(person.userName)}
-                        >
-                          <img src={profile} alt="profile" />
-
-                          <p>{person.userName}</p>
-                        </Person>
-                      </>
+                      <Person
+                        key={person._id}
+                        onClick={() => handleSelectChat(person)}
+                      >
+                        <img src={profile} alt="profile" />
+                        {person.userName
+                          ? person.userName
+                          : Array.isArray(person.users) &&
+                            person.users.length === 2
+                          ? person.users[0].userName === userName
+                            ? person.users[1].userName
+                            : person.users[0].userName
+                          : null}
+                      </Person>
                     );
                   })}
                 </ChatPeopleContainer>
               </ChatSidebar>
 
-              {selectedChat !== " " ? (
+              {selectedChat?._id ? (
                 <>
                   {" "}
                   <ChatSection>
                     <ChatHeader mode={width}>
-                      <p>{selectedChat}</p>
+                      <p>{receiverUsername}</p>
                     </ChatHeader>
 
                     <MessagesSection>
@@ -127,18 +250,21 @@ const Chat = () => {
                           <>
                             {" "}
                             <p>
-                              <b>{message.userName}</b>
+                              <b>{message.from.userName}</b>
                             </p>
-                            <Message>{message.message}</Message>
+                            <Message key={message.message}>
+                              {message.message}
+                            </Message>
                           </>
                         );
                       })}
                     </MessagesSection>
 
                     <Write>
-                      <input></input>
-                      <button>
-                        {" "}
+                      <input
+                        onChange={(e) => setNewMessage(e.target.value)}
+                      ></input>
+                      <button onClick={sendMessage}>
                         <img src="send-svgrepo-com.svg" alt="send"></img>
                       </button>
                     </Write>
@@ -158,12 +284,12 @@ const Chat = () => {
               </div>
             </Header>
             <MobileScreen mode="chat">
-              {selectedChat !== " " ? (
+              {selectedChat?._id ? (
                 <>
                   <MobileChat>
                     <ChatSection>
                       <ChatHeader mode={width}>
-                        <button onClick={handleBack}>
+                        <button onClick={sendMessage}>
                           <img src="back-arrow.svg" />
                         </button>
                         <p>{selectedChat}</p>
@@ -181,16 +307,19 @@ const Chat = () => {
                               <p>
                                 <b>{message.userName}</b>
                               </p>
-                              <Message>{message.message}</Message>
+                              <Message key={message.message}>
+                                {message.message}
+                              </Message>
                             </>
                           );
                         })}
                       </MessagesSection>
 
                       <Write>
-                        <input></input>
-                        <button>
-                          {" "}
+                        <input
+                          onChange={(e) => setNewMessage(e.target.value)}
+                        ></input>
+                        <button onClick={sendMessage}>
                           <img src="send-svgrepo-com.svg" alt="send"></img>
                         </button>
                       </Write>
@@ -201,20 +330,18 @@ const Chat = () => {
                 <>
                   <ChatSidebar>
                     <ChatSearch>
-                      <ChatInput
-                        placeholder="Search..."
-                        {...searcher}
-                      ></ChatInput>
+                      <ChatInput placeholder="Search..."></ChatInput>
                       <SearchButton mode={view} onClick={handleSearch}>
                         Go
                       </SearchButton>
                     </ChatSearch>
 
                     <ChatPeopleContainer>
-                      {peopleChat.map((person) => {
+                      {peopleChat?.map((person) => {
                         return (
                           <>
                             <Person
+                              key={person._id}
                               onClick={() => handleSelectChat(person.userName)}
                             >
                               <img src={profile} alt="profile" />

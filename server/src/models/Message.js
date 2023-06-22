@@ -14,6 +14,9 @@ const MessageSchema = new Schema({
     type: String,
     required: true,
   },
+  chat: {
+    type: Schema.Types.ObjectId,
+  },
   date: {
     type: Date,
     default: Date.now,

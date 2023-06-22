@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <h1>Mira la consola</h1>
+    <script>
+     
+        var socket = io.connect("https://localhost:5001", {
+          forceNew: true,
+      });
+      // Using Socket 4.x
+      //const socket = io("ws://localhost:5001");
+
+      // handle the event sent with socket.send()
+      socket.on("connection",function(socket){
+        console.log("Escuchando")
+      })
+      socket.on("mensaje", (data) => {
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>

@@ -49,7 +49,6 @@ const AdminUsers = () => {
   const [view, setView] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
-
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -209,5 +208,4 @@ const AdminUsers = () => {
     </PagesSection>
   );
 };
-
 export default AdminUsers;
