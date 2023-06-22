@@ -1,24 +1,18 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
-import mentor from '../assets/OnBoarding/Vector.png';
-import email from '../assets/Sing/icon 32px 2/light/email.png';
-import password from '../assets/Sing/icon 32px 3/light/password.png';
-import line from '../assets/Sing/Line 2.png';
-import SalyImage from '../components/SalyImage';
-import { signUpUser } from '../states/user';
+import React from "react";
+import styled from "styled-components";
+import { Section, SmallRectangle } from "../styles/texts";
+import mentor from "../assets/OnBoarding/Vector.png";
+import SalyImage from "../components/SalyImage";
+
 import {
   Button,
-  ErrorMessage,
   GreyButtonInside,
   GreyButtonOutside,
-  H2,
-  Input,
   Line,
-  Section,
-  SmallRectangle,
   VerticalLine,
+  Input,
+  H2,
+  ErrorMessage,
   Text,
 } from "../styles/texts";
 import users from "../assets/Sing/icon 32px/light/user.png";
@@ -28,7 +22,7 @@ import line from "../assets/Sing/Line 2.png";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUser } from "../states/user";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Messages
 const required = "This field is required";
@@ -52,23 +46,19 @@ const SignUpSection = () => {
   const user = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
-    console.log(data, "data en dispatch")
+    console.log(data, "data en dispatch");
     try {
+      dispatch(
+        signUpUser({
+          userName: data.userName,
+          email: data.email,
+          password: data.password,
+        })
+      );
 
-      await
-        dispatch(
-          signUpUser({
-            userName: data.userName,
-            email: data.email,
-            password: data.password,
-          })
-        )
+      localStorage.setItem("signup", "ok");
 
-        localStorage.setItem("signup", "ok")
-
-        navigate("/verification");
-      
-
+      navigate("/verification");
     } catch (error) {
       console.log("error", error);
     }
