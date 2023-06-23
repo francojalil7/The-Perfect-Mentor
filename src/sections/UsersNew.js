@@ -138,6 +138,7 @@ const UsersNew = () => {
         const pendingValue = response.data.notifications[0].pending;
         const userName = response.data.relations[0].userName;
         //Setea el valor de pendingNotification en true/false, según exista o no una notificación pendiente
+        console.log(pendingValue, "ES PENDING VALUE")
         setPendingNotification(pendingValue);
         //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
         setToNotifyUser(userName);
@@ -148,8 +149,9 @@ const UsersNew = () => {
     }
   };
 
+
   // Ejecución de la función notifStack cada 60 secs
-  const ScheduledJob = schedule.scheduleJob("*/1 * * * *", function() {
+  const ScheduledJob = schedule.scheduleJob("* * * * *", function () {
     notificationStack();
   });
 

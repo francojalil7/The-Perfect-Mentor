@@ -84,6 +84,8 @@ const ProfileForm = () => {
       })
     );
 
+    localStorage.setItem("role", selectedRole.value)
+
     navigate("/filtered");
   };
   return (
