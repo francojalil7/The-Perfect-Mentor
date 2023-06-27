@@ -35,7 +35,6 @@ const Table = ({ users }) => {
   };
 
   const parsedList = filterUsers();
-  console.log("parsedList", parsedList)
 
   //Lógica para crear la relación desde el botón de +
   // Sólo podrá ejecutarla un mentee hacia un mentor

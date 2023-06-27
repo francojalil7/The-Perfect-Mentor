@@ -49,9 +49,10 @@ import swal from "sweetalert";
 const UsersNew = () => {
   const [width, setWidth] = useState(window.innerWidth);
   const [role, setRole] = useState("");
-  const [filter, setFilter] = useState("name");
+  const [filter, setFilter] = useState("userName");
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
+  const [result, setResult] = useState("");
   // const [view, setView] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
@@ -92,21 +93,34 @@ const UsersNew = () => {
     }
     return { onChange, value };
   }
+
   const searcher = useInput();
 
   const handleSearch = function (e) {
     if (filter === "") {
-      alert("¡Debe seleccionar un filtro!");
+      alert("Must select a filter!");
+      return;
     }
-    dispatch(getUsersFilter({ value, filter }));
-    setSearch("buscar");
+    if (!value) {
+      alert("Please, insert a name!");
+      return;
+    }
+    if (search === "") {
+      dispatch(getUsersFilter({ value, filter })).then((response) =>
+        setResult(response.payload)
+      );
+      setSearch("search");
+    }
   };
+
+  console.log(result, "result");
 
   const clearFilter = () => {
     setSearch("");
-    setFilter("");
+    setResult("");
     dispatch(setUsersFilter([]));
   };
+
   const filterRole = () => {
     if (search !== "") {
       setSearch("");
@@ -138,7 +152,6 @@ const UsersNew = () => {
         const pendingValue = response.data.notifications[0].pending;
         const userName = response.data.relations[0].userName;
         //Setea el valor de pendingNotification en true/false, según exista o no una notificación pendiente
-        console.log(pendingValue, "ES PENDING VALUE")
         setPendingNotification(pendingValue);
         //Setea el valor del userName a mostrar en la notificación (el mentee que quiere conectar, y se le muestra al mentor)
         setToNotifyUser(userName);
@@ -148,7 +161,6 @@ const UsersNew = () => {
       setShowNotification(true);
     }
   };
-
 
   // Ejecución de la función notifStack cada 60 secs
   const ScheduledJob = schedule.scheduleJob("* * * * *", function () {
@@ -192,7 +204,11 @@ const UsersNew = () => {
     if (optionSelected === "accepted") {
       swal("Congratulations!", "Your mentee has been asigned.", "success");
     } else {
-      swal("Keep looking!", "Soon you will receive new proposals from new mentees.", "success");
+      swal(
+        "Keep looking!",
+        "Soon you will receive new proposals from new mentees.",
+        "success"
+      );
     }
   };
 
@@ -244,7 +260,11 @@ const UsersNew = () => {
                   placeholder="Search by name"
                   {...searcher}
                 ></DashboardInput>
-                <SearchButton onClick={handleSearch}>Go</SearchButton>
+                {search === "search" ? (
+                  <SearchButton onClick={clearFilter}>X</SearchButton>
+                ) : (
+                  <SearchButton onClick={handleSearch}>Go</SearchButton>
+                )}
               </DashboardSearch>
               <Ellipse src="ellipse.svg" />
 
@@ -272,9 +292,14 @@ const UsersNew = () => {
 
               <Table
                 users={
-                  localStorage.getItem("role") === "mentee" ? mentors : mentees
+                  result !== "" && result.joinedDate 
+                    ? result
+                    : localStorage.getItem("role") === "mentee"
+                    ? mentors
+                    : mentees
                 }
               ></Table>
+
               <DPagination>
                 <Pagination
                   usersPerPage={usersPerPage}
@@ -305,7 +330,11 @@ const UsersNew = () => {
                 placeholder={searcher.value ? searcher.value : "Search"}
                 {...searcher}
               ></DashboardInput>
-              <SearchButton onClick={handleSearch}>Go</SearchButton>
+              {search === "search" ? (
+                <SearchButton onClick={clearFilter}>X</SearchButton>
+              ) : (
+                <SearchButton onClick={handleSearch}>Go</SearchButton>
+              )}
             </DashboardSearch>
             <Ellipse src="ellipse.svg" />
 

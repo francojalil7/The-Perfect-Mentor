@@ -1,23 +1,26 @@
-import { createReducer, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import {
+  createReducer,
+  createAsyncThunk,
+  createAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
-
 
 export const setUsersFilter = createAction("SET_USERS_FILTER");
 
 export const getUsersFilter = createAsyncThunk(
   "GET_USERS_FILTER",
-  async ({filter, value}) => {
+  async ({ filter, value }) => {
     try {
-     const filteredUsers = await axios.get(`http://localhost:5001/user/filtered/${filter}/${value}`)
-     let data = filteredUsers.data;
-     return data;
-
-    } catch {
-      console.log("Error");
+      const filteredUsers = await axios.get(
+        `http://localhost:5001/user/filtered/${filter}/${value}`
+      );
+      let data = filteredUsers.data;
+      return data;
+    } catch (err) {
+      console.log("Error", err);
     }
   }
 );
-
 
 const usersFilterReducer = createReducer([], {
   [setUsersFilter]: (state, action) => action.payload,

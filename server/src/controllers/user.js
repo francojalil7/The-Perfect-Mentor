@@ -105,6 +105,7 @@ const newUsers = async (req, res) => {
 };
 
 const filteredUser = async (req, res) => {
+
   const search = { [req.params.filter]: req.params.value };
 
   try {
