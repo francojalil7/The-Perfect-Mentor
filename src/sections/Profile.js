@@ -30,7 +30,7 @@ const Profile = () => {
         {width >= medium ? (
           <>
             <MentorSidebar src={mentor} />
-            {user.registerForm ? <Sidebar /> : <></>}
+            <Sidebar />
 
             {localStorage.getItem("isAdmin") === "true" ? (
               <>
@@ -64,6 +64,7 @@ const Profile = () => {
           </>
         ) : (
           <>
+          <MobileBar/>
             <Header>
               <ProfileTitle>
                 {localStorage.getItem("isAdmin") === "true"

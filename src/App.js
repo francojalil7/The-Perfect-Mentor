@@ -36,7 +36,7 @@ function App() {
         <>
           <Route path="/profile" element={<Profile />} />
           <Route path="/users" element={<AdminUsers />} />
-          <Route path="/reports" element={<Reports />} />
+          {/* <Route path="/reports" element={<Reports />} /> */}
           <Route path="/stadistics" element={<Stadistics />} />
           <Route path="*" element={<Route404/>} />
         </>
@@ -53,7 +53,7 @@ function App() {
       <Routes>
         <>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/reports" element={<Reports />} />
+          {/* <Route path="/reports" element={<Reports />} /> */}
           <Route path="/stadistics" element={<Stadistics />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/filtered" element={<UsersNew />} />

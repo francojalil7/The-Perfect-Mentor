@@ -90,7 +90,7 @@ const Sidebar = () => {
                 <img src={mask} alt="mask" />
               </span>
             </SidebarButtonStadistics>
-            <SidebarButtonReports
+            {/* <SidebarButtonReports
               mode={view}
               onClick={() => handleSelected("reports")}
             >
@@ -103,7 +103,7 @@ const Sidebar = () => {
               <span>
                 <img src={mask} alt="mask" />
               </span>
-            </SidebarButtonReports>
+            </SidebarButtonReports> */}
           </>
         ) : (
           <>

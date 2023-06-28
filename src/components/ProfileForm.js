@@ -95,12 +95,12 @@ const ProfileForm = () => {
           {localStorage.getItem("isAdmin") === "true" ? (
             <>
               <Label>
-                User name: <strong>{user.userName}</strong>
+                Username: <strong>{user.userName}</strong>
               </Label>
               <br />
               <br />
               <Label>
-                Your email: <strong>{user.email}</strong>
+                Email: <strong>{user.email}</strong>
               </Label>
               <br />
               <br />
@@ -110,16 +110,6 @@ const ProfileForm = () => {
               </Label>
               <br />
               <br />
-
-              <Label>
-                Country: <strong>{user.country}</strong>
-              </Label>
-              <br />
-              <br />
-
-              <Label>
-                Age: <strong>{user.age}</strong>
-              </Label>
             </>
           ) : (
             <>

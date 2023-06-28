@@ -82,7 +82,7 @@ const MobileBar = ({ props }) => {
               </span>
             </ButtonStadistics>
 
-            <ButtonReports
+            {/* <ButtonReports
               mode={props}
               onClick={() => {
                 handleMobileSelected("reports");
@@ -95,7 +95,7 @@ const MobileBar = ({ props }) => {
               <span>
                 <img src={mask} alt="mask" />
               </span>
-            </ButtonReports>
+            </ButtonReports> */}
 
             <ButtonLogOut
               mode={props}
