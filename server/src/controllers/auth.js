@@ -132,7 +132,6 @@ const loginCtrl = async ({ body }, res) => {
 };
 
 const completeRegisterCtrl = async ({ body }, res) => {
-  console.log("Es body en auth", body)
   const filter = { email: body.email };
   let update = {
     fullName: body.fullName,

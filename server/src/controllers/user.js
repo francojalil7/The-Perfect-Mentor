@@ -94,7 +94,7 @@ const newUsers = async (req, res) => {
     mentors: 10,
   };
 
-  //Función para contar usuarios nuevos cada mes
+  //Función para contar usuarios nuevos cada mes | Se utilizaría en el caso de que hubieran usuarios nuevos usualmente
   // cron.schedule("* * * */1 * *", () => {
   //   console.log("Cada 3 segundos")
   // }, {
@@ -195,7 +195,6 @@ const createRelation = async (req, res) => {
 };
 
 const updateRelation = async (req, res) => {
-  console.log("req.body en user.js controllerSSS", req.body)
   //Espera recibir el id de los users a actualizar y la respuesta "accepted"/ "rejected"
   //Colocar res.send y code status
   //Ver cómo manejar varias relations

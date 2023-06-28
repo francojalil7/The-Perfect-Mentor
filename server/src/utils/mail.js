@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 transporter.verify().then(() => {
-  console.log("verify transporter nodemailer");
+  console.log("Verifing Transporter Nodemailer: OK");
 });
 
 

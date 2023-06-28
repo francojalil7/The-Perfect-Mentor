@@ -9,7 +9,6 @@ function useInput(initialState = "") {
 
   const onChange = (e) => {
     setValue(e.target.value);
-    console.log(e.target.value)
   };
   return { value, onChange };
 }

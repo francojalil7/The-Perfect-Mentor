@@ -35,6 +35,7 @@ const Chat = () => {
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [receiverUsername, setReceiverUsername] = useState("");
+  const [origin, setOrigin] = useState("");
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -56,7 +57,6 @@ const Chat = () => {
 
   useEffect(() => {
     if (arrivalMessage && selectedChat) {
-
       (selectedChat?.users.includes(arrivalMessage.to) ||
         selectedChat?.users.includes(arrivalMessage.from)) &&
         setConversation((prev) => [...prev, arrivalMessage]);
@@ -74,6 +74,7 @@ const Chat = () => {
     }
   }, [arrivalMessage, selectedChat]);
 
+  //Se utiliza para obtener los chats del usuario actual cuando se monta el componente.
   useEffect(() => {
     if (id) {
       axios.get(`http://localhost:5001/chat?id=${id}`).then((chats) => {
@@ -104,8 +105,7 @@ const Chat = () => {
     if (username?.length === 1) setReceiverUsername(username[0].userName);
   }, [traerMensajes, selectedChat]);
 
-
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setView(window.location.href.split("/")[3]);
@@ -121,27 +121,29 @@ const Chat = () => {
   }
   const searcher = useInput();
 
+  //realiza una solicitud a un servidor para buscar usuarios según el término de búsqueda proporcionado por el usuario.
+  //Los resultados de la búsqueda se almacenan en el estado peopleChat.
   const handleSearch = async function () {
     setSearch("buscar");
     axios
       .get(`http://localhost:5001/user/search/${searcher.value}?id=${id}`)
       .then((users) => {
+        setOrigin("search");
         setPeopleChat(users.data);
-        navigate(`/search/${searcher.value}`);
+        // navigate(`/search/${searcher.value}`);
       })
       .catch((err) => setPeopleChat([]));
   };
 
-
   const handleSelectChat = function (person) {
-    if (location.pathname.includes("search")) {
+    if (/* location.pathname.includes("search") */ origin === "search") {
       axios
         .get(
           `http://localhost:5001/chat/selectedChat/?id=${id}&&to=${person._id}`
         )
         .then((chat) => {
           setSelectedChat(chat.data[0]);
-          navigate(`/chat`);
+          // navigate(`/chat`);
         })
         .catch((err) => console.log(err));
     } else {
@@ -149,7 +151,7 @@ const Chat = () => {
         .get(`http://localhost:5001/chat/selectedChat/?id=${person._id}`)
         .then((chat) => {
           setSelectedChat(chat.data[0]);
-          navigate(`/chat`);
+          // navigate(`/chat`);
         })
         .catch((err) => console.log(err));
     }
@@ -179,6 +181,7 @@ const Chat = () => {
       receiverId,
       text: message.message,
     });
+
 
     axios
       .post("http://localhost:5001/message", message)
@@ -242,7 +245,7 @@ const Chat = () => {
 
                     <MessagesSection>
                       <Date>
-                        <p>Dia de la conversacion</p>
+                        <p>Día de la conversación:</p>
                       </Date>
 
                       {conversation.map((message) => {

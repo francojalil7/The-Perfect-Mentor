@@ -113,8 +113,6 @@ const UsersNew = () => {
     }
   };
 
-  console.log(result, "result");
-
   const clearFilter = () => {
     setSearch("");
     setResult("");
@@ -292,7 +290,7 @@ const UsersNew = () => {
 
               <Table
                 users={
-                  result !== "" && result.joinedDate 
+                  result !== ""
                     ? result
                     : localStorage.getItem("role") === "mentee"
                     ? mentors

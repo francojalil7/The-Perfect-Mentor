@@ -6,7 +6,7 @@ export const getChatContacts = createAsyncThunk(
   async () => {
     try {
       const chatContacts = await axios.get(
-        // `http://localhost:5001/ /`
+        `http://localhost:5001/`
       );
 
       let data = chatContacts.data;

@@ -31,11 +31,11 @@ const contacts = async (nombres, contactosChat) => {
   });
 };
 
+
 const getChats = async (req, res) => {
   try {
     if (!req.query.id) return res.sendStatus(404);
     const chat = await Chat.find({ users: req.query.id }).populate("users");
-
     res.send(chat);
   } catch (error) {
     throw new Error(`Error al ver chats: ${error.message}`);

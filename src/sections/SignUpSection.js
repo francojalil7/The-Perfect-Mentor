@@ -46,7 +46,6 @@ const SignUpSection = () => {
   const user = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
-    console.log(data, "data en dispatch");
     try {
       dispatch(
         signUpUser({
@@ -60,7 +59,7 @@ const SignUpSection = () => {
 
       navigate("/verification");
     } catch (error) {
-      console.log("error", error);
+      console.log("Error", error);
     }
   };
 
