@@ -53,7 +53,6 @@ const UsersNew = () => {
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("");
   const [result, setResult] = useState("");
-  // const [view, setView] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(9);
   const [pendingNotification, setPendingNotification] = useState();
@@ -64,6 +63,17 @@ const UsersNew = () => {
   const dispatch = useDispatch();
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  useEffect(() => {
+    // Función para manejar el evento resize del navegador
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    // Agregar el event listener al montar el componente
+    window.addEventListener("resize", handleResize);
+
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -353,7 +363,6 @@ const UsersNew = () => {
             ) : (
               <></>
             )}
-
             <MobileUsersInfo users={role === "mentee" ? mentors : mentees} />
           </MobileScreenTable>
           <DPagination>

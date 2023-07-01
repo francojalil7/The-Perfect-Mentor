@@ -36,6 +36,7 @@ const Chat = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [receiverUsername, setReceiverUsername] = useState("");
   const [origin, setOrigin] = useState("");
+  
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -182,7 +183,6 @@ const Chat = () => {
       text: message.message,
     });
 
-
     axios
       .post("http://localhost:5001/message", message)
       .then((res) => {
@@ -300,7 +300,7 @@ const Chat = () => {
 
                       <MessagesSection>
                         <Date>
-                          <p>Dia de la conversacion</p>
+                          <p>Día de la conversación:</p>
                         </Date>
 
                         {conversation.map((message) => {
@@ -317,7 +317,6 @@ const Chat = () => {
                           );
                         })}
                       </MessagesSection>
-
                       <Write>
                         <input
                           onChange={(e) => setNewMessage(e.target.value)}
@@ -331,31 +330,37 @@ const Chat = () => {
                 </>
               ) : (
                 <>
-                  <ChatSidebar>
-                    <ChatSearch>
-                      <ChatInput placeholder="Search..."></ChatInput>
-                      <SearchButton mode={view} onClick={handleSearch}>
-                        Go
-                      </SearchButton>
-                    </ChatSearch>
+                  <ChatSearch>
+                  <ChatInput placeholder="Search..." {...searcher}></ChatInput>
+                  <SearchButton mode={view} onClick={handleSearch}>
+                    Go
+                  </SearchButton>
+                  </ChatSearch>
 
-                    <ChatPeopleContainer>
-                      {peopleChat?.map((person) => {
-                        return (
-                          <>
-                            <Person
-                              key={person._id}
-                              onClick={() => handleSelectChat(person.userName)}
-                            >
-                              <img src={profile} alt="profile" />
+                  <ChatPeopleContainer>
+                    {peopleChat?.map((person) => {
+                      return (
+                        <>
+                          <Person
+                            key={person._id}
+                            onClick={() => handleSelectChat(person._id)}
+                          >
+                            <img src={profile} alt="profile" />
 
-                              <p>{person.userName}</p>
-                            </Person>
-                          </>
-                        );
-                      })}
-                    </ChatPeopleContainer>
-                  </ChatSidebar>
+                            <p>{person.userName}</p>
+                          </Person>
+                        </>
+                      );
+                    })}
+                    <Write>
+                      <input
+                        onChange={(e) => setNewMessage(e.target.value)}
+                      ></input>
+                      <button onClick={sendMessage}>
+                        <img src="send-svgrepo-com.svg" alt="send"></img>
+                      </button>
+                    </Write>
+                  </ChatPeopleContainer>
                 </>
               )}
             </MobileScreen>
@@ -477,6 +482,9 @@ const ChatPeopleContainer = styled.div`
   border-bottom-left-radius: 37px !important;
   display: block;
   overflow-y: auto;
+  @media only screen and (max-width: 700px) {
+    border-bottom-left-radius: 0px !important;
+  }
 `;
 
 const Person = styled.div`

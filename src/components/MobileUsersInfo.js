@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const MobileUsersInfo = ({ users }) => {
+
   return (
     <>
       {users.map((data) => {

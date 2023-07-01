@@ -68,7 +68,7 @@ const ProfileForm = () => {
     const skills = selectedSkills.map((option) => {
       return option.value;
     });
-    
+
     dispatch(
       updateUser({
         email: user.email,
@@ -81,10 +81,11 @@ const ProfileForm = () => {
         skills: skills,
         profession: selectedProfession.value,
         registerForm: true,
+        image: data.image,
       })
     );
 
-    localStorage.setItem("role", selectedRole.value)
+    localStorage.setItem("role", selectedRole.value);
 
     navigate("/filtered");
   };
@@ -224,7 +225,7 @@ const ProfileForm = () => {
 
               {errors.description &&
                 errors.description.type === "required" &&
-                errorMessage(required)}
+                errorMessage(required)}              
 
               <SaveChangesButton onClick={handleSubmit(onSubmit)}>
                 <p>Save </p>

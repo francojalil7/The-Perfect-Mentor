@@ -1,7 +1,7 @@
 [
   {
-    "userName": "superadmin1",
-    "fullName": "Super Admin1",
+    "userName": "Admin",
+    "fullName": "Sarah Johnson",
     "email": "superadmin1@gmail.com",
     "password": "superadmin1",
     "isAdmin": true,

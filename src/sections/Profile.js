@@ -9,7 +9,7 @@ import {
 } from "../styles/texts";
 import mentor from "../assets/Profile/ProfileVector.png";
 import styled from "styled-components";
-import profileImg from "../assets/Profile/Jane-Doe.jpeg";
+import profileImg from "../assets/Profile/avatar-profile.png";
 import MobileBar from "../components/MobileBar.js";
 import ProfileForm from "../components/ProfileForm";
 import Sidebar from "../components/Sidebar";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css"
+import "../App.css";
 
 const Pagination = ({ usersPerPage, totalUsers, paginate }) => {
   const userNumbers = [];
@@ -11,10 +11,16 @@ const Pagination = ({ usersPerPage, totalUsers, paginate }) => {
   return (
     <nav>
       <ul>
-        {userNumbers.map((number) => (
-            <a className="pagination" onClick={() => paginate(number)} href="#">
-                <img></img>{number}
-            </a>
+        {userNumbers.map((number, index) => (
+          <a
+            className="pagination"
+            key={index}
+            onClick={() => paginate(number)}
+            href="#"
+          >
+            <img></img>
+            {number}
+          </a>
         ))}
       </ul>
     </nav>

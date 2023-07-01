@@ -13,8 +13,6 @@ import { useNavigate } from "react-router-dom";
 
 const OnBoarding = () => {
   const navigate = useNavigate();
-
-
   const goSignIn = () => {
     navigate("/signin");
   };
@@ -27,7 +25,7 @@ const OnBoarding = () => {
       <Section>
         <Rectangle>
           <ImageContainer>
-            <Saly src={saly} />
+            <Saly src={saly} style={{"top": "-20px"}} />
           </ImageContainer>
 
           <section>
