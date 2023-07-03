@@ -6,7 +6,7 @@ export const getTotalUsers = createAsyncThunk(
   async () => {
     try {
       const totalUsers = await axios.get(
-        `http://localhost:5001/user/totalUsers`
+        `https://the-perfect-mentor-backend.vercel.app/user/totalUsers`
       );
       let data = totalUsers.data;
       return data;

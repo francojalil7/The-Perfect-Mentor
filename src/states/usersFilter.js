@@ -12,7 +12,7 @@ export const getUsersFilter = createAsyncThunk(
   async ({ filter, value }) => {
     try {
       const filteredUsers = await axios.get(
-        `http://localhost:5001/user/filtered/${filter}/${value}`
+        `https://the-perfect-mentor-backend.vercel.app/user/filtered/${filter}/${value}`
       );
       let data = filteredUsers.data;
       return data;

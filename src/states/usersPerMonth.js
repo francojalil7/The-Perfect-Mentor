@@ -6,7 +6,7 @@ export const getUsersPerMonth = createAsyncThunk(
   async () => {
     try {
       const usersPerMonth = await axios.get(
-        `http://localhost:5001/user/singPerMounth`
+        `https://the-perfect-mentor-backend.vercel.app/user/singPerMounth`
       );
       let data = usersPerMonth.data;
       return data;

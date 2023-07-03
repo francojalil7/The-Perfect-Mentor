@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   const onSubmit = async (data) => {
     try {
       const stepOne = await Axios.put(
-        "http://localhost:5001/auth/forgot-password",
+        "https://the-perfect-mentor-backend.vercel.app/auth/forgot-password",
         {email: data.email}
       );
       swal(

@@ -12,7 +12,7 @@ const MailVerification = () => {
         <H2> Your account has been successfully created</H2>
         <H3>Check your email to activate the account</H3>
         <SalySingleImage src={saly2} />
-        <a href="http://localhost:3000">Go to Homepage</a>
+        <a href="/">Go to Homepage</a>
         <br></br>
       </VerificationRectangle>
     </Section>

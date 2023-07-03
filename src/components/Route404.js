@@ -11,7 +11,7 @@ const Route404 = () => {
         <H2>¡Oh no! Page not found.</H2>
         <H3>We couldn't find the page you requested.</H3>
         <SalySingleImage src={saly2} />
-        <a href="http://localhost:3000">Go to Home Page</a>
+        <a href="/">Go to Home Page</a>
         <br></br>
       </VerificationRectangle>
     </Section>

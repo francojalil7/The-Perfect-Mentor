@@ -43,10 +43,10 @@ const Table = ({ users }) => {
     try {
       let notifier = localStorage.getItem("_id");
       let notifierUserName = localStorage.getItem("userName")
-      let search = await Axios.get(`http://localhost:5001/user/me/${data}`);
+      let search = await Axios.get(`https://the-perfect-mentor-backend.vercel.app/user/me/${data}`);
       let notified = search.data._id;
       let relation = await Axios.put(
-        `http://localhost:5001/user/createRelation`,
+        `https://the-perfect-mentor-backend.vercel.app/user/createRelation`,
         { notifier, notified, notifierUserName }
       ).then((response) =>
         response.data.error

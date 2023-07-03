@@ -6,7 +6,7 @@ export const getNewUsers = createAsyncThunk(
   async () => {
     try {
       const newUsers = await axios.get(
-        `http://localhost:5001/user/newUsers`
+        `https://the-perfect-mentor-backend.vercel.app/user/newUsers`
       );
       let data = newUsers.data;
       return data;
