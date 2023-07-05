@@ -95,7 +95,7 @@ const validateUserCtrl = async (req, res) => {
     await user.save();
 
     // Redireccionar a la confirmación
-    return res.redirect(`${process.env.REACT_APP_BACKEND_URI}/signin`);
+    return res.redirect(`http://the-perfect-mentor.vercel.app/signin`);
   } catch (error) {
     console.log(error);
     return res.json({
