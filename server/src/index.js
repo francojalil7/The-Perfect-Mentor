@@ -8,9 +8,11 @@ const dbConnect = require("./db/index");
 const server = http.createServer(app);
 
 dotenv.config();
-app.use(cors()); //acepta todas las URL
+app.use(cors());
 app.use(express.json());
 app.use(router);
+
+const backendURI = process.env.REACT_APP_BACKEND_URI || `http://localhost:${process.env.PORT}`;
 
 dbConnect().then(() => {
   server.listen(process.env.PORT, () => {
