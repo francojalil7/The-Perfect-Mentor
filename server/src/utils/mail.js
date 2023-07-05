@@ -25,7 +25,7 @@ const getTemplate = (userName, token) => {
   <h2>Hi ${userName} </h2>
   <p>We are happy you signed up for The Perfect Mentor. To start exploring the App please confirm your email address.</p>
   <a
-      href="http://localhost:5001/auth/validateUser/${token}"
+      href=`${process.env.REACT_APP_BACKEND_URI}/auth/validateUser/${token}`
       target="_blank"
   >Confirm your account</a>
 
