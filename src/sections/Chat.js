@@ -64,7 +64,7 @@ const Chat = () => {
     }
     if (selectedChat?._id) {
       axios
-        .get(`https://the-perfect-mentor-backend.vercel.app/message?chat=${selectedChat._id}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URI}/message?chat=${selectedChat._id}`, {
           conversation: conversation,
         })
         .then((res) => {
@@ -78,7 +78,7 @@ const Chat = () => {
   //Se utiliza para obtener los chats del usuario actual cuando se monta el componente.
   useEffect(() => {
     if (id) {
-      axios.get(`https://the-perfect-mentor-backend.vercel.app/chat?id=${id}`).then((chats) => {
+      axios.get(`${process.env.REACT_APP_BACKEND_URI}/chat?id=${id}`).then((chats) => {
         setPeopleChat(chats.data);
       });
     }
@@ -87,7 +87,7 @@ const Chat = () => {
   const handlerConversation = () => {
     if (selectedChat?._id) {
       axios
-        .get(`https://the-perfect-mentor-backend.vercel.app/message?chat=${selectedChat._id}`, {
+        .get(`${process.env.REACT_APP_BACKEND_URI}/message?chat=${selectedChat._id}`, {
           conversation: conversation,
         })
         .then((res) => {
@@ -127,7 +127,7 @@ const Chat = () => {
   const handleSearch = async function () {
     setSearch("buscar");
     axios
-      .get(`https://the-perfect-mentor-backend.vercel.app/user/search/${searcher.value}?id=${id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URI}/user/search/${searcher.value}?id=${id}`)
       .then((users) => {
         setOrigin("search");
         setPeopleChat(users.data);
@@ -140,7 +140,7 @@ const Chat = () => {
     if (/* location.pathname.includes("search") */ origin === "search") {
       axios
         .get(
-          `https://the-perfect-mentor-backend.vercel.app/chat/selectedChat/?id=${id}&&to=${person._id}`
+          `${process.env.REACT_APP_BACKEND_URI}/chat/selectedChat/?id=${id}&&to=${person._id}`
         )
         .then((chat) => {
           setSelectedChat(chat.data[0]);
@@ -149,7 +149,7 @@ const Chat = () => {
         .catch((err) => console.log(err));
     } else {
       axios
-        .get(`https://the-perfect-mentor-backend.vercel.app/chat/selectedChat/?id=${person._id}`)
+        .get(`${process.env.REACT_APP_BACKEND_URI}/chat/selectedChat/?id=${person._id}`)
         .then((chat) => {
           setSelectedChat(chat.data[0]);
           // navigate(`/chat`);

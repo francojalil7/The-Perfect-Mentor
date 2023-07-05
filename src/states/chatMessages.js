@@ -6,7 +6,7 @@ export const getChatMessages = createAsyncThunk(
   async () => {
     try {
       const chatMessages = await axios.get(
-        `https://the-perfect-mentor-backend.vercel.app/chat`
+        `${process.env.REACT_APP_BACKEND_URI}`
       );
 
       let data = chatMessages.data;

@@ -8,12 +8,7 @@ const dbConnect = require("./db/index");
 const server = http.createServer(app);
 
 dotenv.config();
-app.use(cors({
-  origin: ["https://the-perfect-mentor-backend.vercel.app/"],
-  methods: ["POST", "GET"],
-  credentials: true
-}
-)); //acepta todas las URL
+app.use(cors()); //acepta todas las URL
 app.use(express.json());
 app.use(router);
 

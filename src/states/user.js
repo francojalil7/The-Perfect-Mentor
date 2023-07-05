@@ -11,7 +11,7 @@ export const setUser = createAction("SET_USER");
 export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
   try {
     const response = await axios.post(
-      "https://the-perfect-mentor-backend.vercel.app/auth/register",
+      "https://localhost:5001/auth/register",
       body
     );
     let data = response.data;
@@ -34,7 +34,7 @@ export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
 
 export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
   try {
-    const response = await fetch("https://the-perfect-mentor-backend.vercel.app/auth/login", {
+    const response = await fetch("https://localhost:5001/auth/login", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
 });
 
 export const updateUser = createAsyncThunk("UPDATE_USER", async (body, res) => {
-  const response = await fetch("https://the-perfect-mentor-backend.vercel.app/auth/completeRegister", {
+  const response = await fetch("https://localhost:5001/auth/completeRegister", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const updateUser = createAsyncThunk("UPDATE_USER", async (body, res) => {
 
 export const getUserMail = createAsyncThunk("GET_USER", async (email) => {
   try {
-    const user = await axios.get(`https://the-perfect-mentor-backend.vercel.app/user/me/${email}`);
+    const user = await axios.get(`${process.env.REACT_APP_BACKEND_URI}/user/me/${email}`);
     let data = user.data;
     return data;
   } catch {

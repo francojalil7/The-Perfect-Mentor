@@ -18,7 +18,7 @@ const Modals = ({ props }) => {
      .then((willDelete) => {
           if (willDelete) {
                  Axios.delete(
-                    `https://the-perfect-mentor-backend.vercel.app/admin/${email}`
+                    `${process.env.REACT_APP_BACKEND_URI}/admin/${email}`
                   );
           } else {
                 //  swal("The user is safe!");
@@ -39,7 +39,7 @@ const Modals = ({ props }) => {
      .then((willDelete) => {
           if (willDelete) {
                  Axios.put(
-                    `https://the-perfect-mentor-backend.vercel.app/admin/upgrade/${props.email}`
+                    `${process.env.REACT_APP_BACKEND_URI}/admin/upgrade/${props.email}`
                   );
           } else {
                  swal(`${props.name} is now an admin`);

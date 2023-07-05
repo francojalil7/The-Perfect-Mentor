@@ -6,7 +6,7 @@ export const getUsersPerMonth = createAsyncThunk(
   async () => {
     try {
       const usersPerMonth = await axios.get(
-        `https://the-perfect-mentor-backend.vercel.app/user/singPerMounth`
+        `${process.env.REACT_APP_BACKEND_URI}/user/singPerMounth`
       );
       let data = usersPerMonth.data;
       return data;

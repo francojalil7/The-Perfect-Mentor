@@ -46,7 +46,7 @@ const ChangePassword = () => {
   const onSubmit = async (data) => {
     const url = window.location.href
     let resetToken = url.split("/")[4]
-    const stepTwo = await Axios.put(`https://the-perfect-mentor-backend.vercel.app/auth/new-password/${data.newPassword}/${resetToken}`).then(
+    const stepTwo = await Axios.put(`${process.env.REACT_APP_BACKEND_URI}/auth/new-password/${data.newPassword}/${resetToken}`).then(
       swal(
           "Congratulations!",
           "Your password has been changed",

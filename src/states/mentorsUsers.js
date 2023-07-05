@@ -6,7 +6,7 @@ export const getMentorsUsers = createAsyncThunk(
   async () => {
     try {
       const mentorsUsers = await axios.get(
-        `https://the-perfect-mentor-backend.vercel.app/user/users/mentors`
+        `${process.env.REACT_APP_BACKEND_URI}`
       );
       let data = mentorsUsers.data;
       return data;
