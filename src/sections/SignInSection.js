@@ -124,12 +124,12 @@ const SignInSection = () => {
                 errors.password.type === "maxLength" &&
                 errorMessage(maxLength)}
 
-              <a href=`${process.env.REACT_APP_BACKEND_URI}/forgotpass`>
+              <a href={`${process.env.REACT_APP_BACKEND_URI}/forgotpass`}>
                 <Text>Forgot password?</Text>
               </a>
               <Text>
                 Don't have an account?{" "}
-                <a href=`${process.env.REACT_APP_BACKEND_URI}/signUp`>Sign up</a>
+                <a href={`${process.env.REACT_APP_BACKEND_URI}/signUp`}>Sign up</a>
               </Text>
 
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
