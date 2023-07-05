@@ -6,7 +6,7 @@ export const getMentorsUsers = createAsyncThunk(
   async () => {
     try {
       const mentorsUsers = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URI}`
+        `${process.env.REACT_APP_BACKEND_URI}/user/users/mentors`
       );
       let data = mentorsUsers.data;
       return data;

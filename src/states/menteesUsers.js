@@ -6,7 +6,7 @@ export const getMenteesUsers = createAsyncThunk(
   async () => {
     try {
       const menteesUsers = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URI}`
+        `${process.env.REACT_APP_BACKEND_URI}/user/users/mentees`
       );
 
       return menteesUsers.data;
