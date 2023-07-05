@@ -11,7 +11,7 @@ export const setUser = createAction("SET_USER");
 export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
   try {
     const response = await axios.post(
-      "https://localhost:5001/auth/register",
+      `${process.env.REACT_APP_BACKEND_URI}/auth/register`,
       body
     );
     let data = response.data;
@@ -34,7 +34,7 @@ export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
 
 export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
   try {
-    const response = await fetch("https://localhost:5001/auth/login", {
+    const response = await fetch`${process.env.REACT_APP_BACKEND_URI}/auth/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -81,7 +81,7 @@ export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
 });
 
 export const updateUser = createAsyncThunk("UPDATE_USER", async (body, res) => {
-  const response = await fetch("https://localhost:5001/auth/completeRegister", {
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/auth/completeRegister`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
