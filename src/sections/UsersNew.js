@@ -155,7 +155,7 @@ const UsersNew = () => {
   const notificationStack = async () => {
     let mentor = localStorage.getItem("email");
     let search = await axios
-      .get(`http://localhost:5001/user/me/${mentor}`)
+      .get(`${process.env.REACT_APP_BACKEND_URI}/user/me/${mentor}`)
       .then((response) => {
         const pendingValue = response.data.notifications[0].pending;
         const userName = response.data.relations[0].userName;
@@ -195,14 +195,14 @@ const UsersNew = () => {
 
     // Obtener menteeId mediante una solicitud GET y esperar la respuesta
     const usersData = await axios.get(
-      `http://localhost:5001/user/me/${mentorEmail}`
+      `${process.env.REACT_APP_BACKEND_URI}/user/me/${mentorEmail}`
     );
     const mentorId = usersData.data._id;
     const menteeId = usersData.data.relations[0].id;
 
     // Realizar la solicitud PUT con los datos actualizados
     const response = await axios.put(
-      "http://localhost:5001/user/updateRelation",
+      `${process.env.REACT_APP_BACKEND_URI}/user/updateRelation`,
       { user: mentorId, otherUserId: menteeId, selectedOption: optionSelected }
     );
     //Cierra el div y cambia la imagen de la campanita sin botón rojo

@@ -95,7 +95,7 @@ const validateUserCtrl = async (req, res) => {
     await user.save();
 
     // Redireccionar a la confirmación
-    return res.redirect("http://localhost:3000/signin");
+    return res.redirect(`${process.env.REACT_APP_BACKEND_URI}/signin`);
   } catch (error) {
     console.log(error);
     return res.json({
@@ -175,7 +175,7 @@ const forgotPasswordCtrl = async (req, res) => {
       });
     }
     const token = generateToken(user);
-    verificationLink = `http://localhost:3000/changepass/${token}`;
+    verificationLink = `${process.env.REACT_APP_BACKEND_URI}/changepass/${token}`;
     user.resetToken = token;
     await user.save();
   } catch (error) {

@@ -140,7 +140,7 @@ const SignUpSection = () => {
                 errorMessage(maxLength)}
               <Text>
                 Have an account?{" "}
-                <a href="http://localhost:3000/signIn">Sign in</a>
+                <a href={`${process.env.REACT_APP_BACKEND_URI}/signIn`}>Sign in</a>
               </Text>
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign Up
