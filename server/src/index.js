@@ -12,11 +12,11 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
-const backendURI = process.env.REACT_APP_BACKEND_URI || `http://localhost:${process.env.PORT}`;
+const backendURI = process.env.REACT_APP_BACKEND_URI
 
 dbConnect().then(() => {
-  server.listen(process.env.PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
+  server.listen(backendURI, () => {
+    console.log(`Servidor corriendo en el puerto ${backendURI}`);
   });
 });
 
