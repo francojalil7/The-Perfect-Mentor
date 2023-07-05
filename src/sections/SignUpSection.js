@@ -140,7 +140,7 @@ const SignUpSection = () => {
                 errorMessage(maxLength)}
               <Text>
                 Have an account?{" "}
-                <a href={`${process.env.REACT_APP_BACKEND_URI}/signIn`}>Sign in</a>
+                <a href={`http://the-perfect-mentor.vercel.app/signIn`}>Sign in</a>
               </Text>
               <GreyButtonInside onClick={handleSubmit(onSubmit)}>
                 Sign Up
