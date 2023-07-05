@@ -25,7 +25,7 @@ const getTemplate = (userName, token) => {
   <h2>Hi ${userName} </h2>
   <p>We are happy you signed up for The Perfect Mentor. To start exploring the App please confirm your email address.</p>
   <a
-      href="http://the-perfect-mentor.vercel.app/auth/validateUser/${token}"
+      href="https://the-perfect-mentor-backend.vercel.app/auth/validateUser/${token}"
       target="_blank"
   >Confirm your account</a>
 
