@@ -34,7 +34,7 @@ export const signUpUser = createAsyncThunk("SIGNUPUSER", async (body) => {
 
 export const effectLogin = createAsyncThunk("PERSISTENCIA", async (body) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/auth/login`), {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URI}/auth/login`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
