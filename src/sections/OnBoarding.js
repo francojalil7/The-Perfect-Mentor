@@ -6,6 +6,7 @@ import {
   Mentor,
   ButtonOnBoardingGreen,
   ButtonOnBoardingGrey,
+  ProfileTitle,
 } from "../styles/texts";
 import mentor from "../assets/OnBoarding/Vector.png";
 import saly from "../assets/OnBoarding/Saly-1.png";
