@@ -175,7 +175,7 @@ const forgotPasswordCtrl = async (req, res) => {
       });
     }
     const token = generateToken(user);
-    verificationLink = `${process.env.REACT_APP_BACKEND_URI}/changepass/${token}`;
+    verificationLink = `http://the-perfect-mentor.vercel.app/changepass/${token}`;
     user.resetToken = token;
     await user.save();
   } catch (error) {
